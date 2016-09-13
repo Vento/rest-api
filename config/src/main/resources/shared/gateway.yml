@@ -1,0 +1,37 @@
+# ===================================================================
+# Gateway Service configuration
+# ===================================================================
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+  routes:
+    profile-service:
+        path: /profiles/**
+        serviceId: profile-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+    auth-service:
+        path: /uaa/**
+        serviceId: auth-service
+        stripPrefix: false
+        sensitiveHeaders:
+
+server:
+  port: 9000

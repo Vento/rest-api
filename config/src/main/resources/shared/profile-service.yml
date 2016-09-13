@@ -1,0 +1,12 @@
+# ===================================================================
+# Profile Service configuration
+# ===================================================================
+
+server:
+  context-path: /profiles
+  port: 1000
+
+spring:
+  data:
+    mongodb:
+      database: test

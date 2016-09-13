@@ -1,0 +1,12 @@
+# ===================================================================
+# Auth Service configuration
+# ===================================================================
+
+server:
+  context-path: /uaa
+  port: 3000
+
+spring:
+  data:
+    mongodb:
+      database: test
