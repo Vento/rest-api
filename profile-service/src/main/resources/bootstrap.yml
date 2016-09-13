@@ -1,0 +1,15 @@
+# ===================================================================
+# Profile Service base configuration
+# ===================================================================
+
+spring:
+  application:
+    name: profile-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+          initial-interval: 1000
+          max-interval: 2000
+          max-attempts: 100
