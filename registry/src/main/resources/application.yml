@@ -1,0 +1,24 @@
+# ===================================================================
+# Registry Service base configuration
+# ===================================================================
+
+spring:
+  application:
+    name: registry
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+          initial-interval: 1000
+          max-interval: 2000
+          max-attempts: 100
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
