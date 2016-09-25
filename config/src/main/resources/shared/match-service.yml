@@ -1,0 +1,21 @@
+# ===================================================================
+# Match Service configuration
+# ===================================================================
+
+server:
+  context-path: /match
+  port: 2000
+
+spring:
+  data:
+    mongodb:
+      database: test
+
+#security:
+  #oauth2:
+    #client:
+      #clientId: match-service
+      #clientSecret: secret
+      #accessTokenUri: http://localhost:3000/uaa/oauth/token
+      #grant-type: client_credentials
+      #scope: server

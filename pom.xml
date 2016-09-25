@@ -17,6 +17,7 @@
         <module>gateway</module>
         <module>profile-service</module>
         <module>auth-service</module>
+        <module>match-service</module>
     </modules>
 
 </project>
