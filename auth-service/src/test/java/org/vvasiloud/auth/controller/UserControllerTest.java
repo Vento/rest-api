@@ -1,5 +1,6 @@
 package org.vvasiloud.auth.controller;
 
+import com.sun.security.auth.UserPrincipal;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,9 @@ import org.vvasiloud.auth.domain.User;
 import org.vvasiloud.auth.service.UserService;
 
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -66,4 +69,10 @@ public class UserControllerTest {
         mockMvc.perform(post("/users")).andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void returnCurrentUser() throws Exception {
+        mockMvc.perform(get("/users/current").principal(new UserPrincipal("Username")))
+                .andExpect(jsonPath("$.name").value("Username"))
+                .andExpect(status().isOk());
+    }
 }
