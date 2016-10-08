@@ -1,4 +1,8 @@
 language: java
 jdk: oraclejdk8
 
-services: mongodb
+services:
+  - mongodb
+  
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 6f6008b6-9461-4949-b7fe-bfc92156919d
