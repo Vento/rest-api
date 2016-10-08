@@ -43,10 +43,12 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .scopes("gateway")
                 .and()
                 .withClient("profile-service")
+                .secret("secret")
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server")
                 .and()
                 .withClient("match-service")
+                .secret("secret")
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server");
     }

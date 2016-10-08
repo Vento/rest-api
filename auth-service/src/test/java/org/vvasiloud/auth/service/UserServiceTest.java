@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.vvasiloud.auth.domain.User;
-import org.vvasiloud.auth.exception.UserAlreadyExistsException;
 import org.vvasiloud.auth.repository.UserRepository;
 
 import static org.mockito.Mockito.verify;
@@ -31,7 +30,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUser() throws UserAlreadyExistsException {
+    public void createUser(){
 
         User user = new User();
         user.setUsername("Username");
@@ -41,8 +40,8 @@ public class UserServiceTest {
         verify(repository, times(1)).save(user);
     }
 
-    @Test(expected = UserAlreadyExistsException.class)
-    public void userAlreadyExists() throws UserAlreadyExistsException {
+    @Test(expected = IllegalArgumentException.class)
+    public void userAlreadyExists() {
 
         User user = new User();
         user.setUsername("Username");

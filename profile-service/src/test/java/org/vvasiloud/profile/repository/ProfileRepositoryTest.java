@@ -26,7 +26,7 @@ public class ProfileRepositoryTest {
     @Autowired
     private ProfileRepository repository;
 
-    private Profile _getStubAccount() {
+    private Profile _getStubProfile() {
 
         PointRecord pointRecord = new PointRecord();
         pointRecord.setPoint(new Point(0,0));
@@ -51,9 +51,9 @@ public class ProfileRepositoryTest {
     }
 
     @Test
-    public void findAccountByName() {
+    public void findProfileByName() {
 
-        Profile stub = _getStubAccount();
+        Profile stub = _getStubProfile();
         repository.save(stub);
 
         Profile found = repository.findByName(stub.getName());

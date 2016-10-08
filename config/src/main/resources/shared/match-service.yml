@@ -3,7 +3,7 @@
 # ===================================================================
 
 server:
-  context-path: /match
+  context-path: /matches
   port: 2000
 
 spring:
@@ -11,11 +11,11 @@ spring:
     mongodb:
       database: test
 
-#security:
-  #oauth2:
-    #client:
-      #clientId: match-service
-      #clientSecret: secret
-      #accessTokenUri: http://localhost:3000/uaa/oauth/token
-      #grant-type: client_credentials
-      #scope: server
+security:
+  oauth2:
+    client:
+      clientId: match-service
+      clientSecret: secret
+      accessTokenUri: http://localhost:3000/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server

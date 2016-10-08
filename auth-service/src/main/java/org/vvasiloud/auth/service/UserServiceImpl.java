@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.vvasiloud.auth.domain.User;
-import org.vvasiloud.auth.exception.UserAlreadyExistsException;
 import org.vvasiloud.auth.repository.UserRepository;
 
 /**
@@ -23,12 +22,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
     @Override
-    public void create(User user) throws UserAlreadyExistsException {
+    public void create(User user) {
 
         User loadedUser = repository.findOne(user.getUsername());
 
         if(loadedUser != null){
-            throw new UserAlreadyExistsException("User already exists: " + user.getUsername());
+            throw new IllegalArgumentException("User already exists: " + user.getUsername());
         }
 
         String hash = encoder.encode(user.getPassword());

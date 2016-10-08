@@ -27,6 +27,12 @@ zuul:
         stripPrefix: false
         sensitiveHeaders:
 
+    match-service:
+        path: /matches/**
+        serviceId: matches-service
+        stripPrefix: false
+        sensitiveHeaders:
+
     auth-service:
         path: /uaa/**
         serviceId: auth-service

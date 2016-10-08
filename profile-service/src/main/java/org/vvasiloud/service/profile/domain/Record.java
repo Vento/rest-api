@@ -1,5 +1,6 @@
 package org.vvasiloud.service.profile.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.tomcat.jni.Time;
 
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by Aeon on 10/9/2016.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Record {
 
     @NotNull
