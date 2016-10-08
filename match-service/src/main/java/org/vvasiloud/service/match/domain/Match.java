@@ -15,7 +15,7 @@ import java.util.List;
 public class Match {
 
     @Id
-    private String id;
+    private String name;
 
     @NotNull
     private String owner;
@@ -39,12 +39,12 @@ public class Match {
         this.owner = owner;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Status getStatus() {

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.vvasiloud.service.match.domain.*;
 import org.vvasiloud.service.match.repository.MatchRepository;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by Aeon on 22/9/2016.
  */
+@Service
 public class MatchServiceImpl implements MatchService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -28,9 +30,9 @@ public class MatchServiceImpl implements MatchService {
      * {@inheritDoc}
      */
     @Override
-    public Match findById(String id) {
-        Assert.hasLength(id);
-        return repository.findById(id);
+    public Match findByName(String name) {
+        Assert.hasLength(name);
+        return repository.findByName(name);
     }
 
     /**
@@ -47,7 +49,7 @@ public class MatchServiceImpl implements MatchService {
 
         repository.save(match);
 
-        log.info("new match has been created: " + match.getId());
+        log.info("new match has been created: " + match.getName());
 
         return match;
     }
@@ -58,8 +60,8 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void update(Match updatedMatch) {
 
-        Match match = repository.findById(updatedMatch.getId());
-        Assert.notNull(match, "Cannot find match with id: " + updatedMatch.getId());
+        Match match = repository.findByName(updatedMatch.getName());
+        Assert.notNull(match, "Cannot find match with id: " + updatedMatch.getName());
         match.setUsers(updatedMatch.getUsers());
         match.setStatus(updatedMatch.getStatus());
         match.setQueue(updatedMatch.getQueue());
@@ -68,12 +70,17 @@ public class MatchServiceImpl implements MatchService {
 
         repository.save(match);
 
-        log.debug("Changes saved for match: "+ updatedMatch.getId());
+        log.debug("Changes saved for match: "+ updatedMatch.getName());
     }
 
     @Override
     public List<Match> findByStatus(Status status, Pageable pageable) {
         return repository.findByStatus(status,pageable);
+    }
+
+    @Override
+    public List<Match> findAllByStatus(Status status) {
+        return repository.findAllByStatus(status);
     }
 
 

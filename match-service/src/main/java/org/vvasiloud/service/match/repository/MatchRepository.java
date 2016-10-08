@@ -14,8 +14,9 @@ import java.util.List;
 @Repository
 public interface MatchRepository extends CrudRepository<Match, String> {
 
-    Match findById(String id);
+    Match findByName(String name);
 
     List<Match> findByStatus(Status status, Pageable pageable);
+    List<Match> findAllByStatus(Status status);
 
 }

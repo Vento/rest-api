@@ -14,12 +14,12 @@ import java.util.List;
 public interface MatchService {
 
     /**
-    * Gets a match by id
+    * Gets a match by name
     *
-    * @param id
+    * @param name
     * @return found match
     */
-    Match findById(String id);
+    Match findByName(String name);
 
     /**
      * Creates a new match
@@ -37,8 +37,14 @@ public interface MatchService {
     void update(Match updatedMatch);
 
     /**
-     * Return all matches by status
+     * Return  matches by status
      *
      */
     List<Match> findByStatus(Status status, Pageable pageable);
+
+    /**
+     * Return all matches by status
+     *
+     */
+    List<Match> findAllByStatus(Status status);
 }
