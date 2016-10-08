@@ -8,7 +8,7 @@ logging:
   level:
     org.springframework.security: INFO
     org.springframework.web: INFO
-  file: application.log
+  file: classpath:/application.log
 
 hystrix:
   command:
@@ -29,6 +29,5 @@ security:
   oauth2:
     resource:
       user-info-uri: http://localhost:3000/uaa/users/current
-
 
 
