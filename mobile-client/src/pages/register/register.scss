@@ -1,0 +1,14 @@
+page-register {
+    .bg-intro {
+        background-image: url('../assets/img/intro.jpg');
+        background-repeat: no-repeat;
+        background-size:cover;
+    }
+    .item-label-floating{
+        background: transparent;
+        border: none !important;
+    }
+    .ion-header{
+        position: relative;
+    }
+}

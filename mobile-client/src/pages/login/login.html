@@ -1,0 +1,30 @@
+<ion-content padding class="bg-intro"[style.background-size]="'auto ' + backgroundHeight">
+	<h3 class="logo">Vento</h3>
+	
+	<ion-col class="actions-container">
+			<ion-item>
+				<ion-label floating>Username</ion-label>
+				<ion-input [(ngModel)]="login.username" type="text" value=""></ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label floating>Password</ion-label>
+				<ion-input [(ngModel)]="login.password" type="password" value=""></ion-input>
+			</ion-item>
+
+		<div class="forgot-password" padding text-right>
+			Forgot your password?
+		</div>
+
+		<div>
+			<button (click)="onLogin(login)" ion-button icon-left block color="orange-light">Login</button>
+		</div>
+
+		<div>
+			<button (click)="onRegister()" ion-button icon-left block color="orange">
+        		<ion-icon icon-left name="person-add"></ion-icon>Register
+      		</button>
+		</div>
+	</ion-col>
+
+</ion-content>
