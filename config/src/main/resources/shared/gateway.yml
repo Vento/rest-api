@@ -16,25 +16,26 @@ ribbon:
 
 zuul:
   ignoredServices: '*'
+  prefix: /api
   host:
     connect-timeout-millis: 20000
     socket-timeout-millis: 20000
 
   routes:
     profile-service:
-        path: /profiles/**
+        path: /v1/profiles/**
         serviceId: profile-service
         stripPrefix: false
         sensitiveHeaders:
 
     match-service:
-        path: /matches/**
+        path: /v1/matches/**
         serviceId: matches-service
         stripPrefix: false
         sensitiveHeaders:
 
     auth-service:
-        path: /uaa/**
+        path: /v1/uaa/**
         serviceId: auth-service
         stripPrefix: false
         sensitiveHeaders:
