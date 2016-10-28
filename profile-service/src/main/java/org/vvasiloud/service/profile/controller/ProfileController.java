@@ -53,7 +53,7 @@ public class ProfileController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createNewAccount(@Valid @RequestBody User user,UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Void> createProfile(@Valid @RequestBody User user,UriComponentsBuilder ucBuilder) {
        Profile profile = profileService.create(user);
         if (profile == null) {
             System.out.println("Profile already exist");

@@ -3,9 +3,9 @@ package org.vvasiloud.match.repository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.geo.Point;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.vvasiloud.service.match.MatchApplication;
 import org.vvasiloud.service.match.domain.*;
 import org.vvasiloud.service.match.repository.MatchRepository;
@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Aeon on 2/10/2016.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = MatchApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = MatchApplication.class)
 public class MatchRepositoryTest {
 
     @Autowired

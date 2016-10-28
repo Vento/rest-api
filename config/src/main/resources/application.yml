@@ -3,6 +3,8 @@
 # ===================================================================
 
 spring:
+  application:
+    name: config
   cloud:
     config:
       server:

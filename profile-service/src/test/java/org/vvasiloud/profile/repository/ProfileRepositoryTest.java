@@ -4,9 +4,9 @@ import org.apache.tomcat.jni.Time;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.geo.Point;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.vvasiloud.service.profile.ProfileApplication;
 import org.vvasiloud.service.profile.domain.*;
 import org.vvasiloud.service.profile.repository.ProfileRepository;
@@ -19,8 +19,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Aeon on 20/8/2016.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ProfileApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ProfileApplication.class)
 public class ProfileRepositoryTest {
 
     @Autowired
