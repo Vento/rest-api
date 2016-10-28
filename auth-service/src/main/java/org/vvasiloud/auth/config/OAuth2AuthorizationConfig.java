@@ -39,8 +39,9 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
         clients.inMemory()
                 .withClient("mobileapp")
-                .authorizedGrantTypes("refresh_token", "password")
-                .scopes("gateway")
+                .secret("secret")
+                .authorizedGrantTypes("password","refresh_token")
+                .scopes("server")
                 .and()
                 .withClient("profile-service")
                 .secret("secret")
