@@ -3,13 +3,13 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
-  Generated class for the ApiGlobals provider.
+  Generated class for the ApiBase provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class ApiGlobals {
+export class ApiBase {
   private apiBase:string;
   private profileApi:string;
   private matchApi:string;
@@ -17,9 +17,9 @@ export class ApiGlobals {
 
   constructor(public http: Http) {
     this.apiBase = "http://localhost:9000/api";
-    this.profileApi = this.apiBase + "/v1/users/";
-    this.matchApi = this.apiBase + "/v1/matches/";
-    this.authApi = this.apiBase + "/v1/uaa/";
+    this.profileApi = this.apiBase + "/profiles";
+    this.matchApi = this.apiBase + "/matches";
+    this.authApi = this.apiBase + "/uaa";
   }
 
   getApiBaseUrl() {

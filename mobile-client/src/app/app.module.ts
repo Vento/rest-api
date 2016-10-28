@@ -8,8 +8,10 @@ import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
 import { Routes } from '../pages/routes/routes';
 
-import { ApiGlobals } from '../providers/api-globals/api-globals';
+import { ApiBase } from '../providers/api-base/api-base';
 import { AuthService } from '../providers/auth-service/auth-service';
+import { ProfileService } from '../providers/profile-service/profile-service';
+import { MatchService } from '../providers/match-service/match-service';
 
 @NgModule({
   declarations: [
@@ -33,8 +35,10 @@ import { AuthService } from '../providers/auth-service/auth-service';
     Routes
   ],
   providers: [
-    ApiGlobals,
-    AuthService
+    ApiBase,
+    AuthService,
+    ProfileService,
+    MatchService
   ]
 })
 export class AppModule {}
