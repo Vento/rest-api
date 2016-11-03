@@ -1,11 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from 'ionic-native';
+import { Events, MenuController, Nav, Platform } from 'ionic-angular';
+import { Splashscreen, StatusBar } from 'ionic-native';
 
 import { Dashboard } from '../pages/dashboard/dashboard';
-import { Page2 } from '../pages/page2/page2';
+import { History } from '../pages/history/history';
 import { Login } from '../pages/login/login';
+import { Statistics } from '../pages/statistics/statistics';
 import { Routes } from '../pages/routes/routes';
+import { Matches } from '../pages/matches/matches';
+import { Settings } from '../pages/settings/settings';
+import { Account } from '../pages/account/account';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,19 +19,28 @@ export class MyApp {
 
   rootPage: any = Login;
 
-  pages: Array<{title: string, component: any}>;
+  appPages: Array<{ title: string, component: any, icon?: string, logsOut?: boolean,index?: number; }>;
+  accountPages: Array<{title: string, component: any, icon?: string, logsOut?: boolean,index?: number;}>;
 
-  constructor(public platform: Platform) {
+  constructor(
+    public events: Events,
+    public menu: MenuController,
+    public platform: Platform) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Activity', component: Login },
-      { title: 'History', component: Page2 },
-      { title: 'Statistics', component: Dashboard },
-      { title: 'Routes', component: Routes },
-      { title: 'Matches', component: Dashboard },
-      { title: 'Settings', component: Dashboard }
+    this.appPages = [
+      { title: 'Activity', component: Dashboard, icon: 'fi flaticon-man-running' },
+      { title: 'History', component: History, icon: 'fi flaticon-history' },
+      { title: 'Statistics', component: Statistics, icon: 'fi flaticon-cardiogram-and-heart' },
+      { title: 'Routes', component: Routes, icon: 'fi flaticon-route-1' },
+      { title: 'Matches', component: Matches , icon: 'fi flaticon-marathon'}
+    ];
+
+    this.accountPages = [
+      { title: 'Settings', component: Settings, icon: 'fi flaticon-settings-gears' },
+      { title: 'Account', component: Account, icon: 'fi flaticon-people' },
+      { title: 'Logout', component: Login, icon: 'fi flaticon-logout', logsOut: true }
     ];
 
   }
@@ -37,6 +50,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+      Splashscreen.hide();
     });
   }
 

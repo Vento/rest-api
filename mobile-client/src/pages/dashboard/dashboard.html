@@ -8,11 +8,20 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <ion-card>
+    <ion-card-content>
+      
+    </ion-card-content>
+  </ion-card>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-fab bottom right>
+    <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab><ion-icon class="fi flaticon-man-running"></ion-icon></button>
+      <button ion-fab><ion-icon class="fi flaticon-history"></ion-icon></button>
+      <button ion-fab><ion-icon class="fi flaticon-cardiogram-and-heart"></ion-icon></button>
+      <button ion-fab><ion-icon class="fi flaticon-route-1"></ion-icon></button>
+      <button ion-fab><ion-icon class="fi flaticon-marathon"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

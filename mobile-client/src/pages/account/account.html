@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Account</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <div padding-top text-center>
+    <img class="avatar" src="http://www.gravatar.com/avatar?d=mm&s=140">
+    <h2 *ngIf="username">{{username}}</h2>
+
+    <ion-list inset>
+      <button ion-item (click)="changePassword()">Change Password</button>
+    </ion-list>
+  </div>
+</ion-content>

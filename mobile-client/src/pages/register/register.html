@@ -10,30 +10,43 @@
 	<ion-col class="actions-container">
 		<ion-list>
 
+ 		<form #registerForm="ngForm" novalidate>
 			<ion-item>
-				<ion-label floating>email</ion-label>
-				<ion-input [(ngModel)]="register.email" type="text" value=""></ion-input>
+				<ion-label floating>Email</ion-label>
+				<ion-input [(ngModel)]="register.email" name="username" type="text" #email="ngModel" required></ion-input>
 			</ion-item>
+			<p [hidden]="email.valid || submitted == false" color="danger" padding-left>
+				Email is required
+			</p>
 
 			<ion-item>
-				<ion-label floating>username</ion-label>
-				<ion-input [(ngModel)]="register.username" type="text" value=""></ion-input>
+				<ion-label floating>Username</ion-label>
+				<ion-input [(ngModel)]="register.username" name="username" type="text" #username="ngModel" required></ion-input>
 			</ion-item>
+			<p [hidden]="username.valid || submitted == false" color="danger" padding-left>
+				Username is required
+			</p>
 
 			<ion-item>
 				<ion-label floating>Password</ion-label>
-				<ion-input [(ngModel)]="register.password" type="password" value=""></ion-input>
+				<ion-input [(ngModel)]="register.password" name="password" type="password" #password="ngModel" required></ion-input>
 			</ion-item>
+			<p [hidden]="password.valid || submitted == false" color="danger" padding-left>
+				Password is required
+			</p>			
 
  			<ion-item>
 				<ion-label floating>Repeat Password</ion-label>
-				<ion-input [(ngModel)]="register.passwordRepeat" type="password" value=""></ion-input>
-			</ion-item>           
-
+				<ion-input [(ngModel)]="register.passwordRepeat" name="passwordRepeat" type="password" #passwordRepeat="ngModel" required></ion-input>
+			</ion-item>    
+			<p [hidden]="passwordRepeat.valid || submitted == false" color="danger" padding-left>
+				Password fields must match
+			</p>			       
+ 		</form>
 		</ion-list>
 
 		<div>
-			<button ion-button icon-left block color="orange">Submit</button>
+			<button ion-button (click)="onRegister(registerForm)" type="submit" icon-left block color="orange">Submit</button>
 		</div>
 	</ion-col>
 

@@ -8,7 +8,11 @@ page-register {
         background: transparent;
         border: none !important;
     }
-    .ion-header{
-        position: relative;
+    .toolbar-background{
+        background: rgba(252, 76, 2, .7)
+
+    }
+    .back-button.show-back-button,.toolbar-title{
+        color : #fff;
     }
 }
