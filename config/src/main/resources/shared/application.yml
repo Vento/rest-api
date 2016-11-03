@@ -8,7 +8,13 @@ logging:
   level:
     org.springframework.security: INFO
     org.springframework.web: INFO
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
   file: classpath:/application.log
+
+spring:
+  sleuth:
+    sampler:
+      percentage: 0.2
 
 hystrix:
   command:
