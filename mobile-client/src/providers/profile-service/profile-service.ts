@@ -72,6 +72,7 @@ export class ProfileService {
 		});
     
 		let body = JSON.stringify({
+      email: request.email,
 			username: request.username,
 			password: request.password,
 		});
