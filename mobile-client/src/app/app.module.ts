@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 
 import { MyApp } from './app.component';
 
@@ -18,6 +19,15 @@ import { ApiBase } from '../providers/api-base/api-base';
 import { AuthService } from '../providers/auth-service/auth-service';
 import { ProfileService } from '../providers/profile-service/profile-service';
 import { MatchService } from '../providers/match-service/match-service';
+
+import { AuthStorage } from '../providers/auth-storage/auth-storage';
+import { ProfileStorage } from '../providers/profile-storage/profile-storage';
+
+import { HttpInterceptor } from '../providers/http-interceptor/http-interceptor';
+
+export function httpInterceptor(backend: XHRBackend, options: RequestOptions, authService: AuthService) {
+  return new HttpInterceptor(backend, options, authService);
+}
 
 @NgModule({
   declarations: [
@@ -53,7 +63,14 @@ import { MatchService } from '../providers/match-service/match-service';
     AuthService,
     ProfileService,
     MatchService,
-    Storage
+    AuthStorage,
+    ProfileStorage,
+    Storage,
+    {
+      provide: HttpInterceptor,
+      useFactory: httpInterceptor,
+      deps: [XHRBackend, RequestOptions, AuthService]
+    }
   ]
 })
 export class AppModule {}

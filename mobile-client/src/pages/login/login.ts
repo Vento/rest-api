@@ -7,11 +7,13 @@ import { Dashboard } from '../dashboard/dashboard';
 import { Register } from '../register/register';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { ProfileService } from '../../providers/profile-service/profile-service';
+import { ProfileStorage } from '../../providers/profile-storage/profile-storage';
+import { AuthStorage } from '../../providers/auth-storage/auth-storage';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers: [AuthService, ProfileService]
+  providers: [AuthService, AuthStorage, ProfileService, ProfileStorage]
 })
 export class Login {
   login: {username?: string, password?: string} = {};
@@ -23,25 +25,31 @@ export class Login {
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController,
               public authService: AuthService, 
-              public profileService: ProfileService) {
+              public authStorage: AuthStorage, 
+              public profileService: ProfileService,
+              public profileStorage: ProfileStorage) {
     this.loader = this.loadingCtrl.create({content: "Please wait..."}); 
   }
+  
   onLogin(form) {
     this.submitted = true;
 
     if (form.valid) {
-      this.presentLoading();
+      this.presentLoading();  
+      
       this.authService.requestToken(this.login).subscribe(
-            data => {          
-              let token = data.access_token;
-              console.log(data.access_token);
-              console.log(data.refresh_token);
+            authData => {          
+              console.log(authData);
+              this.authStorage.setAccessToken(authData.access_token);
+              this.authStorage.setRefreshToken(authData.refresh_token);
+              this.authStorage.setTokenExpiration(authData.expires_in);
+              console.log(authData.access_token);
 
-              this.profileService.getCurrentProfile(token).subscribe(
-                    data => {          
+              this.profileService.getCurrentProfile().subscribe(
+                    profileData => {          
                       this.dismissLoading();     
                       this.navCtrl.setRoot(Dashboard);
-                      let profileData = data;
+                      this.profileStorage.setProfile(profileData);
                       console.log(profileData);
                     },
                     err  => {

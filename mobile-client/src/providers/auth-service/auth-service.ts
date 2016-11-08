@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
+import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
-import 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import { ApiBase } from '../api-base/api-base';
+import { AuthStorage } from '../auth-storage/auth-storage';
 
 /*
   Generated class for the AuthService provider.
@@ -15,21 +13,21 @@ import { ApiBase } from '../api-base/api-base';
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class AuthService {
+export class AuthService extends ApiBase {
   private apiUrl:string;
-  providers: [ApiBase];
+  providers: [AuthStorage];
 
-  constructor(public http: Http, public apiBase: ApiBase) {
+  constructor(public http: Http, public authStorage: AuthStorage) {
+    super();
     console.log('Initialized AuthService Provider');
-    this.http = http;
-    this.apiUrl = this.apiBase.getAuthApiUrl();
+    this.apiUrl = this.getAuthApiUrl();
   }
 
-  requestToken(request) {
+  requestToken(credientials) {
     let accessTokenUri = this.apiUrl + "/oauth/token";
-
 		let headers = new Headers({
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+      'Authorization': 'Basic bW9iaWxlYXBwOnNlY3JldA=='
 		});
 
 		let options = new RequestOptions({
@@ -37,14 +35,49 @@ export class AuthService {
 		});
 
 		let body = JSON.stringify({
-			username: request.username,
-			password: request.password,
+			username: credientials.username,
+			password: credientials.password,
       grant_type: 'password'
 		});
     
     return this.http.post(accessTokenUri, body, options)
       .map(res => res.json())
       .catch(this.handleError)
+  }
+
+    refreshAccessToken() {
+      let token = this.authStorage.getRefreshToken();
+      let accessTokenUri = this.apiUrl + "/oauth/token";
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      });
+
+      let options = new RequestOptions({
+        headers: headers
+      });
+
+      let body = JSON.stringify({});
+    
+      return this.http.post(accessTokenUri, body, options)
+        .map(res => res.json())
+        .catch(this.handleError)
+  }
+
+    isAuthenticated() {
+      let tokenExpiration = this.authStorage.getTokenExpiration();
+      return (Number(tokenExpiration) < new Date().getTime());
+  }
+
+  authenticate(){
+    if(this.isAuthenticated() == false && this.authStorage.getRefreshToken() !== null){
+      let response = JSON.parse(JSON.stringify(this.refreshAccessToken()));
+      this.authStorage.setRefreshToken(response.refresh_token);
+      this.authStorage.setTokenExpiration(response.expires_in);
+      return true;
+    }
+    return false;
+
   }
 
   handleError(error) {

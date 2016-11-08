@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import {ErrorObservable} from 'rxjs/Observable/ErrorObservable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
 import { ApiBase } from '../api-base/api-base';
 
 /*
@@ -14,14 +12,13 @@ import { ApiBase } from '../api-base/api-base';
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class MatchService {
+export class MatchService extends ApiBase{
   private apiUrl:string;
-  providers: [ApiBase];
 
-  constructor(public http: Http, public apiBase: ApiBase) {
+  constructor(public http: Http ) {
+    super();
     console.log('Initialized MatchService Provider');
-    this.http = http;
-    this.apiUrl = this.apiBase.getMatchApiUrl();
+    this.apiUrl = this.getMatchApiUrl();
   }
 
   handleError(error) {

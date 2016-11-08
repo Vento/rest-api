@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 
 /*
   Generated class for the ApiBase provider.
@@ -15,13 +13,13 @@ export class ApiBase {
   private matchApi:string;
   private authApi:string;
 
-  constructor(public http: Http) {
+  constructor() {
     this.apiBase = "http://localhost:9000/api";
     this.profileApi = this.apiBase + "/profiles";
     this.matchApi = this.apiBase + "/matches";
     this.authApi = this.apiBase + "/uaa";
   }
-
+ 
   getApiBaseUrl() {
     return this.apiBase;
   }

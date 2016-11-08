@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import {ErrorObservable} from 'rxjs/Observable/ErrorObservable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
 import { ApiBase } from '../api-base/api-base';
+import { AuthStorage } from '../auth-storage/auth-storage';
+import { HttpInterceptor } from '../http-interceptor/http-interceptor';
 
 /*
   Generated class for the ProfileService provider.
@@ -14,22 +14,23 @@ import { ApiBase } from '../api-base/api-base';
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class ProfileService {
+export class ProfileService extends ApiBase {
 
   private apiUrl:string;
-  providers: [ApiBase];
+  providers: [AuthStorage];
 
-  constructor(public http: Http, public apiBase: ApiBase) {
+  constructor(public http: HttpInterceptor, public authStorage: AuthStorage) {
+    super();
     console.log('Initialized ProfileService Provider');
-    this.http = http;
-    this.apiUrl = this.apiBase.getProfileApiUrl();
+    this.apiUrl = this.getProfileApiUrl();
   }
 
-  getProfile(profileId:string, token:string) {
+  getProfile(profileId:string) {
 
+    let token = this.authStorage.getAccessToken();
     let headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
+      'Authorization': `Bearer ${token}`
     });
 
     let options = new RequestOptions({
@@ -42,21 +43,22 @@ export class ProfileService {
       .catch(this.handleError)
   } 
 
-  getCurrentProfile(token:string) {
+  getCurrentProfile() {
 
-      let headers = new Headers({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      });
+    let token = this.authStorage.getAccessToken();
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
 
-      let options = new RequestOptions({
-        headers: headers
-      });
+    let options = new RequestOptions({
+      headers: headers
+    });
 
-      let userInfoUri = this.apiUrl + "/profiles/current";
-      return this.http.get(userInfoUri, options)
-        .map(res => res.json())
-        .catch(this.handleError)
+    let userInfoUri = this.apiUrl + "/profiles/current";
+    return this.http.get(userInfoUri, options)
+      .map(res => res.json())
+      .catch(this.handleError)
   }
 
   createProfile(request) {
@@ -82,22 +84,23 @@ export class ProfileService {
       .catch(this.handleError)
   }
 
-  updateProfile(updatedProfile, token:string) {
+  updateProfile(updatedProfile) {
 
+    let token = this.authStorage.getAccessToken();
     let updateProfileUri = this.apiUrl + "/current";
 
-		let headers = new Headers({
-			'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-		});
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
 
-		let options = new RequestOptions({
-			headers: headers
-		});
-    
-		let body = JSON.stringify(
+    let options = new RequestOptions({
+      headers: headers
+    });
+
+    let body = JSON.stringify(
       updatedProfile
-		);
+    );
 
     return this.http.put(updateProfileUri, body, options)
       .map(res => res.json())
