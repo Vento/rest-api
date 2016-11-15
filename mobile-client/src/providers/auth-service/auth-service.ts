@@ -26,19 +26,15 @@ export class AuthService extends ApiBase {
   requestToken(credientials) {
     let accessTokenUri = this.apiUrl + "/oauth/token";
 		let headers = new Headers({
-			'Content-Type': 'application/json',
+			'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Basic bW9iaWxlYXBwOnNlY3JldA=='
-		});
+		}); 
 
 		let options = new RequestOptions({
 			headers: headers
 		});
 
-		let body = JSON.stringify({
-			username: credientials.username,
-			password: credientials.password,
-      grant_type: 'password'
-		});
+    let body = "username=" + credientials.username + "&password=" + credientials.password + "&grant_type=password";
     
     return this.http.post(accessTokenUri, body, options)
       .map(res => res.json())
