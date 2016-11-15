@@ -1,0 +1,10 @@
+# ===================================================================
+# Auth Service test configuration
+# ===================================================================
+
+# In-memory MongoDB with random port at startup for testing
+spring:
+  data:
+    mongodb:
+      database: vento_authetestdb
+      port: 0
