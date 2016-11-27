@@ -13,36 +13,36 @@
  		<form #registerForm="ngForm" novalidate>
 			<ion-item>
 				<ion-label floating>Email</ion-label>
-				<ion-input [(ngModel)]="register.email" name="username" type="text" #email="ngModel" required></ion-input>
+				<ion-input [(ngModel)]="user.email" name="username" type="text" #email="ngModel" required></ion-input>
 			</ion-item>
-			<p [hidden]="email.valid || submitted == false" color="danger" padding-left>
+			<small [hidden]="email.valid || submitted == false" color="danger" padding-left>
 				Email is required
-			</p>
+			</small>
 
 			<ion-item>
 				<ion-label floating>Username</ion-label>
-				<ion-input [(ngModel)]="register.username" name="username" type="text" #username="ngModel" required></ion-input>
+				<ion-input [(ngModel)]="user.username" name="username" type="text" #username="ngModel" required pattern="[a-zA-Z ]*"></ion-input>
 			</ion-item>
-			<p [hidden]="username.valid || submitted == false" color="danger" padding-left>
+			<small [hidden]="username.valid || submitted == false" color="danger" padding-left>
 				Username is required
-			</p>
+			</small>
 
 			<ion-item>
 				<ion-label floating>Password</ion-label>
-				<ion-input [(ngModel)]="register.password" name="password" type="password" #password="ngModel" required></ion-input>
+				<ion-input [(ngModel)]="user.password" name="password" type="password" #password="ngModel"></ion-input>
 			</ion-item>
-			<p [hidden]="password.valid || submitted == false" color="danger" padding-left>
+			<small [hidden]="password.valid || submitted == false" color="danger" padding-left>
 				Password is required
-			</p>			
+			</small>			
 
  			<ion-item>
 				<ion-label floating>Repeat Password</ion-label>
-				<ion-input [(ngModel)]="register.passwordRepeat" name="passwordRepeat" type="password" #passwordRepeat="ngModel" required></ion-input>
+				<ion-input [(ngModel)]="user.passwordRepeat" name="passwordRepeat" type="password" #passwordRepeat="ngModel" required></ion-input>
 			</ion-item>    
-			<p [hidden]="passwordRepeat.valid || submitted == false" color="danger" padding-left>
+			<small [hidden]="passwordRepeat.valid || user.password != user.passwordRepeat || submitted == false" color="danger" padding-left>
 				Password fields must match
-			</p>			       
- 		</form>
+			</small>			       
+ 		</form> 
 		</ion-list>
 
 		<div>
