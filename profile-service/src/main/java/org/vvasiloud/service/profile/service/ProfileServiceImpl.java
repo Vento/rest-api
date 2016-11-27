@@ -60,7 +60,7 @@ public class ProfileServiceImpl implements ProfileService {
      * {@inheritDoc}
      */
     @Override
-    public void saveProfile(String name, Profile updatedProfile) {
+    public Profile saveProfile(String name, Profile updatedProfile) {
         Profile profile = repository.findByName(name);
         Assert.notNull(profile, "Cannot find profile with name: " + name);
 
@@ -70,6 +70,8 @@ public class ProfileServiceImpl implements ProfileService {
         repository.save(profile);
 
         log.debug("Changes saved for profile: "+ name);
+
+        return profile;
     }
 
 

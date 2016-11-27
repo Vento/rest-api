@@ -31,7 +31,8 @@ public interface ProfileService {
      *
      * @param name
      * @param updatedProfile
+     * @return updated profile
      */
-    void saveProfile(String name, Profile updatedProfile);
+    Profile saveProfile(String name, Profile updatedProfile);
 
 }

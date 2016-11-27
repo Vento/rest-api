@@ -37,30 +37,29 @@ public class ProfileController {
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
-    //@PreAuthorize("#oauth2.hasScope('server')")
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     public ResponseEntity<Profile> getCurrentProfile(Principal principal) {
         Profile profile = profileService.findByName(principal.getName());
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
-    //@PreAuthorize("#oauth2.hasScope('server')")
     @RequestMapping(path = "/current", method = RequestMethod.PUT)
-    public ResponseEntity<Void> saveProfile(Principal principal,@Valid @RequestBody Profile profile) {
+    public ResponseEntity<Profile> saveProfile(Principal principal,@Valid @RequestBody Profile profile) {
         String name = principal.getName();
-        profileService.saveProfile(name, profile);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Profile updatedProfile = profileService.saveProfile(name, profile);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createProfile(@Valid @RequestBody User user,UriComponentsBuilder ucBuilder) {
-       Profile profile = profileService.create(user);
-        if (profile == null) {
+    public ResponseEntity<Profile> createProfile(@Valid @RequestBody User user,UriComponentsBuilder ucBuilder) {
+        Profile createdProfile = profileService.create(user);
+
+        if (createdProfile == null) {
             System.out.println("Profile already exist");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/{name}").buildAndExpand(profile.getName()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        headers.setLocation(ucBuilder.path("/{name}").buildAndExpand(createdProfile.getName()).toUri());
+        return new ResponseEntity<>(createdProfile , headers, HttpStatus.CREATED);
     }
 }
