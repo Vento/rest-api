@@ -57,6 +57,7 @@ public class ProfileRepositoryTest {
         repository.save(stub);
 
         Profile found = repository.findByName(stub.getName());
+        assertEquals(stub.getName(), found.getName());
         assertEquals(stub.getLastSeen(), found.getLastSeen());
     }
 }
