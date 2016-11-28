@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.vvasiloud.service.profile.client.AuthServiceClient;
 import org.vvasiloud.service.profile.domain.Profile;
 import org.vvasiloud.service.profile.domain.User;
 import org.vvasiloud.service.profile.repository.ProfileRepository;
@@ -11,6 +12,7 @@ import org.vvasiloud.service.profile.service.ProfileServiceImpl;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -24,6 +26,9 @@ public class ProfileServiceTest {
 
     @Mock
     private ProfileRepository repository;
+
+    @Mock
+    private AuthServiceClient authServiceClient;
 
     @Before
     public void setup() {
@@ -53,5 +58,8 @@ public class ProfileServiceTest {
         Profile createdProfile = profileService.create(user);
         assertEquals(user.getUsername(), createdProfile.getName());
         assertNotNull(createdProfile.getLastSeen());
+
+        verify(authServiceClient).createUser(user);
+        verify(repository).save(createdProfile);
     }
 }
