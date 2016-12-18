@@ -1,0 +1,135 @@
+version: '2'
+services:
+#
+# Infrastructure Services
+#
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+        - "5672:5672"
+  elk:
+    build:
+      context: ./logging/
+      dockerfile: Dockerfile
+    ports:
+        - "5601:5601"
+        - "9200:9200"
+        - "5044:5044"  
+#
+# Centralized Configuration
+#
+  config:
+    build:
+      context: ./config/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "8888:8888"
+    links:
+        - elk
+#
+# Service Discovery - Eureka
+#
+  registry:
+    build:
+      context: ./registry/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "8761:8761"
+    links:
+        - elk
+
+#
+# UAA Service
+#	
+  auth-service:
+    build:
+      context: ./auth-service/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "3000:3000"
+    links:
+        - elk
+        - auth-db
+#
+# UAA Database Service
+#
+  auth-db:
+    image: mongo:latest
+    restart: always
+    ports:
+        - "3001:27017"
+    links:
+        - elk
+#
+# Zuul Gateway / Ribbon load balancer
+#	
+  gateway:
+    build:
+      context: ./gateway/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "80:9000"
+    links:
+      - elk
+#
+# Profile Service
+#		
+  profile-service:
+    build:
+      context: ./profile-service/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "1000:1000"
+    links:
+        - elk
+#
+# Profile Database Service
+#
+  profile-db:
+    image: mongo:latest
+    restart: always
+    ports:
+        - "1001:27017"
+    links:
+        - elk
+#
+# Match Service
+#	
+  match-service:
+    build:
+      context: ./match-service/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "2000:2000"
+    links:
+      - elk
+#
+# Match Database Service
+#
+  match-db:
+    image: mongo:latest
+    restart: always
+    ports:
+        - "2001:27017" 
+    links:
+        - elk
+#
+# Hystrix Monitoring
+#		
+  monitoring:
+    build: 
+      context: ./monitoring/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "8989:8989" 
+        - "8080:8080"
+    links:
+        - elk
