@@ -13,3 +13,10 @@ spring:
           initial-interval: 1000
           max-interval: 2000
           max-attempts: 100
+
+---
+spring:
+  profiles: production
+  cloud:
+    config:
+      uri: http://config:8888

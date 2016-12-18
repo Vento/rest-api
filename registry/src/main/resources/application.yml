@@ -22,3 +22,10 @@ eureka:
     fetchRegistry: false
     server:
       waitTimeInMsWhenSyncEmpty: 0
+
+---
+spring:
+  profiles: production
+  cloud:
+    config:
+      uri: http://config:8888

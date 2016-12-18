@@ -19,3 +19,12 @@ security:
       accessTokenUri: http://localhost:3000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
+
+---
+spring:
+  profiles: production
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://auth-service:3000/uaa/oauth/token
