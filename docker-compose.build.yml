@@ -9,7 +9,9 @@ services:
     ports:
         - "5672:5672"
   elk:
-    image: vvasiloud/vento-logging
+    build:
+      context: ./logging/
+      dockerfile: Dockerfile
     ports:
         - "5601:5601"
         - "9200:9200"
@@ -18,7 +20,9 @@ services:
 # Centralized Configuration
 #
   config:
-    image: vvasiloud/vento-config
+    build:
+      context: ./config/
+      dockerfile: Dockerfile
     restart: always
     ports:
         - "8888:8888"
@@ -28,7 +32,9 @@ services:
 # Service Discovery - Eureka
 #
   registry:
-    image: vvasiloud/vento-registry
+    build:
+      context: ./registry/
+      dockerfile: Dockerfile
     restart: always
     ports:
         - "8761:8761"
@@ -39,7 +45,9 @@ services:
 # UAA Service
 #	
   auth-service:
-    image: vvasiloud/vento-auth
+    build:
+      context: ./auth-service/
+      dockerfile: Dockerfile
     restart: always
     ports:
         - "3000:3000"
@@ -60,7 +68,9 @@ services:
 # Zuul Gateway / Ribbon load balancer
 #	
   gateway:
-    image: vvasiloud/vento-gateway
+    build:
+      context: ./gateway/
+      dockerfile: Dockerfile
     restart: always
     ports:
         - "80:9000"
@@ -70,7 +80,9 @@ services:
 # Profile Service
 #		
   profile-service:
-    image: vvasiloud/vento-profile
+    build:
+      context: ./profile-service/
+      dockerfile: Dockerfile
     restart: always
     ports:
         - "1000:1000"
@@ -90,7 +102,9 @@ services:
 # Match Service
 #	
   match-service:
-    image: vvasiloud/vento-match
+    build:
+      context: ./match-service/
+      dockerfile: Dockerfile
     restart: always
     ports:
         - "2000:2000"
@@ -110,7 +124,9 @@ services:
 # Hystrix Monitoring
 #		
   monitoring:
-    image: vvasiloud/vento-monitoring
+    build: 
+      context: ./monitoring/
+      dockerfile: Dockerfile
     restart: always
     ports:
         - "8989:8989" 
