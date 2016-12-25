@@ -14,6 +14,7 @@ after_success:
   - bash <(curl -s https://codecov.io/bash) -t 6f6008b6-9461-4949-b7fe-bfc92156919d
 
 deploy:
+  skip_cleanup: true
   provider: script
   script: scripts/docker.deploy.sh
   on:
