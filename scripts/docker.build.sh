@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export TAG = `if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
 
 if [ "$TRAVIS_BRANCH" == "master" ]; then
 	docker --version
