@@ -13,6 +13,9 @@ before_script:
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t 6f6008b6-9461-4949-b7fe-bfc92156919d
 
+before_deploy:
+  - cd $TRAVIS_BUILD_DIR
+  
 deploy:
   provider: script
   script: chmod +x scripts/docker.deploy.sh && scripts/docker.deploy.sh
