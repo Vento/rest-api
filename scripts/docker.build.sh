@@ -1,5 +1,14 @@
 #!/bin/bash
 
+export DOCKER_AUTH=$DOCKER_USERNAME/vento-auth
+export DOCKER_CONFIG=$DOCKER_USERNAME/vento-config
+export DOCKER_GATEWAY=$DOCKER_USERNAME/vento-gateway
+export DOCKER_LOGGING=$DOCKER_USERNAME/vento-logging
+export DOCKER_MATCH=$DOCKER_USERNAME/vento-match
+export DOCKER_MONITORING=$DOCKER_USERNAME/vento-monitoring
+export DOCKER_PROFILE=$DOCKER_USERNAME/vento-profile
+export DOCKER_REGISTRY=$DOCKER_USERNAME/vento-registry
+export COMMIT=${TRAVIS_COMMIT::6}
 export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
 
 if [ "$TRAVIS_BRANCH" == "master" ]; then
