@@ -13,7 +13,7 @@ export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $
 
 if [ "$TRAVIS_BRANCH" == "master" ]; then
 	docker --version
-	docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+	docker login https://index.docker.io/v1/ -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 	
 	echo ${DOCKER_AUTH}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/auth-service
