@@ -13,47 +13,55 @@ export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $
 
 if [ "$TRAVIS_BRANCH" == "master" ]; then
 	docker --version
-	docker login https://index.docker.io/v1/ -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+	docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 	
 	echo ${DOCKER_AUTH}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/auth-service
 	docker build -t ${DOCKER_AUTH}:${COMMIT} .
-	docker tag ${DOCKER_AUTH}:${COMMIT} ${DOCKER_AUTH}:${TAG} && docker push ${DOCKER_AUTH}:${TAG}
+	docker tag ${DOCKER_AUTH}:${COMMIT} ${DOCKER_AUTH}:${TAG} 
+	docker push ${DOCKER_AUTH}
 
 	echo ${DOCKER_CONFIG}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/config
 	docker build -t ${DOCKER_CONFIG}:${COMMIT} .
-	docker tag ${DOCKER_CONFIG}:${COMMIT} ${DOCKER_CONFIG}:${TAG} && docker push ${DOCKER_CONFIG}:${TAG}
+	docker tag ${DOCKER_CONFIG}:${COMMIT} ${DOCKER_CONFIG}:${TAG} 
+	docker push ${DOCKER_CONFIG}
 
 	echo ${DOCKER_GATEWAY}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/gateway
 	docker build -t ${DOCKER_GATEWAY}:${COMMIT} .
-	docker tag ${DOCKER_GATEWAY}:${COMMIT} ${DOCKER_GATEWAY}:${TAG} && docker push ${DOCKER_GATEWAY}:${TAG}
+	docker tag ${DOCKER_GATEWAY}:${COMMIT} ${DOCKER_GATEWAY}:${TAG} 
+	docker push ${DOCKER_GATEWAY}
 
 	echo ${DOCKER_LOGGING}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/logging
 	docker build -t ${DOCKER_LOGGING}:${COMMIT} .
-	docker tag ${DOCKER_LOGGING}:${COMMIT} ${DOCKER_LOGGING}:${TAG} && docker push ${DOCKER_LOGGING}:${TAG}
+	docker tag ${DOCKER_LOGGING}:${COMMIT} ${DOCKER_LOGGING}:${TAG} 
+	docker push ${DOCKER_LOGGING}
 
 	echo ${DOCKER_MATCH}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/match-service
 	docker build -t ${DOCKER_MATCH}:${COMMIT} .
-	docker tag ${DOCKER_MATCH}:${COMMIT} ${DOCKER_MATCH}:${TAG} && docker push ${DOCKER_MATCH}:${TAG}
+	docker tag ${DOCKER_MATCH}:${COMMIT} ${DOCKER_MATCH}:${TAG} 
+	docker push ${DOCKER_MATCH}
 
 	echo ${DOCKER_MONITORING}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/monitoring
 	docker build -t ${DOCKER_MONITORING}:${COMMIT} .
-	docker tag ${DOCKER_MONITORING}:${COMMIT} ${DOCKER_MONITORING}:${TAG} && docker push ${DOCKER_MONITORING}:${TAG}
+	docker tag ${DOCKER_MONITORING}:${COMMIT} ${DOCKER_MONITORING}:${TAG} 
+	docker push ${DOCKER_MONITORING}
 
 	echo ${DOCKER_PROFILE}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/profile-service
 	docker build -t ${DOCKER_PROFILE}:${COMMIT} .
-	docker tag ${DOCKER_PROFILE}:${COMMIT} ${DOCKER_PROFILE}:${TAG} && docker push ${DOCKER_PROFILE}:${TAG}
+	docker tag ${DOCKER_PROFILE}:${COMMIT} ${DOCKER_PROFILE}:${TAG} 
+	docker push ${DOCKER_PROFILE}
 
 	echo ${DOCKER_REGISTRY}:${TAG}:${COMMIT}
 	cd ${TRAVIS_BUILD_DIR}/registry
 	docker build -t ${DOCKER_REGISTRY}:${COMMIT} .
-	docker tag ${DOCKER_REGISTRY}:${COMMIT} ${DOCKER_REGISTRY}:${TAG} && docker push ${DOCKER_REGISTRY}:${TAG}
+	docker tag ${DOCKER_REGISTRY}:${COMMIT} ${DOCKER_REGISTRY}:${TAG} 
+	docker push ${DOCKER_REGISTRY}
 	
 	cd ${TRAVIS_BUILD_DIR}
 fi
