@@ -23,6 +23,11 @@ security:
 ---
 spring:
   profiles: production
+  data:
+    mongodb:
+      host: profile-db
+      database: vento
+      port: 27017
 
 security:
   oauth2:

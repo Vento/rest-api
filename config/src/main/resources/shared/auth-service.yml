@@ -10,3 +10,11 @@ spring:
   data:
     mongodb:
       database: test
+---
+spring:
+  profiles: production
+  data:
+    mongodb:
+      host: auth-db
+      database: vento
+      port: 27017

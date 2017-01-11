@@ -39,6 +39,8 @@ security:
 ---
 spring:
   profiles: production
+  rabbitmq:
+    host: rabbitmq
 
 eureka:
   client:
