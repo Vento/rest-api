@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.vvasiloud.service.profile.client.AuthServiceClient;
 import org.vvasiloud.service.profile.domain.Profile;
+import org.vvasiloud.service.profile.domain.Record;
+import org.vvasiloud.service.profile.domain.Route;
 import org.vvasiloud.service.profile.domain.User;
 import org.vvasiloud.service.profile.repository.ProfileRepository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Aeon on 14/8/2016.
@@ -73,6 +76,74 @@ public class ProfileServiceImpl implements ProfileService {
 
         return profile;
     }
+	
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Profile saveRoutes(String name, Profile updatedRoutes) {
+        Profile profile = repository.findByName(name);
+        Assert.notNull(profile, "Cannot find profile with name: " + name);
 
+        profile.setRoutes(updatedRoutes.getRoutes());
+        repository.save(profile);
 
+        log.debug("Changes saved for profile: "+ name);
+
+        return profile;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Profile saveRecords(String name, Profile updatedRecords) {
+        Profile profile = repository.findByName(name);
+        Assert.notNull(profile, "Cannot find profile with name: " + name);
+
+        profile.setRecords(updatedRecords.getRecords());
+        repository.save(profile);
+
+        log.debug("Changes saved for profile: "+ name);
+
+        return profile;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Profile createRoute(String name, Route route) {
+        Profile profile = repository.findByName(name);
+        Assert.notNull(profile, "Cannot find profile with name: " + name);
+
+        List<Route> routes = profile.getRoutes();
+        routes.add(route);
+
+        profile.setRoutes(routes);
+        repository.save(profile);
+
+        log.debug("Route saved for profile: "+ name);
+
+        return profile;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Profile createRecord(String name, Record record) {
+        Profile profile = repository.findByName(name);
+        Assert.notNull(profile, "Cannot find profile with name: " + name);
+
+        List<Record> records = profile.getRecords();
+        records.add(record);
+
+        profile.setRecords(records);
+        repository.save(profile);
+
+        log.debug("Record saved for profile: "+ name);
+
+        return profile;
+    }
 }

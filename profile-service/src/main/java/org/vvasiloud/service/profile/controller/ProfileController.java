@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.vvasiloud.service.profile.domain.Profile;
+import org.vvasiloud.service.profile.domain.Record;
+import org.vvasiloud.service.profile.domain.Route;
 import org.vvasiloud.service.profile.domain.User;
 import org.vvasiloud.service.profile.service.ProfileService;
 
@@ -40,6 +42,8 @@ public class ProfileController {
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     public ResponseEntity<Profile> getCurrentProfile(Principal principal) {
         Profile profile = profileService.findByName(principal.getName());
+        String name = principal.getName();
+        Profile updatedProfile = profileService.saveRoutes(name, profile);
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
@@ -47,6 +51,33 @@ public class ProfileController {
     public ResponseEntity<Profile> saveProfile(Principal principal,@Valid @RequestBody Profile profile) {
         String name = principal.getName();
         Profile updatedProfile = profileService.saveProfile(name, profile);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/current/routes", method = RequestMethod.POST)
+    public ResponseEntity<Profile> createRoute(Principal principal,@Valid @RequestBody Route route) {
+        String name = principal.getName();
+        Profile updatedProfile = profileService.createRoute(name, route);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/current/records", method = RequestMethod.POST)
+    public ResponseEntity<Profile> createRecord(Principal principal,@Valid @RequestBody Record record) {
+        String name = principal.getName();
+        Profile updatedProfile = profileService.createRecord(name, record);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    }
+    @RequestMapping(path = "/current/routes", method = RequestMethod.PUT)
+    public ResponseEntity<Profile> saveRoutes(Principal principal,@Valid @RequestBody Profile profile) {
+        String name = principal.getName();
+        Profile updatedProfile = profileService.saveRoutes(name, profile);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    }
+	
+    @RequestMapping(path = "/current/records", method = RequestMethod.PUT)
+    public ResponseEntity<Profile> saveRecords(Principal principal,@Valid @RequestBody Profile profile) {
+        String name = principal.getName();
+        Profile updatedProfile = profileService.saveRecords(name, profile);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
