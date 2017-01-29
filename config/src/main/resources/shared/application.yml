@@ -36,6 +36,8 @@ security:
     resource:
       user-info-uri: http://localhost:3000/uaa/users/current
 
+management:
+  context-path: /
 ---
 spring:
   profiles: production
