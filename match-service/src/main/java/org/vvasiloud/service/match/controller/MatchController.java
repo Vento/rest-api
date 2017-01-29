@@ -35,7 +35,7 @@ public class MatchController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
 
-    @SubscribeMapping("/matches")
+    @SubscribeMapping("/ws")
     public Collection<Match> getMatches() throws Exception {
         log.debug("Getting current matches");
         Collection<Match> matchCollection = matchService.findAllByStatus(Status.WAITING);
