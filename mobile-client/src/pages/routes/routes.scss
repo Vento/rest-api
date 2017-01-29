@@ -1,8 +1,8 @@
 page-routes {
-    .card-md{
+    .card{
         position: relative;
     }
-    .item-md .text-md-secondary{
+    .item .text-md-secondary{
         color: #32db64;
     }
     .button-clear-md-primary{
@@ -10,4 +10,8 @@ page-routes {
         color: #387ef5;
         background-color: transparent;
     }
+    .card-content{
+        background-color: #eee;
+    }
+
 }

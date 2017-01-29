@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
 import { Dashboard } from '../dashboard/dashboard';
 import { Register } from '../register/register';
-import { AuthService } from '../../providers/auth-service/auth-service';
-import { ProfileService } from '../../providers/profile-service/profile-service';
-import { ProfileStorage } from '../../providers/profile-storage/profile-storage';
-import { AuthStorage } from '../../providers/auth-storage/auth-storage';
+import { AuthService } from '../../providers/auth/auth-service';
+import { AuthStorage } from '../../providers/auth/auth-storage';
+import { ProfileService } from '../../providers/profile/profile-service';
+import { ProfileStorage } from '../../providers/profile/profile-storage';
+import { ViewUtilities } from '../../providers/view-utilities/view-utilities';
 
 @Component({
   selector: 'page-login',
@@ -18,24 +17,34 @@ import { AuthStorage } from '../../providers/auth-storage/auth-storage';
 export class Login {
   login: {username?: string, password?: string} = {};
   submitted = false;
-  loader:any;
   backgroundHeight = document.body.clientHeight + 'px' ;
 
   constructor(public navCtrl: NavController, 
-              public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController,
-              public authService: AuthService, 
-              public authStorage: AuthStorage, 
-              public profileService: ProfileService,
-              public profileStorage: ProfileStorage) {
-    this.loader = this.loadingCtrl.create({content: "Please wait..."}); 
+              public viewUtilities: ViewUtilities,
+              private authService: AuthService, 
+              private authStorage: AuthStorage, 
+              private profileService: ProfileService,
+              private profileStorage: ProfileStorage) {
+  }
+
+  ionViewWillEnter() {
+      this.hasValidToken().then((hasToken) => {
+      if (hasToken) this.navCtrl.setRoot(Dashboard); //Skip to Dashboard if user has a valid access token
+    });  
+  }
+  
+  hasValidToken(){
+    return this.authStorage.getTokenExpiration().then((tokenExpiration) => {                               
+      var now = Date.now();
+      return (tokenExpiration.getTime() > now) ? true : false;
+    });
   }
   
   onLogin(form) {
     this.submitted = true;
 
     if (form.valid) {
-      this.presentLoading();  
+      this.viewUtilities.presentLoading();  
       
       this.authService.requestToken(this.login).subscribe(
             authData => {          
@@ -43,49 +52,25 @@ export class Login {
               this.authStorage.setAccessToken(authData.access_token);
               this.authStorage.setRefreshToken(authData.refresh_token);
               this.authStorage.setTokenExpiration(authData.expires_in);
-              console.log(authData.access_token);
-
-              this.profileService.getCurrentProfile().subscribe(
-                    profileData => {          
-                      this.dismissLoading();     
-                      this.navCtrl.setRoot(Dashboard);
-                      this.profileStorage.setProfile(profileData);
-                      console.log(profileData);
-                    },
-                    err  => {
-                      this.dismissLoading(); 
-                      this.presentToast(<any>err);
-                    }
-                    
-                )              
+              this.viewUtilities.dismissLoading();     
+              this.navCtrl.setRoot(Dashboard);            
             },
             err  => {
-              this.dismissLoading(); 
-              this.presentToast(<any>err);
+              this.onError(err);
             }
             
         )
     }
   }
 
-  onRegister() {
-    this.navCtrl.push(Register);
-  }
-
-presentLoading() {
-    this.loader.present();
+onRegister() {
+  this.navCtrl.push(Register);
 }
 
-dismissLoading(){
-    this.loader.dismissAll();
-}
+onError(err) {
+  this.viewUtilities.dismissLoading(); 
+  this.viewUtilities.presentToast(<any>err);
+}  
 
-presentToast(message) {
-  let toast = this.toastCtrl.create({
-    message: message,
-    duration: 3000
-  });
-  toast.present();
-}
 
 }

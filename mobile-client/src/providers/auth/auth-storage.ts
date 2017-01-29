@@ -16,9 +16,7 @@ export class AuthStorage {
   }
 
   getAccessToken() {
-    return this.storage.get('access_token').then((value) => {
-      return value;
-    });
+    return this.storage.get('access_token');
   }
 
   setAccessToken(access_token) {

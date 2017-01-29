@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+import { Http,HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 
 import { MyApp } from './app.component';
 
@@ -11,22 +11,32 @@ import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
 import { Statistics } from '../pages/statistics/statistics';
 import { Routes } from '../pages/routes/routes';
+import { RouteViewPage } from '../pages/route-view/route-view';
 import { Matches } from '../pages/matches/matches';
 import { Settings } from '../pages/settings/settings';
 import { Account } from '../pages/account/account';
 
 import { ApiBase } from '../providers/api-base/api-base';
-import { AuthService } from '../providers/auth-service/auth-service';
-import { ProfileService } from '../providers/profile-service/profile-service';
-import { MatchService } from '../providers/match-service/match-service';
+import { AuthService } from '../providers/auth/auth-service';
+import { ProfileService } from '../providers/profile/profile-service';
+import { MatchService } from '../providers/match/match-service';
 
-import { AuthStorage } from '../providers/auth-storage/auth-storage';
-import { ProfileStorage } from '../providers/profile-storage/profile-storage';
+import { AuthStorage } from '../providers/auth/auth-storage';
+import { ProfileStorage } from '../providers/profile/profile-storage';
+import { SettingsStorage } from '../providers/settings/settings-storage';
+
+import { ViewUtilities } from '../providers/view-utilities/view-utilities';
 
 import { HttpInterceptor } from '../providers/http-interceptor/http-interceptor';
+import { TranslateModule, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
+import { TranslationService } from '../providers/translation/translation-service';
 
-export function httpInterceptor(backend: XHRBackend, options: RequestOptions, authService: AuthService) {
-  return new HttpInterceptor(backend, options, authService);
+export function httpInterceptor(backend: XHRBackend, options: RequestOptions, authService: AuthService, authStorage: AuthStorage) {
+  return new HttpInterceptor(backend, options, authService, authStorage);
+}
+
+export function createTranslateLoader(http: Http) {
+    return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
 
 @NgModule({
@@ -38,12 +48,18 @@ export function httpInterceptor(backend: XHRBackend, options: RequestOptions, au
     Register,
     Statistics,
     Routes,
+    RouteViewPage,
     Matches,
     Settings,
     Account
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: (createTranslateLoader),
+      deps: [Http]
+    })  
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,6 +70,7 @@ export function httpInterceptor(backend: XHRBackend, options: RequestOptions, au
     Register,
     Statistics,
     Routes,
+    RouteViewPage,
     Matches,
     Settings,
     Account
@@ -65,11 +82,14 @@ export function httpInterceptor(backend: XHRBackend, options: RequestOptions, au
     MatchService,
     AuthStorage,
     ProfileStorage,
+    SettingsStorage,
+    ViewUtilities,
+    TranslationService,
     Storage,
     {
       provide: HttpInterceptor,
       useFactory: httpInterceptor,
-      deps: [XHRBackend, RequestOptions, AuthService]
+      deps: [XHRBackend, RequestOptions, AuthService, AuthStorage]
     }
   ]
 })

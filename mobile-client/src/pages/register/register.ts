@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 
-import { LoadingController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import { ViewUtilities } from '../../providers/view-utilities/view-utilities';
 import { NavController } from 'ionic-angular';
 import { Dashboard } from '../dashboard/dashboard';
-import { ProfileService } from '../../providers/profile-service/profile-service';
-import { AuthService } from '../../providers/auth-service/auth-service';
-import { ProfileStorage } from '../../providers/profile-storage/profile-storage';
-import { AuthStorage } from '../../providers/auth-storage/auth-storage';
+import { ProfileService } from '../../providers/profile/profile-service';
+import { ProfileStorage } from '../../providers/profile/profile-storage';
+import { AuthService } from '../../providers/auth/auth-service';
+import { AuthStorage } from '../../providers/auth/auth-storage';
 import { User } from './user.interface';
 
 import {Observable} from 'rxjs/Observable';
@@ -21,16 +20,13 @@ import {Observable} from 'rxjs/Observable';
 export class Register {
   public user: User;
   submitted = false;
-  loader: any;
   
   constructor(public navCtrl: NavController,
-              private loadingCtrl: LoadingController,
-              private toastCtrl: ToastController,
+              private viewUtilities: ViewUtilities,
               private profileService: ProfileService,
               private authService: AuthService,
               private profileStorage: ProfileStorage,
               private authStorage: AuthStorage) {
-    this.loader = this.loadingCtrl.create({ content: "Please wait..." }); 
     this.user = {
       email: '',
       username: '',
@@ -43,11 +39,11 @@ export class Register {
     this.submitted = true;
 
     if (form.valid) {
-      this.presentLoading();
+      this.viewUtilities.presentLoading();
       this.profileService.createProfile(this.user).subscribe(
         profileData => {    
           
-          this.presentToast("Registration Success!");
+          this.viewUtilities.presentToast("Registration Success!");
 
               this.authService.requestToken(this.user).subscribe(
                     authData => {          
@@ -58,40 +54,26 @@ export class Register {
 
                       console.log(authData);
                       console.log(profileData);
-                      this.dismissLoading();     
+                      this.viewUtilities.dismissLoading();     
                       this.navCtrl.setRoot(Dashboard);
                     },
                     err  => {
-                      this.dismissLoading(); 
-                      this.presentToast(<any>err);
+                      this.onError(<any>err);
                     }
                     
                 )
             },
             err  => {
-              this.dismissLoading(); 
-              this.presentToast(<any>err);
+              this.onError(<any>err);
             }
             
         )
-
     }
   }
 
-  presentLoading() {
-    this.loader.present();
-  }
-
-  dismissLoading(){
-      this.loader.dismissAll();
-  }
-
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
+onError(err) {
+  this.viewUtilities.dismissLoading(); 
+  this.viewUtilities.presentToast(<any>err);
+} 
 
 }

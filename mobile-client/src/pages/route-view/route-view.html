@@ -1,0 +1,37 @@
+<!--
+  Generated template for the RouteView page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf='selectedRoute == "new"'>New Route</ion-title>
+    <ion-title *ngIf='selectedRoute != "new"'>{{selectedRoute.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf='selectedRoute == "new"'>
+    <form #routeForm="ngForm" novalidate>
+      <ion-item>
+        <ion-label floating>Name</ion-label>
+        <ion-input [(ngModel)]="route.name"name="routeName" type="text" #routeName="ngModel" spellcheck="false" autocapitalize="off" required></ion-input>
+      </ion-item>
+      <small [hidden]="routeName.valid || submitted == false" color="danger" padding-left>
+				Route name is required
+			</small>
+    </form>
+    <ion-col>
+      <button (click)="saveRoute(routeForm)" ion-button icon-left block>Save</button>
+    </ion-col>
+  </div>
+
+  <div *ngIf='selectedRoute != "new"'>
+    {{selectedRoute.name}}
+  </div>
+
+</ion-content>

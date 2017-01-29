@@ -4,7 +4,7 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
 import { ApiBase } from '../api-base/api-base';
-import { AuthStorage } from '../auth-storage/auth-storage';
+import { AuthStorage } from '../auth/auth-storage';
 
 /*
   Generated class for the AuthService provider.
@@ -46,7 +46,6 @@ export class AuthService extends ApiBase {
       let accessTokenUri = this.apiUrl + "/oauth/token";
       let headers = new Headers({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
       });
 
       let options = new RequestOptions({
@@ -55,12 +54,16 @@ export class AuthService extends ApiBase {
 
       let body = JSON.stringify({});
     
-      return this.http.post(accessTokenUri, body, options)
+      return Observable.fromPromise(this.authStorage.getAccessToken())
+      .flatMap((token) => {
+        headers.append('Authorization',`Bearer ${token}`)
+        return this.http.post(accessTokenUri, body, options)
         .map(res => res.json())
-        .catch(this.handleError)
+        .catch(this.handleError)    
+      });    
   }
 
-    isAuthenticated() {
+  isAuthenticated() {
       let tokenExpiration = this.authStorage.getTokenExpiration();
       return (Number(tokenExpiration) < new Date().getTime());
   }

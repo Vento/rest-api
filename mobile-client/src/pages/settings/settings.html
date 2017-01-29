@@ -3,19 +3,24 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Settings</ion-title>
+    <ion-title>{{ 'SETTINGS' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
  <ion-list>
     <ion-list-header>
-      Settings
+      {{ 'SETTINGS' | translate }}
     </ion-list-header>
-
     <ion-item>
-      <ion-label>Toggle</ion-label>
-      <ion-toggle></ion-toggle>
+      <ion-label>{{ 'LANGUAGE' | translate }}</ion-label>
+      <ion-select [(ngModel)]="settingsModel.selectedLanguage" (ionChange)="saveLanguageOption(settingsModel.selectedLanguage)">
+        <ion-option *ngFor="let option of settingsModel.languages" value="{{option.value}}">{{option.key}}</ion-option>
+      </ion-select>
     </ion-item>
- </ion-list>
+    <ion-item>
+      <ion-label>{{ 'USE_NATIVE_MAPS' | translate }}</ion-label>
+      <ion-toggle [(ngModel)]="settingsModel.useNativeMaps" (ionChange)="saveNativeMapOption(settingsModel.useNativeMaps)"></ion-toggle>
+    </ion-item>
+ </ion-list> 
 </ion-content>
