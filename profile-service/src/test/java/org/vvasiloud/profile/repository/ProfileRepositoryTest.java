@@ -1,5 +1,6 @@
 package org.vvasiloud.profile.repository;
 
+
 import org.apache.tomcat.jni.Time;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ public class ProfileRepositoryTest {
     private Profile _getStubProfile() {
 
         PointRecord pointRecord = new PointRecord();
-        pointRecord.setPoint(new Point(0,0));
+        pointRecord.setPoint(new Point(1.001,1.002));
         pointRecord.setTime(new Time());
 
         Record record = new Record();
@@ -40,7 +41,7 @@ public class ProfileRepositoryTest {
 
         Route route = new Route();
         route.setName("testRoute");
-        route.setPoints(Arrays.asList(new Point(0,0),new Point(1,1)));
+        route.setPoints(Arrays.asList(new Point(1.001,1.002),new Point(2.001,2.002)));
         Profile profile = new Profile();
         profile.setName("testuser");
         profile.setLastSeen(new Date());
@@ -57,6 +58,7 @@ public class ProfileRepositoryTest {
         repository.save(stub);
 
         Profile found = repository.findByName(stub.getName());
+
         assertEquals(stub.getName(), found.getName());
         assertEquals(stub.getLastSeen(), found.getLastSeen());
     }
