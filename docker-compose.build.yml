@@ -9,14 +9,23 @@ services:
     ports:
         - "5672:5672"
         - "15672:15672"
-  elk:
+  elasticsearch:
     build:
-      context: ./logging/
+      context: ./logging/elasticsearch/
+      dockerfile: Dockerfile
+    ports:
+        - "9200:9200"
+        - "9300:9300"  
+  kibana:
+    build:
+      context: ./logging/kibana/
       dockerfile: Dockerfile
     ports:
         - "5601:5601"
-        - "9200:9200"
-        - "5044:5044"  
+  logstash:
+    build:
+      context: ./logging/logstash/
+      dockerfile: Dockerfile
 #
 # Centralized Configuration
 #
