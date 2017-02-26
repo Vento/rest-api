@@ -17,12 +17,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <docker.image.prefix>vento</docker.image.prefix>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -34,6 +28,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <docker.image.prefix>vento</docker.image.prefix>
+        <camel.version>2.18.2</camel.version>
+        <logback.encoder.version>4.8</logback.encoder.version>
+        <jacoco.mvn.version>0.7.7.201606060606</jacoco.mvn.version>
+        <docker.mvn.version>0.4.13</docker.mvn.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -66,7 +70,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-hystrix-stream</artifactId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -96,12 +100,22 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring-boot-starter</artifactId>
-			<version>2.17.0</version>
-		</dependency>		
-		<dependency>
+			<version>${camel.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-rabbitmq</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jackson</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
 		  <groupId>net.logstash.logback</groupId>
 		  <artifactId>logstash-logback-encoder</artifactId>
-		  <version>4.8</version>
+		  <version>${logback.encoder.version}</version>
 		</dependency>
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
@@ -127,7 +141,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.7.201606060606</version>
+                <version>${jacoco.mvn.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -146,7 +160,7 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
+                <version>${docker.mvn.version}</version>
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     <dockerDirectory>/</dockerDirectory>
