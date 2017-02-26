@@ -8,12 +8,22 @@ services:
     restart: always
     ports:
         - "5672:5672"
-  elk:
-    image: vvasiloud/vento-logging
+  elasticsearch:
+    image: vvasiloud/vento-elasticsearch
+    restart: always
+    ports:
+        - "9200:9200"
+        - "9300:9300"  
+  kibana:
+    build:
+    image: vvasiloud/vento-kibana
+    restart: always
     ports:
         - "5601:5601"
-        - "9200:9200"
-        - "5044:5044"  
+  logstash:
+    image: vvasiloud/vento-logstash
+    restart: always
+      dockerfile: Dockerfile
 #
 # Centralized Configuration
 #
@@ -22,8 +32,6 @@ services:
     restart: always
     ports:
         - "8888:8888"
-    links:
-        - elk
 #
 # Service Discovery - Eureka
 #
@@ -32,9 +40,6 @@ services:
     restart: always
     ports:
         - "8761:8761"
-    links:
-        - elk
-
 #
 # UAA Service
 #	
@@ -43,9 +48,6 @@ services:
     restart: always
     ports:
         - "3000:3000"
-    links:
-        - elk
-        - auth-db
 #
 # UAA Database Service
 #
@@ -54,8 +56,6 @@ services:
     restart: always
     ports:
         - "3001:27017"
-    links:
-        - elk
 #
 # Zuul Gateway / Ribbon load balancer
 #	
@@ -64,8 +64,6 @@ services:
     restart: always
     ports:
         - "80:9000"
-    links:
-      - elk
 #
 # Profile Service
 #		
@@ -74,8 +72,6 @@ services:
     restart: always
     ports:
         - "1000:1000"
-    links:
-        - elk
 #
 # Profile Database Service
 #
@@ -84,8 +80,6 @@ services:
     restart: always
     ports:
         - "1001:27017"
-    links:
-        - elk
 #
 # Match Service
 #	
@@ -94,8 +88,6 @@ services:
     restart: always
     ports:
         - "2000:2000"
-    links:
-      - elk
 #
 # Match Database Service
 #
@@ -104,8 +96,6 @@ services:
     restart: always
     ports:
         - "2001:27017" 
-    links:
-        - elk
 #
 # Hystrix Monitoring
 #		
@@ -115,5 +105,12 @@ services:
     ports:
         - "8989:8989" 
         - "8080:8080"
-    links:
-        - elk
+		
+#
+# Zipkin Tracing
+#
+  monitoring:
+    image: vvasiloud/vento-tracing
+    restart: always
+    ports:
+        - "9411:9411"

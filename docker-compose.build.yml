@@ -13,6 +13,7 @@ services:
     build:
       context: ./logging/elasticsearch/
       dockerfile: Dockerfile
+    restart: always
     ports:
         - "9200:9200"
         - "9300:9300"  
@@ -20,11 +21,13 @@ services:
     build:
       context: ./logging/kibana/
       dockerfile: Dockerfile
+    restart: always
     ports:
         - "5601:5601"
   logstash:
     build:
       context: ./logging/logstash/
+    restart: always
       dockerfile: Dockerfile
 #
 # Centralized Configuration
@@ -131,3 +134,14 @@ services:
     ports:
         - "8989:8989" 
         - "8080:8080"
+		
+#
+# Zipkin Tracing
+#
+  monitoring:
+    build: 
+      context: ./monitoring/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+        - "9411:9411" 

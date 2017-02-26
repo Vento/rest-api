@@ -1,0 +1,22 @@
+# ===================================================================
+# Tracing Service base configuration
+# ===================================================================
+
+spring:
+  application:
+    name: tracing
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+          initial-interval: 1000
+          max-interval: 2000
+          max-attempts: 100
+
+---
+spring:
+  profiles: production
+  cloud:
+    config:
+      uri: http://config:8888
