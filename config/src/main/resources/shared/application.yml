@@ -37,7 +37,17 @@ security:
       user-info-uri: http://localhost:3000/uaa/users/current
 
 management:
-  context-path: /
+  context-path: /manage
+  security:
+    enabled: false
+
+camel:
+  connection:
+    rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
 ---
 spring:
   profiles: production
@@ -53,3 +63,11 @@ security:
   oauth2:
     resource:
       user-info-uri: http://auth-service:3000/uaa/users/current
+
+camel:
+  connection:
+    rabbitmq:
+      host: rabbitmq
+      port: 5672
+      username: guest
+      password: guest
