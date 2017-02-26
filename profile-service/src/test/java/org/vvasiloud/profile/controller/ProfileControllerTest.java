@@ -76,7 +76,7 @@ public class ProfileControllerTest {
 
         when(profileService.findByName(profile.getName())).thenReturn(profile);
 
-        mockMvc.perform(get("/current").principal(new UserPrincipal(profile.getName())))
+        mockMvc.perform(get("/me").principal(new UserPrincipal(profile.getName())))
                 .andExpect(jsonPath("$.name").value(profile.getName()))
                 .andExpect(status().isOk());
     }

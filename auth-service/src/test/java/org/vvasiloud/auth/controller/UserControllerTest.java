@@ -71,7 +71,7 @@ public class UserControllerTest {
 
     @Test
     public void returnCurrentUser() throws Exception {
-        mockMvc.perform(get("/users/current").principal(new UserPrincipal("Username")))
+        mockMvc.perform(get("/users/me").principal(new UserPrincipal("Username")))
                 .andExpect(jsonPath("$.name").value("Username"))
                 .andExpect(status().isOk());
     }
