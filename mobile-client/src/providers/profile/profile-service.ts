@@ -56,7 +56,7 @@ export class ProfileService extends ApiBase {
       headers: headers
     });
  
-    let userInfoUri = this.apiUrl + "/current";
+    let userInfoUri = this.apiUrl + "/me";
     return Observable.fromPromise(this.authStorage.getAccessToken())
       .flatMap((token) => {
         headers.append('Authorization',`Bearer ${token}`)
@@ -93,7 +93,7 @@ export class ProfileService extends ApiBase {
   updateProfile(updatedProfile) {
 
     let token = this.authStorage.getAccessToken();
-    let updateProfileUri = this.apiUrl + "/current";
+    let updateProfileUri = this.apiUrl + "/me";
 
     let headers = new Headers({
       'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ export class ProfileService extends ApiBase {
     createRoute(route) {
 
     let token = this.authStorage.getAccessToken();
-    let createRoutesUri = this.apiUrl + "/current/routes";
+    let createRoutesUri = this.apiUrl + "/me/routes";
 
     let headers = new Headers({
       'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ export class ProfileService extends ApiBase {
   createRecord(record) {
 
     let token = this.authStorage.getAccessToken();
-    let createRecordUri = this.apiUrl + "/current/records";
+    let createRecordUri = this.apiUrl + "/me/records";
 
     let headers = new Headers({
       'Content-Type': 'application/json'
