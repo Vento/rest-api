@@ -10,6 +10,12 @@ spring:
   data:
     mongodb:
       database: test
+
+camel:
+  endpoint:
+    auth:
+      userProfileUri: "rabbitmq:///vento.service.profile/users?connectionFactory=#customConnectionFactory"
+      userAuthUri: "rabbitmq:///vento.service.auth/users?connectionFactory=#customConnectionFactory"
 ---
 spring:
   profiles: production

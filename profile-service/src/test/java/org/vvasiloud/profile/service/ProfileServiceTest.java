@@ -4,10 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.vvasiloud.service.profile.client.AuthServiceClient;
 import org.vvasiloud.service.profile.domain.Profile;
 import org.vvasiloud.service.profile.domain.User;
 import org.vvasiloud.service.profile.repository.ProfileRepository;
+import org.vvasiloud.service.profile.service.AuthService;
 import org.vvasiloud.service.profile.service.ProfileServiceImpl;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -28,7 +28,7 @@ public class ProfileServiceTest {
     private ProfileRepository repository;
 
     @Mock
-    private AuthServiceClient authServiceClient;
+    private AuthService authService;
 
     @Before
     public void setup() {
@@ -59,7 +59,30 @@ public class ProfileServiceTest {
         assertEquals(user.getUsername(), createdProfile.getName());
         assertNotNull(createdProfile.getLastSeen());
 
-        verify(authServiceClient).createUser(user);
+        verify(authService).createUser(user);
         verify(repository).save(createdProfile);
     }
+
+   /* @Test
+    public void shouldCreateRoute() {
+
+        final Route route = new Route();
+        route.setName("testRoute");
+        route.setPoints(Arrays.asList(new Point(1.001,1.002),new Point(2.001,2.002)));
+
+        Profile profile = new Profile();
+        profile.setName("testUser");
+        profile.setLastSeen(new Date());
+
+        when(profileService.createRoute(profile.getName(),any(Route.class))).thenReturn(profile);
+        //when(profileService.findByName(profile.getName())).thenReturn(profile);
+        //when(repository.findByName(profile.getName())).thenReturn(profile);
+
+        Profile updatedProfile = profileService.createRoute(profile.getName(),route);
+        assertEquals(route.getName(), updatedProfile.getRoutes().get(0).getName());
+        //assertNotNull(updatedProfile.getRoutes().get(0).getPoints());
+
+        //verify(repository).save(profileStub);
+    }
+    */
 }

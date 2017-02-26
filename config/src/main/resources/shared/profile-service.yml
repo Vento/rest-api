@@ -20,6 +20,11 @@ security:
       grant-type: client_credentials
       scope: server
 
+camel:
+  endpoint:
+    auth:
+      userProfileUri: "rabbitmq:///vento.service.profile/users?connectionFactory=#customConnectionFactory"
+      userAuthUri: "rabbitmq:///vento.service.auth/users?connectionFactory=#customConnectionFactory"
 ---
 spring:
   profiles: production

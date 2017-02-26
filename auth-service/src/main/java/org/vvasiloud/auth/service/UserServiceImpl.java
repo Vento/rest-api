@@ -1,5 +1,6 @@
 package org.vvasiloud.auth.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
+    @HystrixCommand
     @Override
     public void create(User user) {
 

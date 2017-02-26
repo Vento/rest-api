@@ -8,3 +8,9 @@ spring:
     mongodb:
       database: vento_authetestdb
       port: 0
+
+camel:
+  endpoint:
+    auth:
+      producerUri: "rabbitmq://vento.service.auth/users"
+      consumerUri: "rabbitmq://vento.service.profile/users"

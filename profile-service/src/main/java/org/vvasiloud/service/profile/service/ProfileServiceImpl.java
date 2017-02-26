@@ -1,11 +1,11 @@
 package org.vvasiloud.service.profile.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.vvasiloud.service.profile.client.AuthServiceClient;
 import org.vvasiloud.service.profile.domain.Profile;
 import org.vvasiloud.service.profile.domain.Record;
 import org.vvasiloud.service.profile.domain.Route;
@@ -24,7 +24,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private AuthServiceClient authClient;
+    private AuthService authService;
 
     @Autowired
     private ProfileRepository repository;
@@ -32,6 +32,7 @@ public class ProfileServiceImpl implements ProfileService {
     /**
      * {@inheritDoc}
      */
+    @HystrixCommand
     @Override
     public Profile findByName(String profileName) {
         Assert.hasLength(profileName);
@@ -41,13 +42,14 @@ public class ProfileServiceImpl implements ProfileService {
     /**
      * {@inheritDoc}
      */
+    @HystrixCommand
     @Override
     public Profile create(User user) {
 
         Profile existing = repository.findByName(user.getUsername());
         Assert.isNull(existing, "profile already exists: " + user.getUsername());
 
-        authClient.createUser(user);
+        authService.createUser(user);
 
         Profile profile = new Profile();
         profile.setName(user.getUsername());
@@ -62,6 +64,7 @@ public class ProfileServiceImpl implements ProfileService {
     /**
      * {@inheritDoc}
      */
+    @HystrixCommand
     @Override
     public Profile saveProfile(String name, Profile updatedProfile) {
         Profile profile = repository.findByName(name);
@@ -80,6 +83,7 @@ public class ProfileServiceImpl implements ProfileService {
     /**
      * {@inheritDoc}
      */
+    @HystrixCommand
     @Override
     public Profile saveRoutes(String name, Profile updatedRoutes) {
         Profile profile = repository.findByName(name);
@@ -96,6 +100,7 @@ public class ProfileServiceImpl implements ProfileService {
     /**
      * {@inheritDoc}
      */
+    @HystrixCommand
     @Override
     public Profile saveRecords(String name, Profile updatedRecords) {
         Profile profile = repository.findByName(name);
@@ -112,6 +117,7 @@ public class ProfileServiceImpl implements ProfileService {
     /**
      * {@inheritDoc}
      */
+    @HystrixCommand
     @Override
     public Profile createRoute(String name, Route route) {
         Profile profile = repository.findByName(name);
@@ -131,6 +137,7 @@ public class ProfileServiceImpl implements ProfileService {
     /**
      * {@inheritDoc}
      */
+    @HystrixCommand
     @Override
     public Profile createRecord(String name, Record record) {
         Profile profile = repository.findByName(name);
