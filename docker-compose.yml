@@ -15,7 +15,6 @@ services:
         - "9200:9200"
         - "9300:9300"  
   kibana:
-    build:
     image: vvasiloud/vento-kibana
     restart: always
     ports:
@@ -23,7 +22,7 @@ services:
   logstash:
     image: vvasiloud/vento-logstash
     restart: always
-      dockerfile: Dockerfile
+	
 #
 # Centralized Configuration
 #
