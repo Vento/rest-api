@@ -139,9 +139,9 @@ services:
 #
 # Zipkin Tracing
 #
-  monitoring:
+  tracing:
     build: 
-      context: ./monitoring/
+      context: ./tracing/
       dockerfile: Dockerfile
     restart: always
     ports:

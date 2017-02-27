@@ -108,7 +108,7 @@ services:
 #
 # Zipkin Tracing
 #
-  monitoring:
+  tracing:
     image: vvasiloud/vento-tracing
     restart: always
     ports:
