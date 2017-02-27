@@ -12,5 +12,5 @@ spring:
 camel:
   endpoint:
     auth:
-      producerUri: "rabbitmq://vento.service.profile/users"
-      consumerUri: "rabbitmq://vento.service.auth/users"
+      userProfileUri: "rabbitmq://vento.service.profile/users"
+      userAuthUri: "rabbitmq://vento.service.auth/users"
