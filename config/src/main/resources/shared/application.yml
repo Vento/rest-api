@@ -34,7 +34,10 @@ eureka:
 security:
   oauth2:
     resource:
+      filter-order: 3
       user-info-uri: http://localhost:3000/uaa/users/me
+    client:
+      accessTokenUri: http://localhost:3000/uaa/oauth/token
 
 management:
   context-path: /manage
@@ -63,7 +66,8 @@ security:
   oauth2:
     resource:
       user-info-uri: http://auth-service:3000/uaa/users/me
-
+    client:
+      accessTokenUri: http://auth-service:3000/uaa/oauth/token
 camel:
   connection:
     rabbitmq:
