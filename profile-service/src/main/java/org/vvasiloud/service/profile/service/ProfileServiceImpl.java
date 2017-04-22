@@ -12,6 +12,7 @@ import org.vvasiloud.service.profile.domain.Route;
 import org.vvasiloud.service.profile.domain.User;
 import org.vvasiloud.service.profile.repository.ProfileRepository;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,9 @@ public class ProfileServiceImpl implements ProfileService {
     @HystrixCommand
     @Override
     public Profile findByName(String profileName) {
-        Assert.hasLength(profileName);
+        if (profileName.isEmpty())
+            throw new IllegalArgumentException("Username empty");
+
         return repository.findByName(profileName);
     }
 
@@ -124,7 +127,11 @@ public class ProfileServiceImpl implements ProfileService {
         Assert.notNull(profile, "Cannot find profile with name: " + name);
 
         List<Route> routes = profile.getRoutes();
-        routes.add(route);
+        if(profile.getRoutes().isEmpty()){
+            profile.setRoutes(Arrays.asList());
+        }else{
+            routes.add(route);
+        }
 
         profile.setRoutes(routes);
         repository.save(profile);
