@@ -1,36 +1,73 @@
-version: '2'
+version: '3'
 services:
 #
 # Infrastructure Services
 #
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:3-management-alpine
     restart: always
     ports:
         - "5672:5672"
+        - "15672:15672"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+        - "6379:6379"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
   elasticsearch:
     image: vvasiloud/vento-elasticsearch
     restart: always
     ports:
         - "9200:9200"
-        - "9300:9300"  
+        - "9300:9300"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
   kibana:
     image: vvasiloud/vento-kibana
     restart: always
     ports:
         - "5601:5601"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
   logstash:
+    build:
     image: vvasiloud/vento-logstash
     restart: always
-	
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
 #
 # Centralized Configuration
 #
   config:
+    build:
     image: vvasiloud/vento-config
     restart: always
     ports:
         - "8888:8888"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
 #
 # Service Discovery - Eureka
 #
@@ -39,14 +76,43 @@ services:
     restart: always
     ports:
         - "8761:8761"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
 #
 # UAA Service
-#	
+#
   auth-service:
     image: vvasiloud/vento-auth
     restart: always
     ports:
         - "3000:3000"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
+    depends_on:
+      - auth-db
+      - rabbitmq
 #
 # UAA Database Service
 #
@@ -55,22 +121,54 @@ services:
     restart: always
     ports:
         - "3001:27017"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
 #
 # Zuul Gateway / Ribbon load balancer
-#	
+#
   gateway:
     image: vvasiloud/vento-gateway
     restart: always
     ports:
         - "80:9000"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
 #
 # Profile Service
-#		
+#
   profile-service:
     image: vvasiloud/vento-profile
     restart: always
     ports:
         - "1000:1000"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
+    depends_on:
+      - profile-db
+      - rabbitmq
 #
 # Profile Database Service
 #
@@ -79,37 +177,71 @@ services:
     restart: always
     ports:
         - "1001:27017"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
 #
 # Match Service
-#	
+#
   match-service:
     image: vvasiloud/vento-match
     restart: always
     ports:
         - "2000:2000"
-#
-# Match Database Service
-#
-  match-db:
-    image: mongo:latest
-    restart: always
-    ports:
-        - "2001:27017" 
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
+    depends_on:
+      - redis
+      - rabbitmq
+
 #
 # Hystrix Monitoring
-#		
+#
   monitoring:
     image: vvasiloud/vento-monitoring
     restart: always
     ports:
         - "8989:8989" 
         - "8080:8080"
-
-#
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
+    depends_on:
+      - rabbitmq
 # Zipkin Tracing
 #
   tracing:
     image: vvasiloud/vento-tracing
     restart: always
     ports:
-        - "9411:9411"
+        - "9411:9411" 
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+      placement:
+        constraints: [node.role == manager]
+    depends_on:
+      - rabbitmq
