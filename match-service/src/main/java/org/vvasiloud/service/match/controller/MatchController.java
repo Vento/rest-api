@@ -3,21 +3,21 @@ package org.vvasiloud.service.match.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.data.geo.Point;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.vvasiloud.service.match.domain.JoinMessage;
-import org.vvasiloud.service.match.domain.Match;
-import org.vvasiloud.service.match.domain.Status;
-import org.vvasiloud.service.match.service.MatchService;
+import org.vvasiloud.service.match.domain.Location;
+import org.vvasiloud.service.match.service.LocationService;
 
 import java.security.Principal;
-import java.util.Collection;
+import java.util.Set;
 
 
 /**
@@ -28,25 +28,27 @@ public class MatchController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private MatchService matchService;
 
     @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    private LocationService locationService;
 
-
-    @SubscribeMapping("/ws")
-    public Collection<Match> getMatches() throws Exception {
-        log.debug("Getting current matches");
-        Collection<Match> matchCollection = matchService.findAllByStatus(Status.WAITING);
-        return matchCollection;
+    @MessageMapping("/track")
+    @SendTo("/topic/locations")
+    public Location sendLocation(Point position, Principal principal) throws Exception {
+        Location location = new Location(principal.getName(), position);
+        return locationService.sendLocation(location);
     }
 
-    @MessageMapping("/match.{matchId}")
-    public void joinMatchMessage (@Payload JoinMessage message, @DestinationVariable("matchId") String matchId, Principal principal) {
+    @SubscribeMapping("/locations")
+    public Set<Location> getClosestLocations(Principal principal) throws Exception {
+        Set<Location> locationCollection = locationService.findGeoRadiusByMember(principal.getName());
+        return locationCollection;
+    }
 
-        message.setUsername(principal.getName());
-        simpMessagingTemplate.convertAndSend("/topic/messages/match.{matchId}", message);
+    @RequestMapping(path = "locations1/{username}", method = RequestMethod.GET)
+    public Set<Location> getClosestLocations1(@PathVariable String username) throws Exception {
+        Set<Location> locationCollection = locationService.findGeoRadiusByMember(username);
+        return locationCollection;
     }
 
     @MessageExceptionHandler
