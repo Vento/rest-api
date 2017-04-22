@@ -6,6 +6,8 @@ jdk: oraclejdk8
 services:
   - mongodb
   - docker
+  - redis-server
+  - rabbitmq
 
 before_script:
   - env > .env
