@@ -14,7 +14,7 @@ public class Location {
     @Indexed
     private String username;
 
-    @GeoIndexed
+    //@GeoIndexed
     private Point position;
 
     public Location(String username, Point position) {
