@@ -3,6 +3,7 @@ export class SettingsModel{
     languages: any[];
     selectedLanguage: any;
     useNativeMaps: boolean = false;
+    pushNotifications: boolean = true;
     
     constructor() {
         this.languages = [

@@ -7,5 +7,6 @@
 	"WELCOME_BACK" : "Welcome back",
 	"LAST_VISIT" : "Your last visit was at",
 	"NO_ROUTES_YET" : "No routes yet !",
-	"NO_RECORDS_YET" : "No records yet !"
+	"NO_RECORDS_YET" : "No records yet !",
+	"PUSH_NOTIFICATIONS" : "Push notifications"
 }

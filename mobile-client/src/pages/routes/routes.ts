@@ -12,7 +12,7 @@ import { ViewUtilities } from '../../providers/view-utilities/view-utilities';
 })
 export class Routes {
   routeModel?: RouteModel;
-  loader: any;
+  hasDataClass?: any = "no-data-bg";
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -22,12 +22,13 @@ export class Routes {
   }
 
   ionViewWillEnter() {
-    this.loadDashboard();
+    this.loadData();
   }
   
-  private loadDashboard() {
-    this.profileService.getCurrentProfile().subscribe((profileData) => {        
-            this.routeModel.routes = profileData.routes;
+  private loadData() {
+    this.profileService.getCurrentProfile().subscribe((profileData) => {   
+      if (profileData.routes !== null && profileData.routes.length !== 0) this.hasDataClass = "";
+      this.routeModel.routes = profileData.routes;
           },
           err => {
             this.viewUtilities.onError(err);

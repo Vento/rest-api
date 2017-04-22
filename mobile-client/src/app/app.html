@@ -1,12 +1,13 @@
 <ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <ion-content>
     <ion-list>
+      <ion-item>
+        <ion-avatar item-left>
+             <img class="avatar" src="http://www.gravatar.com/avatar?d=mm&s=140">
+      </ion-avatar>
+        <h2 color="primary">Username</h2>
+      </ion-item>
       <button menuClose ion-item *ngFor="let p of appPages" (click)="openPage(p)">
         <ion-icon item-left class="{{p.icon}}"></ion-icon>
         {{p.title}}

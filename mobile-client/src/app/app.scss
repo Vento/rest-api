@@ -15,3 +15,60 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.toolbar-background{
+    background: #4A4A4A;
+}
+
+ion-navbar{
+    ion-icon,.toolbar-title{
+        color: #eee;
+    }
+}
+.no-data-bg{
+    .scroll-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        strong{
+            font-weight: bold;
+        }
+        overflow: hidden;
+        margin-top: 0 !important;
+    }
+}
+.no-data-notice > i:before{
+    font-size: 12em;
+}
+
+cntstyle {
+background-color: #06c;
+// background: linear-gradient(to bottom, #06c , white);
+}
+.cntstyle .list{
+background-color: transparent;
+}
+.cntstyle .item, .cntstyle .item-content, .cntstyle .item-complex{
+background-color: transparent;
+color: #FFFFFF;
+border-color: rgba(0,0,0,0);
+}
+/*.menu-inner{
+    background: none;
+    background-image: url(../assets/img/intro.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    background-blend-mode: multiply;
+    .content,.item{
+        background: none;
+    }
+    .list .item-block .item-inner{
+        border: 0;
+        color: #eee;
+    }
+    ion-list ion-icon{
+        color: #eee;
+    }
+
+}*/

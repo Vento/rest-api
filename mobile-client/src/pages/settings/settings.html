@@ -9,9 +9,9 @@
 
 <ion-content padding>
  <ion-list>
-    <ion-list-header>
+    <!--<ion-list-header>
       {{ 'SETTINGS' | translate }}
-    </ion-list-header>
+    </ion-list-header>-->
     <ion-item>
       <ion-label>{{ 'LANGUAGE' | translate }}</ion-label>
       <ion-select [(ngModel)]="settingsModel.selectedLanguage" (ionChange)="saveLanguageOption(settingsModel.selectedLanguage)">
@@ -19,8 +19,8 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>{{ 'USE_NATIVE_MAPS' | translate }}</ion-label>
-      <ion-toggle [(ngModel)]="settingsModel.useNativeMaps" (ionChange)="saveNativeMapOption(settingsModel.useNativeMaps)"></ion-toggle>
+      <ion-label>{{ 'PUSH_NOTIFICATIONS' | translate }}</ion-label>
+      <ion-toggle [(ngModel)]="settingsModel.pushNotifications" (ionChange)="savePushNotificationsOption(settingsModel.pushNotifications)"></ion-toggle>
     </ion-item>
  </ion-list> 
 </ion-content>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule  } from '@ionic/storage';
 import { Http,HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 
 import { MyApp } from './app.component';
@@ -12,7 +12,7 @@ import { Register } from '../pages/register/register';
 import { Statistics } from '../pages/statistics/statistics';
 import { Routes } from '../pages/routes/routes';
 import { RouteViewPage } from '../pages/route-view/route-view';
-import { Matches } from '../pages/matches/matches';
+import { Matches, MatchPopoverPage } from '../pages/matches/matches';
 import { Settings } from '../pages/settings/settings';
 import { Account } from '../pages/account/account';
 
@@ -30,6 +30,12 @@ import { ViewUtilities } from '../providers/view-utilities/view-utilities';
 import { HttpInterceptor } from '../providers/http-interceptor/http-interceptor';
 import { TranslateModule, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { TranslationService } from '../providers/translation/translation-service';
+import { ConnectivityService } from '../providers/connectivity-service';
+import { LocationTrackerService } from '../providers/location-tracker-service';
+
+
+import { GoogleMapComponent } from '../components/googlemaps/googlemaps-component';
+
 
 export function httpInterceptor(backend: XHRBackend, options: RequestOptions, authService: AuthService, authStorage: AuthStorage) {
   return new HttpInterceptor(backend, options, authService, authStorage);
@@ -50,11 +56,17 @@ export function createTranslateLoader(http: Http) {
     Routes,
     RouteViewPage,
     Matches,
+    MatchPopoverPage,
     Settings,
-    Account
+    Account,
+    GoogleMapComponent
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      tabsPlacement: 'top', 
+      menuType: 'push'
+    }),
+    IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),
@@ -85,7 +97,8 @@ export function createTranslateLoader(http: Http) {
     SettingsStorage,
     ViewUtilities,
     TranslationService,
-    Storage,
+    ConnectivityService,
+    LocationTrackerService,
     {
       provide: HttpInterceptor,
       useFactory: httpInterceptor,

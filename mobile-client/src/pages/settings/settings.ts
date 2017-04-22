@@ -22,7 +22,7 @@ export class Settings {
   ionViewWillEnter() {
     this.settingsStorage.getSettings().subscribe(data => {
       this.settingsModel.selectedLanguage = data[0];
-      this.settingsModel.useNativeMaps = data[1];
+      this.settingsModel.pushNotifications = data[1];
       this.translationService.loadLanguagePreferences();
     });
   }
@@ -30,9 +30,9 @@ export class Settings {
   saveLanguageOption(selectedItem) {
     this.settingsStorage.setLanguage(selectedItem);
     this.navCtrl.push(Settings);
-  }  
+  }   
 
-  saveNativeMapOption(selectedItem) {
-    this.settingsStorage.setNativeMaps(selectedItem);
-  }    
+  savePushNotificationsOption(selectedItem) {
+    this.settingsStorage.setPushNotifications(selectedItem);
+  } 
 }

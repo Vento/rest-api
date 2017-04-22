@@ -21,7 +21,7 @@ export class SettingsStorage {
   getSettings() {
       return Observable.forkJoin([
           Observable.fromPromise(this.getLanguage()),
-          Observable.fromPromise(this.getNativeMaps())
+          Observable.fromPromise(this.getPushNotifications())
       ]);
   }
     
@@ -34,14 +34,14 @@ export class SettingsStorage {
   setLanguage(option) {
     this.storage.set('settings.language', option);
   }
-
-  getNativeMaps() {
-    return this.storage.get('settings.nativemaps').then((value) => {
+  
+  getPushNotifications() {
+    return this.storage.get('settings.pushnotifications').then((value) => {
       return value;
-    });
+    });    
   }
 
-  setNativeMaps(option) {
-    this.storage.set('settings.nativemaps', option);
-  }  
+  setPushNotifications(option) {
+    this.storage.set('settings.pushnotifications', option);
+  }
 }

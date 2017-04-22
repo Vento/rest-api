@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { Splashscreen, StatusBar } from 'ionic-native';
+import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
 
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { History } from '../pages/history/history';
@@ -10,6 +12,8 @@ import { Routes } from '../pages/routes/routes';
 import { Matches } from '../pages/matches/matches';
 import { Settings } from '../pages/settings/settings';
 import { Account } from '../pages/account/account';
+import { DashboardTabs } from '../pages/dashboard/tabs/dashboard-tabs';
+import { ConnectivityService } from '../providers/connectivity-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +29,9 @@ export class MyApp {
   constructor(
     public events: Events,
     public menu: MenuController,
-    public platform: Platform) {
+    public platform: Platform,
+    public storage: Storage,
+    public connectivityService: ConnectivityService) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -51,12 +57,28 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      this.addConnectivityListeners();
     });
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
+    if (page.logsOut) this.logout().then(data => { this.nav.setRoot(page.component); } );
     this.nav.setRoot(page.component);
+  }
+  logout() {
+      return Promise.all([
+          Observable.fromPromise(this.storage.remove('profile')),
+          Observable.fromPromise(this.storage.remove('access_token')),
+          Observable.fromPromise(this.storage.remove('refresh_token'))
+      ]);
+  }
+  onMenuToggle(event) {
+    (this.menu.isOpen()) ? this.events.publish('sidebar:open') : this.events.publish('sidebar:close');
+  }
+
+  addConnectivityListeners() {
+    this.connectivityService.addConnectivityListeners();
   }
 }

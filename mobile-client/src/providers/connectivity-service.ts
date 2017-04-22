@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Network } from 'ionic-native';
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 
 declare var Connection;
 
@@ -14,25 +14,41 @@ declare var Connection;
 @Injectable()
 export class ConnectivityService {
 
-onDevice: boolean;
+  private onDevice: boolean;
+  private connectWatch: any; 
+  private disconnectWatch: any;
 
-  constructor(public platform: Platform){
+  constructor(private platform: Platform, private events: Events){
     this.onDevice = this.platform.is('cordova');
   }
 
   isOnline(): boolean {
-    if(this.onDevice && Network.connection){
-      return Network.connection !== Connection.NONE;
+    if(this.onDevice && Network.type){
+      return Network.type !== Connection.NONE;
     } else {
       return navigator.onLine; 
     }
   }
 
   isOffline(): boolean {
-    if(this.onDevice && Network.connection){
-      return Network.connection === Connection.NONE;
+    if(this.onDevice && Network.type){
+      return Network.type === Connection.NONE;
     } else {
       return !navigator.onLine;   
     }
+  }
+
+  addConnectivityListeners(){
+    this.connectWatch = Network.onConnect().subscribe(con => {
+      this.events.publish('connectivity:connected');
+    });    
+    this.disconnectWatch = Network.onDisconnect().subscribe(con => {
+      this.events.publish('connectivity:disconnected');
+    });  
+  }
+
+  removeConnectivityListeners() {
+    this.connectWatch.unsubscribe();
+    this.disconnectWatch.unsubscribe();     
   }
 }

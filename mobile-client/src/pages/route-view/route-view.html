@@ -15,7 +15,11 @@
 
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div *ngIf='selectedRoute == "new"'>
+    <div id="map"></div>
     <form #routeForm="ngForm" novalidate>
       <ion-item>
         <ion-label floating>Name</ion-label>
