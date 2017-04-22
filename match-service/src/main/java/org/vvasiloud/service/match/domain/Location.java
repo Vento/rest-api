@@ -3,6 +3,7 @@ package org.vvasiloud.service.match.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.GeoIndexed;
 import org.springframework.data.redis.core.index.Indexed;
 
 @RedisHash("locations")
@@ -14,7 +15,7 @@ public class Location {
     @Indexed
     private String username;
 
-    //@GeoIndexed
+    @GeoIndexed
     private Point position;
 
     public Location(String username, Point position) {

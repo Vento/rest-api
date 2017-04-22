@@ -2,13 +2,22 @@ package org.vvasiloud.profile.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.geo.Point;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.vvasiloud.service.profile.ProfileApplication;
 import org.vvasiloud.service.profile.domain.Profile;
+import org.vvasiloud.service.profile.domain.Route;
 import org.vvasiloud.service.profile.domain.User;
 import org.vvasiloud.service.profile.repository.ProfileRepository;
 import org.vvasiloud.service.profile.service.AuthService;
 import org.vvasiloud.service.profile.service.ProfileServiceImpl;
+
+import java.util.Arrays;
+import java.util.Date;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -19,6 +28,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 /**
  * Created by Aeon on 10/9/2016.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ProfileApplication.class)
 public class ProfileServiceTest {
 
     @InjectMocks
@@ -63,26 +74,48 @@ public class ProfileServiceTest {
         verify(repository).save(createdProfile);
     }
 
-   /* @Test
+    @Test
+    public void shouldSaveRoutes() {
+
+        final Route route = new Route();
+        route.setName("testRoute");
+        route.setPoints(Arrays.asList(new Point(1.001,1.002),new Point(2.001,2.002)));
+
+        final Profile profile = new Profile();
+        profile.setName("testUser");
+        profile.setLastSeen(new Date());
+
+        final Profile expectedProfile = new Profile();
+        expectedProfile.setName("testUser");
+        expectedProfile.setRoutes(Arrays.asList(route));
+
+        when(profileService.findByName(profile.getName())).thenReturn(profile);
+
+        final Profile updatedProfile = profileService.saveRoutes(profile.getName(),expectedProfile);
+        assertEquals(expectedProfile.getName(), updatedProfile.getName());
+        assertEquals(expectedProfile.getRoutes().get(0).getName(), updatedProfile.getRoutes().get(0).getName());
+
+        verify(repository).save(updatedProfile);
+    }
+
+    /*@Test
     public void shouldCreateRoute() {
 
         final Route route = new Route();
         route.setName("testRoute");
         route.setPoints(Arrays.asList(new Point(1.001,1.002),new Point(2.001,2.002)));
 
-        Profile profile = new Profile();
+        final Profile profile = new Profile();
         profile.setName("testUser");
         profile.setLastSeen(new Date());
 
-        when(profileService.createRoute(profile.getName(),any(Route.class))).thenReturn(profile);
-        //when(profileService.findByName(profile.getName())).thenReturn(profile);
-        //when(repository.findByName(profile.getName())).thenReturn(profile);
+        when(profileService.findByName(profile.getName())).thenReturn(profile);
 
         Profile updatedProfile = profileService.createRoute(profile.getName(),route);
-        assertEquals(route.getName(), updatedProfile.getRoutes().get(0).getName());
-        //assertNotNull(updatedProfile.getRoutes().get(0).getPoints());
+        assertEquals(updatedProfile.getName(), profile.getName());
+        assertEquals(updatedProfile.getRoutes().get(0).getName(), route.getName());
 
-        //verify(repository).save(profileStub);
-    }
-    */
+        verify(repository).save(updatedProfile);
+    }*/
+
 }
