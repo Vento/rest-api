@@ -2,6 +2,7 @@ package org.vvasiloud.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
@@ -9,6 +10,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
  * Created by Aeon on 14/8/2016.
  */
 @SpringBootApplication
+@EnableCircuitBreaker
 @EnableDiscoveryClient
 @EnableZuulProxy
 public class GatewayApplication {

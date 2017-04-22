@@ -8,7 +8,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 20000
+            timeoutInMilliseconds: 50000
 
 ribbon:
   ReadTimeout: 20000
@@ -19,8 +19,8 @@ zuul:
   prefix: /api
   addProxyHeaders: true
   host:
-    connect-timeout-millis: 20000
-    socket-timeout-millis: 20000
+    connect-timeout-millis: 50000
+    socket-timeout-millis: 50000
 
   routes:
     profile-service:
@@ -31,7 +31,7 @@ zuul:
 
     match-service:
         path: /matches/**
-        serviceId: matches-service
+        serviceId: match-service
         stripPrefix: false
         sensitiveHeaders:
 

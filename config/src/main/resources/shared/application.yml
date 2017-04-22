@@ -8,8 +8,7 @@ logging:
   level:
     org.springframework.security: INFO
     org.springframework.web: INFO
-    org.springframework.web.servlet.DispatcherServlet: DEBUG
-  file: classpath:/logs/application.log
+    org.springframework.web.servlet.DispatcherServlet: INFO
 
 spring:
   sleuth:
@@ -56,6 +55,8 @@ spring:
   profiles: production
   rabbitmq:
     host: rabbitmq
+  redis:
+    host: redis
 
 eureka:
   client:
