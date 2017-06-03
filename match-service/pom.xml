@@ -22,7 +22,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-parent</artifactId>
-                <version>Dalston.RELEASE</version>
+                <version>Dalston.SR1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -36,9 +36,10 @@
         <camel.version>2.18.3</camel.version>
         <logback.encoder.version>4.9</logback.encoder.version>
         <jacoco.mvn.version>0.7.9</jacoco.mvn.version>
-        <docker.mvn.version>0.4.13</docker.mvn.version>
+        <docker.mvn.version>0.4.14</docker.mvn.version>
         <org.mapstruct.version>1.1.0.Final</org.mapstruct.version>
-        <mvn.compiler.version>3.5.1</mvn.compiler.version>
+        <mvn.compiler.version>3.6.1</mvn.compiler.version>
+        <lombok.version>1.16.16</lombok.version>
     </properties>
 
     <dependencies>
@@ -58,10 +59,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -117,10 +114,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -129,11 +122,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
+            <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
@@ -159,6 +152,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -170,11 +165,6 @@
             <artifactId>json-path</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <scope>test</scope>
-        </dependency>-->
         <dependency>
             <groupId>com.github.kstyrc</groupId>
             <artifactId>embedded-redis</artifactId>
@@ -197,14 +187,21 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${mvn.compiler.version}</version>
                 <configuration>
-                    <source>1.6</source> <!-- or higher, depending on your project -->
-                    <target>1.6</target> <!-- or higher, depending on your project -->
-                    <annotationProcessorPaths>
+                    <source>1.8</source> <!-- or higher, depending on your project -->
+                    <target>1.8</target> <!-- or higher, depending on your project -->
+                    <!--<annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
+                    </annotationProcessorPaths>-->
+                    <annotationProcessorPaths>
+                        <path>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>${lombok.version}</version>
+                    </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
