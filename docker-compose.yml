@@ -45,7 +45,6 @@ services:
         constraints: [node.role == manager]
 
   logstash:
-    build:
     image: vvasiloud/vento-logstash
     restart: always
     deploy:
@@ -56,7 +55,6 @@ services:
 # Centralized Configuration
 #
   config:
-    build:
     image: vvasiloud/vento-config
     restart: always
     ports:
@@ -81,7 +79,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-        restart_policy:
+      restart_policy:
         condition: on-failure
       resources:
         limits:
@@ -102,7 +100,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-        restart_policy:
+      restart_policy:
         condition: on-failure
       resources:
         limits:
@@ -137,7 +135,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-        restart_policy:
+      restart_policy:
         condition: on-failure
       resources:
         limits:
@@ -158,7 +156,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-        restart_policy:
+      restart_policy:
         condition: on-failure
       resources:
         limits:
@@ -193,7 +191,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-        restart_policy:
+      restart_policy:
         condition: on-failure
       resources:
         limits:
@@ -219,7 +217,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-        restart_policy:
+      restart_policy:
         condition: on-failure
       resources:
         limits:
