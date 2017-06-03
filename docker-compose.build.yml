@@ -85,12 +85,6 @@ services:
     ports:
         - "8761:8761"
     deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        restart_policy:
-        condition: on-failure
       resources:
         limits:
           cpus: '0.25'
@@ -108,12 +102,6 @@ services:
     ports:
         - "3000:3000"
     deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        restart_policy:
-        condition: on-failure
       resources:
         limits:
           cpus: '0.25'
@@ -145,12 +133,6 @@ services:
     ports:
         - "80:9000"
     deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        restart_policy:
-        condition: on-failure
       resources:
         limits:
           cpus: '0.25'
@@ -205,12 +187,6 @@ services:
     ports:
         - "2000:2000"
     deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        restart_policy:
-        condition: on-failure
       resources:
         limits:
           cpus: '0.25'
@@ -233,12 +209,6 @@ services:
         - "8989:8989" 
         - "8080:8080"
     deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        restart_policy:
-        condition: on-failure
       resources:
         limits:
           cpus: '0.25'
