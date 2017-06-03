@@ -1,15 +1,24 @@
 package org.vvasiloud.service.match.service;
 
+import org.springframework.data.geo.GeoResults;
+import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.vvasiloud.service.match.domain.Location;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Aeon on 9/4/2017.
  */
 public interface LocationService {
 
-    Location sendLocation(Location location);
+    Location save(Location location);
 
-    Set<Location> findGeoRadiusByMember(String username);
+    GeoResults<RedisGeoCommands.GeoLocation<String>> findGeoRadiusByMember(String username);
+
+    Iterable<Location> findAll();
+
+    Location findByUsername(String username);
+
+    List<Location> findByUsernameNear(String username);
+
 }

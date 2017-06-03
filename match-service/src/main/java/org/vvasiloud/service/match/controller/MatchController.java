@@ -17,12 +17,9 @@ import org.vvasiloud.service.match.domain.Location;
 import org.vvasiloud.service.match.service.LocationService;
 
 import java.security.Principal;
-import java.util.Set;
+import java.util.List;
 
 
-/**
- * Created by Aeon on 22/9/2016.
- */
 @RestController
 public class MatchController {
 
@@ -36,19 +33,41 @@ public class MatchController {
     @SendTo("/topic/locations")
     public Location sendLocation(Point position, Principal principal) throws Exception {
         Location location = new Location(principal.getName(), position);
-        return locationService.sendLocation(location);
+        return locationService.save(location);
     }
 
-    @SubscribeMapping("/locations")
-    public Set<Location> getClosestLocations(Principal principal) throws Exception {
-        Set<Location> locationCollection = locationService.findGeoRadiusByMember(principal.getName());
+    @SubscribeMapping("/around/me")
+    public List<Location> getClosestLocations(Principal principal) throws Exception {
+        List<Location> locationCollection = locationService.findByUsernameNear(principal.getName());
         return locationCollection;
     }
 
-    @RequestMapping(path = "locations1/{username}", method = RequestMethod.GET)
-    public Set<Location> getClosestLocations1(@PathVariable String username) throws Exception {
-        Set<Location> locationCollection = locationService.findGeoRadiusByMember(username);
+    @RequestMapping(path = "/around/{username}", method = RequestMethod.GET)
+    public List<Location> getClosestLocationsByUsername(@PathVariable String username) throws Exception {
+        List<Location> locationCollection = locationService.findByUsernameNear(username);
         return locationCollection;
+    }
+
+    /*@RequestMapping(path = "/aroundByMember/{username}", method = RequestMethod.GET)
+    public GeoResults<GeoLocation<String>> getClosestLocationsByUsernameByRadius(@PathVariable String username) throws Exception {
+        GeoResults<GeoLocation<String>> locationCollection = locationService.findGeoRadiusByMember(username);
+        return locationCollection;
+    }*/
+
+    @RequestMapping(path = "/location/me", method = RequestMethod.GET)
+    public Location getOwnLocation(Principal principal) throws Exception {
+        Location returnedLocation = locationService.findByUsername(principal.getName());
+        return returnedLocation;
+    }
+
+    @RequestMapping(path = "/location/{username}", method = RequestMethod.GET)
+    public Location getLocationByUsername(@PathVariable String username) throws Exception {
+
+        Location location = new Location(username, new Point(12.456,34.756));
+        locationService.save(location);
+
+        Location returnedLocation = locationService.findByUsername(username);
+        return returnedLocation;
     }
 
     @MessageExceptionHandler
