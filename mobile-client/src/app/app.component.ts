@@ -12,7 +12,6 @@ import { Routes } from '../pages/routes/routes';
 import { Matches } from '../pages/matches/matches';
 import { Settings } from '../pages/settings/settings';
 import { Account } from '../pages/account/account';
-import { DashboardTabs } from '../pages/dashboard/tabs/dashboard-tabs';
 import { ConnectivityService } from '../providers/connectivity-service';
 
 @Component({

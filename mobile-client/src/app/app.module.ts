@@ -1,9 +1,17 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { IonicStorageModule  } from '@ionic/storage';
-import { Http,HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { MyApp } from './app.component';
+
+import { Geolocation } from '@ionic-native/geolocation';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { Device } from '@ionic-native/device';
+import { Shake } from '@ionic-native/shake';
+import { Network } from '@ionic-native/network';
 
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { History } from '../pages/history/history';
@@ -62,6 +70,8 @@ export function createTranslateLoader(http: Http) {
     GoogleMapComponent
   ],
   imports: [
+	BrowserModule,
+	HttpModule,
     IonicModule.forRoot(MyApp, {
       tabsPlacement: 'top', 
       menuType: 'push'
@@ -88,6 +98,12 @@ export function createTranslateLoader(http: Http) {
     Account
   ],
   providers: [
+    StatusBar,
+    SplashScreen,
+    Geolocation,
+    Network,
+    Device,
+    Shake,
     ApiBase,
     AuthService,
     ProfileService,
