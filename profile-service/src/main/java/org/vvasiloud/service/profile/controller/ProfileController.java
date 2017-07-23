@@ -25,7 +25,7 @@ public class ProfileController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final ProfileService profileService;
+    private ProfileService profileService;
 
     @Autowired
     public ProfileController(ProfileService profileService) {
@@ -36,7 +36,7 @@ public class ProfileController {
     public ResponseEntity<Profile> getProfileByName(@PathVariable String name) {
         Profile profile = profileService.findByName(name);
         if(profile == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(profile,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }

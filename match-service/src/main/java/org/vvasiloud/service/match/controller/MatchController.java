@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class MatchController {
 
-    private final LocationService locationService;
+    private LocationService locationService;
 
     @Autowired
     public MatchController(LocationService locationService) {
