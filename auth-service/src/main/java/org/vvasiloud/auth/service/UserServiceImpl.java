@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 import org.vvasiloud.auth.domain.User;
 import org.vvasiloud.auth.repository.UserRepository;
 
-/**
- * Created by Aeon on 19/8/2016.
- */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -19,12 +16,8 @@ public class UserServiceImpl implements UserService {
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    private final UserRepository userRepository;
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @HystrixCommand
     @Override
