@@ -30,6 +30,6 @@ public class Location {
 
     @TimeToLive
     public long getTimeToLive() {
-        return Long.valueOf(3600);
+        return 3600;
     }
 }

@@ -19,14 +19,18 @@ public class UserServiceImpl implements UserService {
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository repository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @HystrixCommand
     @Override
     public void create(User user) {
 
-        User loadedUser = repository.findOne(user.getUsername());
+        User loadedUser = userRepository.findOne(user.getUsername());
 
         if(loadedUser != null){
             throw new IllegalArgumentException("User already exists: " + user.getUsername());
@@ -35,7 +39,7 @@ public class UserServiceImpl implements UserService {
         String hash = encoder.encode(user.getPassword());
         user.setPassword(hash);
 
-        repository.save(user);
+        userRepository.save(user);
         log.info("User created successfully: ", user.getUsername());
     }
 }

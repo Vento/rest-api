@@ -30,7 +30,7 @@ public class AuthUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
-        log.debug(" User from username " + user.toString());
+        log.debug(" User from username ", user.toString());
         return user;
     }
 

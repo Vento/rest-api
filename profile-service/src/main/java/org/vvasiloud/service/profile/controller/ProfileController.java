@@ -1,5 +1,7 @@
 package org.vvasiloud.service.profile.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,66 +23,66 @@ import java.security.Principal;
 @RestController
 public class ProfileController {
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
+    private final ProfileService profileService;
+
     @Autowired
-    private ProfileService profileService;
+    public ProfileController(ProfileService profileService) {
+        this.profileService = profileService;
+    }
 
-    /*@ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(HystrixRuntimeException.class)
-    public String handleBadRequest(Exception ex) {
-        return ex.getMessage();
-    }*/
-
-    @RequestMapping(path = "/{name}", method = RequestMethod.GET)
+    @GetMapping(path = "/{name}")
     public ResponseEntity<Profile> getProfileByName(@PathVariable String name) {
         Profile profile = profileService.findByName(name);
         if(profile == null){
-            return new ResponseEntity<>(profile,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/me", method = RequestMethod.GET)
+    @GetMapping(path = "/me")
     public ResponseEntity<Profile> getCurrentProfile(Principal principal) {
         Profile profile = profileService.findByName(principal.getName());
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/me", method = RequestMethod.PUT)
+    @PutMapping(path = "/me")
     public ResponseEntity<Profile> saveProfile(Principal principal,@Valid @RequestBody Profile profile) {
         Profile updatedProfile = profileService.saveProfile(principal.getName(), profile);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/me/routes", method = RequestMethod.POST)
+    @PostMapping(path = "/me/routes")
     public ResponseEntity<Profile> createRoute(Principal principal,@Valid @RequestBody Route route) {
         Profile updatedProfile = profileService.createRoute(principal.getName(), route);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/me/records", method = RequestMethod.POST)
+    @PostMapping(path = "/me/records")
     public ResponseEntity<Profile> createRecord(Principal principal,@Valid @RequestBody Record record) {
         Profile updatedProfile = profileService.createRecord(principal.getName(), record);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
-    @RequestMapping(path = "/me/routes", method = RequestMethod.PUT)
+    @PutMapping(path = "/me/routes")
     public ResponseEntity<Profile> saveRoutes(Principal principal,@Valid @RequestBody Profile profile) {
         Profile updatedProfile = profileService.saveRoutes(principal.getName(), profile);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/me/records", method = RequestMethod.PUT)
+    @PutMapping(path = "/me/records")
     public ResponseEntity<Profile> saveRecords(Principal principal,@Valid @RequestBody Profile profile) {
         String name = principal.getName();
         Profile updatedProfile = profileService.saveRecords(name, profile);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @PostMapping(path = "/")
     public ResponseEntity<Profile> createProfile(@Valid @RequestBody User user,UriComponentsBuilder ucBuilder) {
         Profile createdProfile = profileService.create(user);
 
         if (createdProfile == null) {
-            System.out.println("Profile already exist");
+            log.info("Profile already exist", user.getUsername());
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         HttpHeaders headers = new HttpHeaders();
