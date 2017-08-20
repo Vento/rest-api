@@ -27,6 +27,8 @@ public class Profile {
     @Valid
     private List<Route> routes;
 
+    private Gender gender;
+
     public String getName() {
         return name;
     }
@@ -57,5 +59,13 @@ public class Profile {
 
     public void setRecords(List<Record> records) {
         this.records = records;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

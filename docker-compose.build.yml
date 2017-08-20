@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
 #
 # Infrastructure Services
@@ -22,40 +22,39 @@ services:
       placement:
         constraints: [node.role == manager]
 
-  elasticsearch:
-    build:
-      context: ./logging/elasticsearch/
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-        - "9200:9200"
-        - "9300:9300"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 256M
-  kibana:
-    build:
-      context: ./logging/kibana/
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-        - "5601:5601"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-
-  logstash:
-    build:
-      context: ./logging/logstash/
-      dockerfile: Dockerfile
-    restart: always
-    deploy:
-      placement:
-        constraints: [node.role == manager]
+#  elasticsearch:
+#    build:
+#      context: ./logging/elasticsearch/
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#        - "9200:9200"
+#        - "9300:9300"
+#    deploy:
+#      placement:
+#        constraints: [node.role == manager]
+#      resources:
+#        limits:
+#          cpus: '0.25'
+#          memory: 256M
+#  kibana:
+#    build:
+#      context: ./logging/kibana/
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#        - "5601:5601"
+#    deploy:
+#      placement:
+#        constraints: [node.role == manager]
+#  logstash:
+#    build:
+#      context: ./logging/logstash/
+#      dockerfile: Dockerfile
+#    restart: always
+#    deploy:
+#      placement:
+#        constraints: [node.role == manager]
 
 #
 # Centralized Configuration
@@ -206,7 +205,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-        - "8989:8989" 
+        - "8989:8989"
         - "8080:8080"
     deploy:
       resources:
@@ -225,7 +224,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-        - "9411:9411" 
+        - "9411:9411"
     deploy:
       resources:
         limits:

@@ -12,7 +12,8 @@ import org.vvasiloud.service.profile.domain.Route;
 import org.vvasiloud.service.profile.domain.User;
 import org.vvasiloud.service.profile.repository.ProfileRepository;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -24,11 +25,14 @@ public class ProfileServiceImpl implements ProfileService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
     private AuthService authService;
+    private ProfileRepository profileRepository;
 
     @Autowired
-    private ProfileRepository repository;
+    public ProfileServiceImpl(AuthService authService, ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+        this.authService = authService;
+    }
 
     /**
      * {@inheritDoc}
@@ -39,7 +43,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (profileName.isEmpty())
             throw new IllegalArgumentException("Username empty");
 
-        return repository.findByName(profileName);
+        return profileRepository.findByName(profileName);
     }
 
     /**
@@ -49,7 +53,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public Profile create(User user) {
 
-        Profile existing = repository.findByName(user.getUsername());
+        Profile existing = profileRepository.findByName(user.getUsername());
         Assert.isNull(existing, "profile already exists: " + user.getUsername());
 
         authService.createUser(user);
@@ -57,7 +61,7 @@ public class ProfileServiceImpl implements ProfileService {
         Profile profile = new Profile();
         profile.setName(user.getUsername());
         profile.setLastSeen(new Date());
-        repository.save(profile);
+        profileRepository.save(profile);
 
         log.info("new profile has been created: " + profile.getName());
 
@@ -70,32 +74,32 @@ public class ProfileServiceImpl implements ProfileService {
     @HystrixCommand
     @Override
     public Profile saveProfile(String name, Profile updatedProfile) {
-        Profile profile = repository.findByName(name);
+        Profile profile = profileRepository.findByName(name);
         Assert.notNull(profile, "Cannot find profile with name: " + name);
 
         profile.setRecords(updatedProfile.getRecords());
         profile.setRoutes(updatedProfile.getRoutes());
         profile.setLastSeen(new Date());
-        repository.save(profile);
+        profileRepository.save(profile);
 
-        log.debug("Changes saved for profile: "+ name);
+        log.debug("Changes saved for profile: ", name);
 
         return profile;
     }
-	
+
     /**
      * {@inheritDoc}
      */
     @HystrixCommand
     @Override
     public Profile saveRoutes(String name, Profile updatedRoutes) {
-        Profile profile = repository.findByName(name);
+        Profile profile = profileRepository.findByName(name);
         Assert.notNull(profile, "Cannot find profile with name: " + name);
 
         profile.setRoutes(updatedRoutes.getRoutes());
-        repository.save(profile);
+        profileRepository.save(profile);
 
-        log.debug("Changes saved for profile: "+ name);
+        log.debug("Changes saved for profile: ", name);
 
         return profile;
     }
@@ -106,13 +110,13 @@ public class ProfileServiceImpl implements ProfileService {
     @HystrixCommand
     @Override
     public Profile saveRecords(String name, Profile updatedRecords) {
-        Profile profile = repository.findByName(name);
+        Profile profile = profileRepository.findByName(name);
         Assert.notNull(profile, "Cannot find profile with name: " + name);
 
         profile.setRecords(updatedRecords.getRecords());
-        repository.save(profile);
+        profileRepository.save(profile);
 
-        log.debug("Changes saved for profile: "+ name);
+        log.debug("Changes saved for profile: ", name);
 
         return profile;
     }
@@ -123,22 +127,23 @@ public class ProfileServiceImpl implements ProfileService {
     @HystrixCommand
     @Override
     public Profile createRoute(String name, Route route) {
-        Profile profile = repository.findByName(name);
+        Profile profile = profileRepository.findByName(name);
         Assert.notNull(profile, "Cannot find profile with name: " + name);
 
         List<Route> routes = profile.getRoutes();
-        if(profile.getRoutes().isEmpty()){
-            profile.setRoutes(Arrays.asList());
-        }else{
+        if (profile.getRoutes() == null) {
+            routes = new ArrayList<>();
+            routes.add(route);
+        } else {
             routes.add(route);
         }
 
         profile.setRoutes(routes);
-        repository.save(profile);
+        Profile savedProfile = profileRepository.save(profile);
 
-        log.debug("Route saved for profile: "+ name);
+        log.debug("Route saved for profile: ", name);
 
-        return profile;
+        return savedProfile;
     }
 
     /**
@@ -147,17 +152,22 @@ public class ProfileServiceImpl implements ProfileService {
     @HystrixCommand
     @Override
     public Profile createRecord(String name, Record record) {
-        Profile profile = repository.findByName(name);
+        Profile profile = profileRepository.findByName(name);
         Assert.notNull(profile, "Cannot find profile with name: " + name);
 
         List<Record> records = profile.getRecords();
-        records.add(record);
+        if (records == null) {
+            records = new ArrayList<>();
+            records.add(record);
+        } else {
+            records.add(record);
+        }
 
         profile.setRecords(records);
-        repository.save(profile);
+        Profile savedProfile = profileRepository.save(profile);
 
-        log.debug("Record saved for profile: "+ name);
+        log.debug("Record saved for profile: ", name);
 
-        return profile;
+        return savedProfile;
     }
 }

@@ -12,17 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "camel.endpoint.auth")
 public class EndpointProperties {
 
-    private String userProfileUri;
-
     private String userAuthUri;
-
-    public String getUserProfileUri() {
-        return userProfileUri;
-    }
-
-    public void setUserProfileUri(String userProfileUri) {
-        this.userProfileUri = userProfileUri;
-    }
 
     public String getUserAuthUri() {
         return userAuthUri;

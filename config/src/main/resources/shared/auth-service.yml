@@ -14,8 +14,7 @@ spring:
 camel:
   endpoint:
     auth:
-      userProfileUri: "rabbitmq:///vento.service.profile/users?connectionFactory=#customConnectionFactory"
-      userAuthUri: "rabbitmq:///vento.service.auth/users?connectionFactory=#customConnectionFactory"
+      userAuthUri: "rabbitmq:///vento.service.auth/users?connectionFactory=#customConnectionFactory&queue=user:principal:create"
 ---
 spring:
   profiles: production

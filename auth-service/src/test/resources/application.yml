@@ -12,5 +12,4 @@ spring:
 camel:
   endpoint:
     auth:
-      userProfileUri: "rabbitmq://vento.service.profile/users"
-      userAuthUri: "rabbitmq://vento.service.auth/users"
+      userAuthUri: "seda:user:principal:create"

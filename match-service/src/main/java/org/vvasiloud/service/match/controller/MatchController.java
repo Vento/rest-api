@@ -2,6 +2,7 @@ package org.vvasiloud.service.match.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -32,6 +33,11 @@ public class MatchController {
         return locationService.save(location);
     }
 
+    @SubscribeMapping("/around/{username}")
+    public List<Location> getClosestLocationsForUser(@DestinationVariable String username) throws Exception {
+        return locationService.findByUsernameNear(username);
+    }
+
     @SubscribeMapping("/around/me")
     public List<Location> getClosestLocations(Principal principal) throws Exception {
         return locationService.findByUsernameNear(principal.getName());
@@ -56,7 +62,7 @@ public class MatchController {
     @GetMapping(path = "/location/{username}")
     public Location getLocationByUsername(@PathVariable String username) throws Exception {
 
-        Location location = new Location(username, new Point(12.456,34.756));
+        Location location = new Location(username, new Point(12.456, 34.756));
         locationService.save(location);
 
         return locationService.findByUsername(username);
