@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
 import { ApiBase } from '../api-base/api-base';
 import { AuthStorage } from '../auth/auth-storage';
 
@@ -19,7 +18,6 @@ export class AuthService extends ApiBase {
 
   constructor(public http: Http, public authStorage: AuthStorage) {
     super();
-    console.log('Initialized AuthService Provider');
     this.apiUrl = this.getAuthApiUrl();
   }
 
@@ -28,14 +26,14 @@ export class AuthService extends ApiBase {
 		let headers = new Headers({
 			'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Basic bW9iaWxlYXBwOnNlY3JldA=='
-		}); 
+		});
 
 		let options = new RequestOptions({
 			headers: headers
 		});
 
     let body = "username=" + credientials.username + "&password=" + credientials.password + "&grant_type=password";
-    
+
     return this.http.post(accessTokenUri, body, options)
       .map(res => res.json())
       .catch(this.handleError)
@@ -53,14 +51,14 @@ export class AuthService extends ApiBase {
       });
 
       let body = JSON.stringify({});
-    
+
       return Observable.fromPromise(this.authStorage.getAccessToken())
       .flatMap((token) => {
         headers.append('Authorization',`Bearer ${token}`)
         return this.http.post(accessTokenUri, body, options)
         .map(res => res.json())
-        .catch(this.handleError)    
-      });    
+        .catch(this.handleError)
+      });
   }
 
   isAuthenticated() {

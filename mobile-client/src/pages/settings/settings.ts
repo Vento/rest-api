@@ -15,7 +15,7 @@ export class Settings {
 
   constructor(public navCtrl: NavController, public viewUtilities: ViewUtilities, public translationService: TranslationService,
     public settingsModel: SettingsModel, public settingsStorage: SettingsStorage) {
-    
+
     this.settingsModel = new SettingsModel();
   }
 
@@ -30,9 +30,9 @@ export class Settings {
   saveLanguageOption(selectedItem) {
     this.settingsStorage.setLanguage(selectedItem);
     this.navCtrl.push(Settings);
-  }   
+  }
 
   savePushNotificationsOption(selectedItem) {
     this.settingsStorage.setPushNotifications(selectedItem);
-  } 
+  }
 }

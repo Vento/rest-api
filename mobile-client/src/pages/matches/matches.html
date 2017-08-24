@@ -1,20 +1,38 @@
 <ion-header>
   <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Matches</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="presentPopover($event)">
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content [ngClass]="{'grayscale' : isConnected}">
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-    <GoogleMap #gmap (init)="onMapInit($event)"></GoogleMap>
+  <div #pleaseConnect id="please-connect">
+    <p>Please connect to the Internet...</p>
+  </div>
+
+  <!--<div #map id="map"></div>-->
+  <agm-map #map id="map" [styles]="googleMapsProvider.mapStyle" [zoom]="googleMapsProvider.options.zoom"
+           [minZoom]="googleMapsProvider.options.minZoom"
+           [maxZoom]="googleMapsProvider.options.maxZoom"
+           [latitude]="googleMapsProvider.options.center.lat"
+           [longitude]="googleMapsProvider.options.center.lng"
+           [usePanning]="true">
+    <agm-marker [latitude]="googleMapsProvider.options.center.lat"
+                [longitude]="googleMapsProvider.options.center.lng"
+                label="Me"></agm-marker>
+    <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="openDetail(m)"
+                [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [iconUrl]="'assets/img/marker.png'">
+      <!--      <agm-info-window [disableAutoPan]="true" (infoWindowClose)="onCloseDetail.emit()">
+              <h5>{{m.label}}</h5>
+            </agm-info-window>-->
+    </agm-marker>
+    <agm-polygon [paths]="paths" [editable]="true" [polyDraggable]="true" [geodesic]="true"></agm-polygon>
+  </agm-map>
+  <ion-fab class="locateButton" bottom right>
+    <button ion-fab (click)='googleMapsProvider.centerToMyLocation()'>
+      <ion-icon name="ios-locate-outline"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

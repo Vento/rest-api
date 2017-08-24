@@ -53,11 +53,27 @@ page-login  {
     ::-webkit-input-placeholder {@content}
     :-moz-placeholder           {@content}
     ::-moz-placeholder          {@content}
-    :-ms-input-placeholder      {@content}  
+    :-ms-input-placeholder      {@content}
     }
 
     @include placeholder {
         color: $orange-dark;
     }
-    
+
+  .animate-bg {
+    animation: animate-move-bg 20s infinite;
+  }
+
+  @keyframes animate-move-bg {
+    0%   { transform: translateY(0px); }
+    100% { transform: translateY(-200px); }
+  }
+
+  ion-slides {
+    height: 40vh;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: $orange;
+  }
 }

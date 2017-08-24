@@ -1,41 +1,58 @@
 <ion-content padding class="bg-intro">
-	<h3 class="logo">Vento</h3>
-	
-	<ion-col class="actions-container">
-		<form #loginForm="ngForm" novalidate>
-			<ion-item>
-				<ion-label floating>Username</ion-label>
-				<ion-input [(ngModel)]="login.username"name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off" required></ion-input>
-			</ion-item>
+  <ion-col class="actions-container">
 
-			<p [hidden]="username.valid || submitted == false" color="danger" padding-left>
-				Username is required
-			</p>
+    <form #loginForm="ngForm" novalidate>
+      <ion-slides pager>
 
-			<ion-item>
-				<ion-label floating>Password</ion-label>
-				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required></ion-input>
-			</ion-item>
-			<p [hidden]="password.valid || submitted == false" color="danger" padding-left>
-       			Password is required
-     		</p>
+        <ion-slide>
+          <h1 class="logo">Vento</h1>
+        </ion-slide>
 
-			<ion-col responsive-sm>
-				<ion-col class="forgot-password" padding text-right>
-				Forgot your password?
-				</ion-col>
+        <ion-slide>
+          <h2>Slide 2</h2>
+        </ion-slide>
 
-			<ion-col>
-				<button (click)="onLogin(loginForm)" ion-button icon-left block color="orange-light">Login</button>
-			</ion-col>
+        <ion-slide>
+          <h2>Slide 3</h2>
+        </ion-slide>
 
-			<ion-col>
-				<button (click)="onRegister()" ion-button icon-left block color="orange">
-					<ion-icon icon-left name="person-add"></ion-icon>Register
-				</button>
-			</ion-col>
-			</ion-col>
-		</form>
-	</ion-col>
+      </ion-slides>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false"
+                   autocapitalize="off" required></ion-input>
+      </ion-item>
+
+      <p [hidden]="username.valid || submitted == false" color="danger" padding-left>
+        Username is required
+      </p>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel"
+                   required></ion-input>
+      </ion-item>
+      <p [hidden]="password.valid || submitted == false" color="danger" padding-left>
+        Password is required
+      </p>
+
+      <ion-col responsive-sm>
+        <ion-col class="forgot-password" padding text-right>
+          Forgot your password?
+        </ion-col>
+
+        <ion-col>
+          <button (click)="onLogin(loginForm)" ion-button icon-left block color="orange-light">Login</button>
+        </ion-col>
+
+        <ion-col>
+          <button (click)="onRegister()" ion-button icon-left block color="orange">
+            <ion-icon icon-left name="person-add"></ion-icon>
+            Register
+          </button>
+        </ion-col>
+      </ion-col>
+    </form>
+  </ion-col>
 
 </ion-content>

@@ -12,7 +12,6 @@ import { Storage } from '@ionic/storage';
 export class AuthStorage {
 
   constructor(public events: Events, public storage: Storage) {
-    console.log('Hello AuthStorage Provider');
   }
 
   getAccessToken() {
@@ -43,5 +42,5 @@ export class AuthStorage {
     let token_expiration_date = new Date (new Date().getTime() + (1000 * token_expiration));
     this.storage.set('token_expiration', token_expiration_date);
   }
-  
+
 }

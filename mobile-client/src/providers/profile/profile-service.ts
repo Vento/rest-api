@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
 import { ApiBase } from '../api-base/api-base';
 import { AuthStorage } from '../auth/auth-storage';
 import { HttpInterceptor } from '../http-interceptor/http-interceptor';
@@ -21,11 +20,10 @@ export class ProfileService extends ApiBase {
 
   constructor(public http: HttpInterceptor, public authStorage: AuthStorage) {
     super();
-    console.log('Initialized ProfileService Provider');
     this.apiUrl = this.getProfileApiUrl();
   }
 
-  getProfile(profileId:string) {
+  public getProfile(profileId:string) {
 
     let headers = new Headers({
       'Content-Type': 'application/json'
@@ -36,17 +34,17 @@ export class ProfileService extends ApiBase {
     });
 
     let profileUri = this.apiUrl + "/" + profileId;
-    
+
     return Observable.fromPromise(this.authStorage.getAccessToken())
       .flatMap((token) => {
         headers.append('Authorization',`Bearer ${token}`)
         return this.http.get(profileUri, options)
         .map(res => res.json())
-        .catch(this.handleError)    
+        .catch(ProfileService.handleError)
       });
-  } 
+  }
 
-  getCurrentProfile() {
+  public getCurrentProfile() {
 
     let headers = new Headers({
       'Content-Type': 'application/json'
@@ -55,19 +53,18 @@ export class ProfileService extends ApiBase {
     let options = new RequestOptions({
       headers: headers
     });
- 
+
     let userInfoUri = this.apiUrl + "/me";
     return Observable.fromPromise(this.authStorage.getAccessToken())
       .flatMap((token) => {
         headers.append('Authorization',`Bearer ${token}`)
         return this.http.get(userInfoUri, options)
         .map(res => res.json())
-        .catch(this.handleError)    
-      });  
-
+        .catch(ProfileService.handleError)
+      });
   }
 
-  createProfile(request) {
+  public createProfile(request) {
 
     let createProfileUri = this.apiUrl + "/";
 
@@ -78,7 +75,7 @@ export class ProfileService extends ApiBase {
 		let options = new RequestOptions({
 			headers: headers
 		});
-    
+
 		let body = JSON.stringify({
       email: request.email,
 			username: request.username,
@@ -87,10 +84,10 @@ export class ProfileService extends ApiBase {
 
     return this.http.post(createProfileUri, body, options)
       .map(res => res.json())
-      .catch(this.handleError)
+      .catch(ProfileService.handleError)
   }
 
-  updateProfile(updatedProfile) {
+  public updateProfile(updatedProfile) {
 
     let token = this.authStorage.getAccessToken();
     let updateProfileUri = this.apiUrl + "/me";
@@ -113,11 +110,11 @@ export class ProfileService extends ApiBase {
         headers.append('Authorization',`Bearer ${token}`)
         return this.http.put(updateProfileUri, body, options)
         .map(res => res.json())
-        .catch(this.handleError)    
-      });  
+        .catch(ProfileService.handleError)
+      });
   }
 
-    createRoute(route) {
+  public createRoute(route) {
 
     let token = this.authStorage.getAccessToken();
     let createRoutesUri = this.apiUrl + "/me/routes";
@@ -139,11 +136,11 @@ export class ProfileService extends ApiBase {
         headers.append('Authorization',`Bearer ${token}`)
         return this.http.post(createRoutesUri, body, options)
         .map(res => res.json())
-        .catch(this.handleError)    
-      });  
+        .catch(ProfileService.handleError)
+      });
     }
-  
-  createRecord(record) {
+
+  public createRecord(record) {
 
     let token = this.authStorage.getAccessToken();
     let createRecordUri = this.apiUrl + "/me/records";
@@ -165,11 +162,11 @@ export class ProfileService extends ApiBase {
         headers.append('Authorization',`Bearer ${token}`)
         return this.http.post(createRecordUri, body, options)
         .map(res => res.json())
-        .catch(this.handleError)    
+        .catch(ProfileService.handleError)
       });
   }
 
-  handleError(error) {
+  private static handleError(error) {
       console.error(error);
       return Observable.throw(error.json().error || 'Server error');
   }

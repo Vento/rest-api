@@ -8,13 +8,15 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.vvasiloud.service.match.domain.Location;
 import org.vvasiloud.service.match.service.LocationService;
 
 import java.security.Principal;
 import java.util.List;
-
 
 @RestController
 public class MatchController {
@@ -27,10 +29,9 @@ public class MatchController {
     }
 
     @MessageMapping("/track")
-    @SendTo("/topic/locations")
-    public Location sendLocation(Point position, Principal principal) throws Exception {
-        Location location = new Location(principal.getName(), position);
-        return locationService.save(location);
+    @SendTo("/topic/around/{username}")
+    public Location sendLocation(@PathVariable String username, Point position, Principal principal) throws Exception {
+        return locationService.save(new Location(principal.getName(), position));
     }
 
     @SubscribeMapping("/around/{username}")

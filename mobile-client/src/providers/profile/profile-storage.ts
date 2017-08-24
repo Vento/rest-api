@@ -12,7 +12,6 @@ import { Storage } from '@ionic/storage';
 export class ProfileStorage {
 
   constructor(public events: Events, public storage: Storage) {
-    console.log('Hello ProfileStorage Provider');
   }
 
   getProfile() {

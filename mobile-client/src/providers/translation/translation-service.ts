@@ -14,8 +14,7 @@ import { TranslateService } from 'ng2-translate';
 export class TranslationService {
 
   constructor(public events: Events, public settingsStorage: SettingsStorage, public translate: TranslateService) {
-      console.log('Hello TranslationService Provider');
-      translate.setDefaultLang('en_US');  
+      translate.setDefaultLang('en_US');
   }
 
   public loadLanguagePreferences() {
@@ -23,5 +22,5 @@ export class TranslationService {
       if(language) this.translate.use(language);
     });
   }
-     
+
 }

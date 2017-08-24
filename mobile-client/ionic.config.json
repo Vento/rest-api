@@ -1,10 +1,11 @@
 {
   "name": "Vento",
   "app_id": "",
-  "v2": true,
-  "typescript": true,
-  "proxies": [{
-    "path": "/api",
-    "proxyUrl": "http://localhost:9000/api"
-  }]
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://localhost:9000/api"
+    }
+  ],
+  "type": "ionic-angular"
 }

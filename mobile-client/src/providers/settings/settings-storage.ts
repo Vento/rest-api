@@ -14,7 +14,6 @@ import {Observable} from 'rxjs/Observable';
 export class SettingsStorage {
 
   constructor(public events: Events, public storage: Storage) {
-    console.log('Hello SettingsStorage Provider');
   }
 
 
@@ -24,7 +23,7 @@ export class SettingsStorage {
           Observable.fromPromise(this.getPushNotifications())
       ]);
   }
-    
+
   getLanguage() {
     return this.storage.get('settings.language').then((value) => {
       return value;
@@ -34,11 +33,11 @@ export class SettingsStorage {
   setLanguage(option) {
     this.storage.set('settings.language', option);
   }
-  
+
   getPushNotifications() {
-    return this.storage.get('settings.pushnotifications').then((value) => {
+    return this.storage.get('settings.pushotifications').then((value) => {
       return value;
-    });    
+    });
   }
 
   setPushNotifications(option) {

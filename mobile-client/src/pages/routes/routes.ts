@@ -1,50 +1,58 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { NavController, NavParams } from 'ionic-angular';
-import { RouteModel } from '../../models/route-model';
-import { RouteViewPage } from '../../pages/route-view/route-view';
-import { ProfileService } from '../../providers/profile/profile-service';
-import { ViewUtilities } from '../../providers/view-utilities/view-utilities';
+import {NavController, NavParams} from 'ionic-angular';
+import {RouteModel} from '../../models/route-model';
+import {RouteViewPage} from '../../pages/route-view/route-view';
+import {ProfileService} from '../../providers/profile/profile-service';
+import {ViewUtilities} from '../../providers/view-utilities/view-utilities';
+import {IRoute} from "./RouteModel";
+import {IProfile} from "../../models/ProfileModel";
 
 @Component({
   selector: 'page-routes',
   templateUrl: 'routes.html'
 })
 export class Routes {
-  routeModel?: RouteModel;
-  hasDataClass?: any = "no-data-bg";
+  private routes: IRoute[] = [];
+  private hasDataClass?: any = "no-data-bg";
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public viewUtilities: ViewUtilities,  
-              private profileService: ProfileService) {
-    this.routeModel = new RouteModel([]);
-  }
+  constructor(private navCtrl: NavController,
+              private viewUtilities: ViewUtilities,
+              private profileService: ProfileService) {}
 
-  ionViewWillEnter() {
+  public ionViewWillEnter() {
     this.loadData();
   }
-  
-  private loadData() {
-    this.profileService.getCurrentProfile().subscribe((profileData) => {   
-      if (profileData.routes !== null && profileData.routes.length !== 0) this.hasDataClass = "";
-      this.routeModel.routes = profileData.routes;
-          },
-          err => {
-            this.viewUtilities.onError(err);
-          } 
-      )  
+
+  private loadData(): void {
+    this.profileService.getCurrentProfile().subscribe((profile: IProfile) => {
+        if (profile.routes && profile.routes.length !== 0) this.hasDataClass = "";
+        this.routes = profile.routes;
+      },
+      err => {
+        this.viewUtilities.onError(err);
+      }
+    )
   }
-  navigateToRoute(routeId) {
+
+  private navigateToRoute(routeId): void {
     this.navCtrl.push(RouteViewPage, {
       route: routeId
     });
   }
 
-  addRoute() {
+  private addRoute():  void {
     this.navCtrl.push(RouteViewPage, {
-      route: "new"
+      route: undefined
     });
+  }
+
+  private beginRoute(): void {
+
+  }
+
+  private deleteRoute() : void {
+
   }
 
 }

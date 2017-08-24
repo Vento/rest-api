@@ -14,12 +14,12 @@ export class ApiBase {
   private authApi:string;
 
   constructor() {
-    this.apiBase = "http://localhost:9000/api";
+    this.apiBase = "http://localhost:8100/api";
     this.profileApi = this.apiBase + "/profiles";
     this.matchApi = this.apiBase + "/matches";
     this.authApi = this.apiBase + "/uaa";
   }
- 
+
   getApiBaseUrl() {
     return this.apiBase;
   }

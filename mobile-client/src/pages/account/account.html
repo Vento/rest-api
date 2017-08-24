@@ -10,9 +10,15 @@
 <ion-content class="outer-content">
   <div padding-top text-center>
     <img class="avatar" src="http://www.gravatar.com/avatar?d=mm&s=140">
-    <h2 *ngIf="username">{{username}}</h2>
+    <h2 *ngIf="this.userProfile">{{this.userProfile.name}}</h2>
 
     <ion-list inset>
+      <ion-item>
+        <ion-label>{{ 'GENDER' | translate }}</ion-label>
+        <ion-select [(ngModel)]="gender" (ionChange)="saveGender(gender)">
+          <ion-option *ngFor="let gender of genders" value="{{gender}}">{{gender}}</ion-option>
+        </ion-select>
+      </ion-item>
       <button ion-item (click)="changePassword()">Change Password</button>
     </ion-list>
   </div>
