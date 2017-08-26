@@ -7,5 +7,8 @@
       "proxyUrl": "http://localhost:9000/api"
     }
   ],
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

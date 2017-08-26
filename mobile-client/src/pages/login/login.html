@@ -1,5 +1,5 @@
 <ion-content padding class="bg-intro">
-  <ion-col class="actions-container">
+  <ion-grid class="actions-container">
 
     <form #loginForm="ngForm" novalidate>
       <ion-slides pager>
@@ -36,23 +36,16 @@
         Password is required
       </p>
 
-      <ion-col responsive-sm>
+      <ion-row>
         <ion-col class="forgot-password" padding text-right>
           Forgot your password?
         </ion-col>
 
-        <ion-col>
-          <button (click)="onLogin(loginForm)" ion-button icon-left block color="orange-light">Login</button>
-        </ion-col>
+        <button (click)="onLogin(loginForm)" padding ion-button icon-left block color="orange-light">Login</button>
 
-        <ion-col>
-          <button (click)="onRegister()" ion-button icon-left block color="orange">
-            <ion-icon icon-left name="person-add"></ion-icon>
-            Register
-          </button>
-        </ion-col>
-      </ion-col>
+        <ion-col padding text-center> Don't have an account yet? <a href="#" (click)="onRegister()">Sign up</a></ion-col>
+      </ion-row>
     </form>
-  </ion-col>
+  </ion-grid>
 
 </ion-content>

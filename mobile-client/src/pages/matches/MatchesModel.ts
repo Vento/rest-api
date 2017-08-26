@@ -1,4 +1,4 @@
-export interface IUserPosition {
+export interface IUserLocation {
   username: string;
   position: IPosition;
   timeToLive: number;

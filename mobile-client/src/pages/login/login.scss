@@ -1,72 +1,86 @@
-page-login  {
-    $orange: #EB7E15;
-    $orange-dark: #FC4C02;
-    .bg-intro {
-        background-image: url('../assets/img/intro.jpg');
-        background-repeat: no-repeat;
-        background-size:cover;
-        background-position: center;
-        background-color: rgba(0, 0, 0, 0.2);
-        background-blend-mode: multiply;
-    }
-    .actions{
-        position: absolute;
-        bottom: 0;
-    }
-    .actions-container{
-        min-height: 75vh;
-        margin-top: auto;
-        display: flex;
-        justify-content: flex-end;
-        flex-direction: column;
-    }
-    .item-input ion-input{
-        color: $orange-dark;
-    }
-    .item-label-floating{
-        background: transparent;
-        border: none !important;
-    }
-    .logo{
-        font-family: 'MarkMyWords', sans-serif;
-        font-size: 6rem;
-        text-align: center;
-        min-height: 15vh;
-        color: $orange-dark;
-    }
-    .input-has-focus .label-md[stacked], .input-has-focus .label-md[floating]{
-        color: $orange;
-    }
+page-login {
+  $orange: #EB7E15;
+  $orange-dark: #FC4C02;
+  $white: #fff;
 
-    .forgot-password{
-        font-size: 1.2rem;
-        color: $orange-dark;
-    }
+  .bg-intro {
+    background-image: url('../assets/img/intro.jpg'), linear-gradient(transparent, $orange-dark);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    background-blend-mode: multiply;
+  }
+  .actions {
+    position: absolute;
+    bottom: 0;
+  }
+  .actions-container {
+    min-height: 95vh;
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+  .item-input ion-input {
+    color: $white;
+  }
+  .item-label-floating {
+    background: transparent;
+    border: none !important;
+  }
+  .logo {
+    font-family: 'MarkMyWords', sans-serif;
+    font-size: 6rem;
+    text-align: center;
+    min-height: 15vh;
+    color: $orange-dark;
+  }
+  .input-has-focus .label-md[stacked], .input-has-focus .label-md[floating] {
+    color: $orange;
+  }
 
-    .item-input.input-has-focus .item-inner{
-        color: $orange;
-        box-shadow: inset 0 -1px 0 0 $orange;
-        border: $orange;
-    }
+  .forgot-password {
+    font-size: 1.2rem;
+    color: $orange-dark;
+  }
 
-    @mixin placeholder {
-    ::-webkit-input-placeholder {@content}
-    :-moz-placeholder           {@content}
-    ::-moz-placeholder          {@content}
-    :-ms-input-placeholder      {@content}
-    }
+  .item-input.input-has-focus .item-inner {
+    color: $orange;
+    box-shadow: inset 0 -1px 0 0 $orange;
+    border: $orange;
+  }
 
-    @include placeholder {
-        color: $orange-dark;
+  @mixin placeholder {
+    ::-webkit-input-placeholder {
+      @content
     }
+    :-moz-placeholder {
+      @content
+    }
+    ::-moz-placeholder {
+      @content
+    }
+    :-ms-input-placeholder {
+      @content
+    }
+  }
+
+  @include placeholder {
+    color: $orange-dark;
+  }
 
   .animate-bg {
     animation: animate-move-bg 20s infinite;
   }
 
   @keyframes animate-move-bg {
-    0%   { transform: translateY(0px); }
-    100% { transform: translateY(-200px); }
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-200px);
+    }
   }
 
   ion-slides {
@@ -75,5 +89,9 @@ page-login  {
 
   .swiper-pagination-bullet-active {
     background: $orange;
+  }
+
+  .scroll-content {
+    padding-bottom: 0 !important;
   }
 }

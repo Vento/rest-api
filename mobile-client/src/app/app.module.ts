@@ -44,10 +44,13 @@ import {LocationTrackerService} from '../providers/location-tracker-service';
 import {GoogleMapComponent} from '../components/googlemaps/googlemaps-component';
 import {GoogleMapsProvider} from '../providers/google-maps/google-maps';
 import {ConnectivityProvider} from '../providers/connectivity/connectivity';
-import {StompConfig} from "../providers/stomp-js/stomp.config";
-import {StompService} from "../providers/stomp-js/stomp.service";
+
 import * as SockJS from 'sockjs-client';
-import { AgmCoreModule } from '@agm/core';
+import {AgmCoreModule} from '@agm/core';
+import {StompConfig} from "@stomp/ng2-stompjs";
+import {StompService} from "@stomp/ng2-stompjs";
+
+import {LottieAnimationViewModule} from 'ng-lottie';
 
 
 export function httpInterceptor(backend: XHRBackend, options: RequestOptions, authService: AuthService, authStorage: AuthStorage) {
@@ -102,8 +105,10 @@ const stompConfig: StompConfig = {
       deps: [Http]
     }),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAc1FP_Vf1BCmuCqo47pM5HUcrA9kiVcrI'
-    })
+      apiKey: 'AIzaSyAc1FP_Vf1BCmuCqo47pM5HUcrA9kiVcrI',
+      libraries: ['drawing', 'places']
+    }),
+    LottieAnimationViewModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

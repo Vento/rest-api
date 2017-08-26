@@ -1,15 +1,16 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NavController, Platform} from 'ionic-angular';
 import {ViewUtilities} from '../../providers/view-utilities/view-utilities';
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
 import {GoogleMapsProvider} from "../../providers/google-maps/google-maps";
-import {Observable} from "rxjs/Observable";
 import {MatchService} from "../../providers/match/match-service";
-import {IUserPosition} from "./MatchesModel";
-import {StompService, StompState} from "../../providers/stomp-js/stomp.service";
-import {AgmCoreModule, LatLngLiteral, GoogleMapsAPIWrapper} from '@agm/core';
-import {MarkerOptions} from "@agm/core/services/google-maps-types";
+import {StompService, StompState} from "@stomp/ng2-stompjs";
+import {LatLngLiteral, GoogleMapsAPIWrapper, AgmMap} from '@agm/core';
+import {IUserLocation} from "./MatchesModel";
+import {Http, Headers, RequestOptions} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+
+
+declare let google: any;
 
 @Component({
   selector: 'page-matches',
@@ -17,26 +18,24 @@ import {MarkerOptions} from "@agm/core/services/google-maps-types";
 })
 export class Matches {
 
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild(AgmMap) mapElement: AgmMap;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
-  private stompClient: any;
-  private socket: any;
   private markers: any = [];
-  public gMaps: GoogleMapsAPIWrapper;
-
+  private map: GoogleMapsAPIWrapper;
 
   constructor(public navCtrl: NavController, private platform: Platform, private viewUtilities: ViewUtilities, public googleMapsProvider: GoogleMapsProvider,
-              private matchService: MatchService, private _stompService: StompService) {
+              private matchService: MatchService, private _stompService: StompService, private http: Http) {
     this.initWebsocket();
   }
 
-  paths: Array<LatLngLiteral> = []
-
+  public loadAPIWrapper(map) {
+    this.map = map;
+  }
 
   public ionViewDidLoad(): void {
 
     this.platform.ready().then(() => {
-      this.googleMapsProvider.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement);
+      this.googleMapsProvider.init(this.mapElement, this.pleaseConnect.nativeElement);
     });
 
   }
@@ -64,7 +63,7 @@ export class Matches {
     }).subscribe((msg_body: string) => {
       console.log(JSON.parse(msg_body), msg_body);
       this.markers = [];
-      JSON.parse(msg_body).forEach((location: any) => {
+      JSON.parse(msg_body).forEach((location: IUserLocation) => {
         let marker: any = {};
         marker.lat = location.position.x;
         marker.lng = location.position.y;
@@ -82,11 +81,10 @@ export class Matches {
     });
   }
 
-/*  private sendLocation() {
-    this.stompClient.send("/app/track", {}, JSON.stringify({
-      'username': "test",
-      'position': {"x": "1.222", "y": "2.33"}
-    }));
-  }*/
-
+  /*  private sendLocation() {
+      this.stompClient.send("/app/track", {}, JSON.stringify({
+        'username': "test",
+        'position': {"x": "1.222", "y": "2.33"}
+      }));
+    }*/
 }

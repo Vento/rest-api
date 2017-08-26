@@ -12,23 +12,29 @@
     <p>Please connect to the Internet...</p>
   </div>
 
-  <!--<div #map id="map"></div>-->
-  <agm-map #map id="map" [styles]="googleMapsProvider.mapStyle" [zoom]="googleMapsProvider.options.zoom"
+  <agm-map #map id="map" [styles]="googleMapsProvider.mapStyle" [zoom]="16"
            [minZoom]="googleMapsProvider.options.minZoom"
            [maxZoom]="googleMapsProvider.options.maxZoom"
            [latitude]="googleMapsProvider.options.center.lat"
            [longitude]="googleMapsProvider.options.center.lng"
-           [usePanning]="true">
+           [usePanning]="true"
+           (mapClick)="addPolyline($event)"
+           (mapReady)='loadAPIWrapper($event)'>
     <agm-marker [latitude]="googleMapsProvider.options.center.lat"
                 [longitude]="googleMapsProvider.options.center.lng"
                 label="Me"></agm-marker>
+    <agm-circle [latitude]="googleMapsProvider.options.center.lat"
+                [longitude]="googleMapsProvider.options.center.lng"
+                [radius]="1000"
+                [fillColor]="'blue'"
+                [clickable]="false">
+    </agm-circle>
     <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="openDetail(m)"
                 [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [iconUrl]="'assets/img/marker.png'">
       <!--      <agm-info-window [disableAutoPan]="true" (infoWindowClose)="onCloseDetail.emit()">
               <h5>{{m.label}}</h5>
             </agm-info-window>-->
     </agm-marker>
-    <agm-polygon [paths]="paths" [editable]="true" [polyDraggable]="true" [geodesic]="true"></agm-polygon>
   </agm-map>
   <ion-fab class="locateButton" bottom right>
     <button ion-fab (click)='googleMapsProvider.centerToMyLocation()'>

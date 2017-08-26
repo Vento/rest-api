@@ -19,7 +19,18 @@
     <p>Please connect to the Internet...</p>
   </div>
   <div *ngIf='selectedRoute === undefined'>
-    <div #map id="map"></div>
+    <agm-map id="routeMap" [styles]="googleMapsProvider.mapStyle" [zoom]="16"
+             [minZoom]="googleMapsProvider.options.minZoom"
+             [maxZoom]="googleMapsProvider.options.maxZoom"
+             [latitude]="googleMapsProvider.options.center.lat"
+             [longitude]="googleMapsProvider.options.center.lng"
+             [usePanning]="true"
+             (mapReady)='loadAPIWrapper($event)'>
+      <agm-polyline [geodesic]="true" [editable]="true" [draggable]="true" [strokeWeight]="3" [strokeColor]="FFFFFF" [strokeOpacity]="1.0">
+        <agm-polyline-point *ngFor="let p of paths; let i = index" [latitude]="p.lat" [longitude]="p.lng"
+        ></agm-polyline-point>
+      </agm-polyline>
+    </agm-map>
     <div class="form-container" padding>
       <form #routeForm="ngForm" novalidate>
         <ion-item>
@@ -40,7 +51,18 @@
   </div>
 
   <div *ngIf='selectedRoute'>
-    <div #map id="map"></div>
+    <agm-map id="selectedRouteMap" [styles]="googleMapsProvider.mapStyle" [zoom]="16"
+             [minZoom]="googleMapsProvider.options.minZoom"
+             [maxZoom]="googleMapsProvider.options.maxZoom"
+             [latitude]="googleMapsProvider.options.center.lat"
+             [longitude]="googleMapsProvider.options.center.lng"
+             [usePanning]="true"
+             (mapReady)='loadAPIWrapper($event)'>
+      <agm-polyline [geodesic]="true" [editable]="true" [draggable]="true" [strokeWeight]="3" [strokeColor]="FFFFFF" [strokeOpacity]="1.0">
+        <agm-polyline-point *ngFor="let p of paths; let i = index" [latitude]="p.lat" [longitude]="p.lng"
+        ></agm-polyline-point>
+      </agm-polyline>
+    </agm-map>
     <div class="form-container" padding>
       <ion-item>
         {{selectedRoute.name}}

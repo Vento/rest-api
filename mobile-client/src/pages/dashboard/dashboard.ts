@@ -14,12 +14,12 @@ import * as moment from 'moment';
 })
 export class Dashboard {
   dashboard: { name?: string, lastSeen?: string, routes?: any, records?: any } = {};
-  
+
   constructor(public navCtrl: NavController, public viewUtilities: ViewUtilities, private profileService: ProfileService,
     private profileStorage: ProfileStorage, public translationService: TranslationService) {
   }
 
-  
+
   ionViewWillEnter() {
     this.loadDashboard();
   }
@@ -32,7 +32,7 @@ export class Dashboard {
 
   }
   private loadDashboard() {
-    this.profileService.getCurrentProfile().subscribe((profileData) => {        
+    this.profileService.getCurrentProfile().subscribe((profileData) => {
             this.profileStorage.setProfile(profileData);
             this.dashboard.name = profileData.name;
             this.dashboard.lastSeen = this.lastLoginDuration(profileData.lastSeen);
@@ -41,15 +41,15 @@ export class Dashboard {
           },
           err => {
             this.viewUtilities.onError(err);
-          } 
+          }
       )
-    
+
     this.translationService.loadLanguagePreferences();
   }
 
    lastLoginDuration(loginTime) {
     var now = moment(new Date());
-    var end = moment(loginTime); 
+    var end = moment(loginTime);
     var duration = moment.duration(now.diff(end));
     return duration.humanize();
   }
