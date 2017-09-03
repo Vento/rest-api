@@ -28,10 +28,9 @@ public class MatchController {
         this.locationService = locationService;
     }
 
-    @MessageMapping("/track")
-    @SendTo("/topic/around/{username}")
-    public Location sendLocation(@PathVariable String username, Point position, Principal principal) throws Exception {
-        return locationService.save(new Location(principal.getName(), position));
+    @MessageMapping("/track/{username}")
+    public Location sendLocation(@DestinationVariable String username, Location position) throws Exception {
+        return locationService.save(position);
     }
 
     @SubscribeMapping("/around/{username}")
@@ -62,10 +61,6 @@ public class MatchController {
 
     @GetMapping(path = "/location/{username}")
     public Location getLocationByUsername(@PathVariable String username) throws Exception {
-
-        Location location = new Location(username, new Point(12.456, 34.756));
-        locationService.save(location);
-
         return locationService.findByUsername(username);
     }
 
