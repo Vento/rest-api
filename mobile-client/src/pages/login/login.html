@@ -2,7 +2,7 @@
   <ion-grid class="actions-container">
 
     <form #loginForm="ngForm" novalidate>
-      <ion-slides pager>
+      <ion-slides class="animated fadeIn" pager>
 
         <ion-slide>
           <h1 class="logo">Vento</h1>
@@ -43,7 +43,7 @@
 
         <button (click)="onLogin(loginForm)" padding ion-button icon-left block color="orange-light">Login</button>
 
-        <ion-col padding text-center> Don't have an account yet? <a href="#" (click)="onRegister()">Sign up</a></ion-col>
+        <ion-col class="sign-up"padding text-center> Don't have an account yet? <a href="#" (click)="onRegister()">Sign up</a></ion-col>
       </ion-row>
     </form>
   </ion-grid>

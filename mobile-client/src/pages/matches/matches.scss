@@ -24,7 +24,7 @@ page-matches {
     height: 100%;
   }
 
-  #map,agm-map {
+  #map, agm-map {
     width: 100%;
     height: 100%;
   }
@@ -75,6 +75,52 @@ page-matches {
       font-weight: bold;
     }
 
+  }
+
+  .infoWindow {
+    background-color: #fff;
+    width: 90vw;
+    height: 150px;
+    border-radius: 10px;
+    padding: 10px;
+    top: 50%;
+    margin: 5vw;
+    left: 0;
+    box-shadow: -8px -2px 130px 6px rgba(194, 194, 194, 1);
+
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 10px;
+    }
+
+    .challenge-btn {
+      margin-top: auto;
+      margin-left: auto;
+      margin-right: auto;
+      ion-icon {
+        padding-right: 5px;
+        :before {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .avatar-container {
+    ion-avatar {
+      position: absolute;
+      left: calc(50% - 33px);
+      top: -35px;
+      img {
+        border: 3px solid #fff;
+        border-radius: 50px
+      }
+      span {
+        font-size: 16px
+      }
+    }
   }
 }
 

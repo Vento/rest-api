@@ -21,6 +21,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = Login;
+  activePage: any = Login;
 
   appPages: Array<{ title: string, component: any, icon?: string, logsOut?: boolean, index?: number; }>;
   accountPages: Array<{ title: string, component: any, icon?: string, logsOut?: boolean, index?: number; }>;
@@ -66,6 +67,7 @@ export class MyApp {
       this.nav.setRoot(page.component);
     });
     this.nav.setRoot(page.component);
+    this.activePage = page;
   }
 
   logout() {
@@ -84,5 +86,9 @@ export class MyApp {
 
   addConnectivityListeners() {
     this.connectivityService.addConnectivityListeners();
+  }
+
+  isPageActive(page): boolean {
+    return (page.title === this.activePage.title);
   }
 }

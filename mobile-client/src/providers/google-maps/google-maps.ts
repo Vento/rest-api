@@ -26,113 +26,23 @@ export class GoogleMapsProvider {
 
   private mapStyle: any = [
     {
-      "featureType": "all",
-      "elementType": "labels",
+      "featureType": "water",
+      "elementType": "geometry",
       "stylers": [
         {
-          "visibility": "on"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.fill",
-      "featureType": "all",
-      "stylers": [
-        {
-          "saturation": 36
-        },
-        {
-          "color": "#000000"
-        },
-        {
-          "lightness": 40
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.stroke",
-      "featureType": "all",
-      "stylers": [
-        {
-          "visibility": "on"
-        },
-        {
-          "color": "#000000"
-        },
-        {
-          "lightness": 16
-        }
-      ]
-    },
-    {
-      "elementType": "labels.icon",
-      "featureType": "all",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry.fill",
-      "featureType": "administrative",
-      "stylers": [
-        {
-          "color": "#000000"
-        },
-        {
-          "lightness": 20
-        }
-      ]
-    },
-    {
-      "elementType": "geometry.stroke",
-      "featureType": "administrative",
-      "stylers": [
-        {
-          "color": "#000000"
+          "color": "#e9e9e9"
         },
         {
           "lightness": 17
-        },
-        {
-          "weight": 1.2
         }
       ]
     },
     {
-      "elementType": "labels.text.fill",
-      "featureType": "administrative.country",
-      "stylers": [
-        {
-          "color": "#ed5929"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.fill",
-      "featureType": "administrative.locality",
-      "stylers": [
-        {
-          "color": "#ffffff"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.fill",
-      "featureType": "administrative.neighborhood",
-      "stylers": [
-        {
-          "color": "#fbfbfb"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry",
       "featureType": "landscape",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#1f1613"
+          "color": "#f5f5f5"
         },
         {
           "lightness": 20
@@ -140,92 +50,38 @@ export class GoogleMapsProvider {
       ]
     },
     {
-      "elementType": "geometry.fill",
-      "featureType": "landscape.natural.landcover",
-      "stylers": [
-        {
-          "color": "#693013"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry",
-      "featureType": "poi",
-      "stylers": [
-        {
-          "color": "#000000"
-        },
-        {
-          "lightness": 21
-        },
-        {
-          "visibility": "on"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry",
-      "featureType": "poi.business",
-      "stylers": [
-        {
-          "visibility": "on"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry.fill",
-      "featureType": "road",
-      "stylers": [
-        {
-          "color": "#df6715"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry.fill",
       "featureType": "road.highway",
-      "stylers": [
-        {
-          "color": "#f07d0b"
-        },
-        {
-          "lightness": "0"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry.stroke",
-      "featureType": "road.highway",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.fill",
-      "featureType": "road.highway",
+      "elementType": "geometry.fill",
       "stylers": [
         {
           "color": "#ffffff"
+        },
+        {
+          "lightness": 17
         }
       ]
     },
     {
-      "elementType": "labels.text.stroke",
       "featureType": "road.highway",
+      "elementType": "geometry.stroke",
       "stylers": [
         {
-          "color": "#ed5929"
+          "color": "#ffffff"
+        },
+        {
+          "lightness": 29
+        },
+        {
+          "weight": 0.2
         }
       ]
     },
     {
-      "elementType": "geometry",
       "featureType": "road.arterial",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#000000"
+          "color": "#ffffff"
         },
         {
           "lightness": 18
@@ -233,38 +89,49 @@ export class GoogleMapsProvider {
       ]
     },
     {
-      "elementType": "geometry.fill",
-      "featureType": "road.arterial",
+      "featureType": "road.local",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#575757"
+          "color": "#ffffff"
+        },
+        {
+          "lightness": 16
         }
       ]
     },
     {
-      "elementType": "labels.text.fill",
-      "featureType": "road.arterial",
+      "featureType": "poi",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#ffffff"
+          "color": "#f5f5f5"
+        },
+        {
+          "lightness": 21
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dedede"
+        },
+        {
+          "lightness": 21
         }
       ]
     },
     {
       "elementType": "labels.text.stroke",
-      "featureType": "road.arterial",
       "stylers": [
         {
-          "color": "#2c2c2c"
-        }
-      ]
-    },
-    {
-      "elementType": "geometry",
-      "featureType": "road.local",
-      "stylers": [
+          "visibility": "on"
+        },
         {
-          "color": "#000000"
+          "color": "#ffffff"
         },
         {
           "lightness": 16
@@ -273,19 +140,32 @@ export class GoogleMapsProvider {
     },
     {
       "elementType": "labels.text.fill",
-      "featureType": "road.local",
       "stylers": [
         {
-          "color": "#999999"
+          "saturation": 36
+        },
+        {
+          "color": "#333333"
+        },
+        {
+          "lightness": 40
         }
       ]
     },
     {
-      "elementType": "geometry",
-      "featureType": "transit",
+      "elementType": "labels.icon",
       "stylers": [
         {
-          "color": "#000000"
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "transit",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#f2f2f2"
         },
         {
           "lightness": 19
@@ -293,14 +173,29 @@ export class GoogleMapsProvider {
       ]
     },
     {
-      "elementType": "geometry",
-      "featureType": "water",
+      "featureType": "administrative",
+      "elementType": "geometry.fill",
       "stylers": [
         {
-          "color": "#000000"
+          "color": "#fefefe"
+        },
+        {
+          "lightness": 20
+        }
+      ]
+    },
+    {
+      "featureType": "administrative",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#fefefe"
         },
         {
           "lightness": 17
+        },
+        {
+          "weight": 1.2
         }
       ]
     }

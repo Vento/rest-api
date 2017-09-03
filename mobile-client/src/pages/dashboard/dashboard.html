@@ -24,7 +24,7 @@
          <ion-item>{{record.value}} {{ record.date}}</ion-item>
        </ion-list>
     </ion-card-content>
-    <ion-card-content text-center class="records no-data" *ngIf="!dashboard.records">
+    <ion-card-content text-center class="records no-data animated rubberBand" *ngIf="!dashboard.records">
       {{ 'NO_RECORDS_YET' | translate }} <br/>
       <ion-icon class="icon ion-md-sad"></ion-icon>
     </ion-card-content>
@@ -36,7 +36,7 @@
          <ion-item>{{route.name}}</ion-item>
        </ion-list>
     </ion-card-content>
-    <ion-card-content text-center class="routes no-data" *ngIf="!dashboard.routes">
+    <ion-card-content text-center class="routes no-data animated rubberBand" *ngIf="!dashboard.routes">
       {{ 'NO_ROUTES_YET' | translate }} <br/>
       <ion-icon class="icon ion-md-sad"></ion-icon>
     </ion-card-content>

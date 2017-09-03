@@ -18,15 +18,14 @@
            [latitude]="googleMapsProvider.options.center.lat"
            [longitude]="googleMapsProvider.options.center.lng"
            [usePanning]="true"
-           (mapClick)="addPolyline($event)"
            (mapReady)='loadAPIWrapper($event)'>
     <agm-marker [latitude]="googleMapsProvider.options.center.lat"
                 [longitude]="googleMapsProvider.options.center.lng"
-                label="Me"></agm-marker>
+                label="Me" (markerClick)="openDetail(m)">
+    </agm-marker>
     <agm-circle [latitude]="googleMapsProvider.options.center.lat"
                 [longitude]="googleMapsProvider.options.center.lng"
-                [radius]="1000"
-                [fillColor]="'blue'"
+                [radius]="this.circleRadius"
                 [clickable]="false">
     </agm-circle>
     <agm-marker *ngFor="let m of markers; let i = index" (markerClick)="openDetail(m)"
@@ -36,7 +35,23 @@
             </agm-info-window>-->
     </agm-marker>
   </agm-map>
-  <ion-fab class="locateButton" bottom right>
+  <ion-fab [hidden]="!this.activeMarker" class="row infoWindow animated fadeInUp">
+    <div class="avatar-container">
+      <ion-avatar>
+        <img class="avatar" src="http://www.gravatar.com/avatar?d=mm&amp;s=75">
+        <div text-center>Username</div>
+      </ion-avatar>
+    </div>
+    <div class="close" (click)="closeDetail()">
+      <ion-icon name="ios-close"></ion-icon>
+    </div>
+
+    <button (click)="showRouteSelectionPrompt()" ion-button class="challenge-btn">
+      <ion-icon item-left role="img" class="fi flaticon-marathon"></ion-icon>
+      Challenge player
+    </button>
+  </ion-fab>
+  <ion-fab class="locateButton animated fadeInUp" bottom right>
     <button ion-fab (click)='googleMapsProvider.centerToMyLocation()'>
       <ion-icon name="ios-locate-outline"></ion-icon>
     </button>

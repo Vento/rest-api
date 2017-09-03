@@ -2,13 +2,13 @@
 
   <ion-content>
     <ion-list>
-      <ion-item>
-        <ion-avatar item-left>
-             <img class="avatar" src="http://www.gravatar.com/avatar?d=mm&s=140">
-      </ion-avatar>
-        <h2 color="primary">Username</h2>
+      <ion-item text-center>
+        <ion-avatar>
+          <img class="avatar" src="http://www.gravatar.com/avatar?d=mm&s=140">
+          <h2 color="primary">Username</h2>
+        </ion-avatar>
       </ion-item>
-      <button menuClose ion-item *ngFor="let p of appPages" (click)="openPage(p)">
+      <button menuClose ion-item *ngFor="let p of appPages" [class.active]="isPageActive(p)" (click)="openPage(p)">
         <ion-icon item-left class="{{p.icon}}"></ion-icon>
         {{p.title}}
       </button>
@@ -18,7 +18,7 @@
       <ion-list-header>
         Account
       </ion-list-header>
-      <button ion-item menuClose *ngFor="let p of accountPages" (click)="openPage(p)">
+      <button ion-item menuClose *ngFor="let p of accountPages" [class.active]="isPageActive(p)" (click)="openPage(p)">
         <ion-icon item-left class="{{p.icon}}"></ion-icon>
         {{p.title}}
       </button>

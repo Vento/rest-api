@@ -9,10 +9,10 @@
 
 <ion-content padding [ngClass]="hasDataClass">
 
-  <div text-center class="no-data-notice" *ngIf="statisticsModel.statistics == null || this.statisticsModel.statistics.length == 0">
+  <div text-center class="no-data-notice animated rubberBand" *ngIf="statisticsModel.statistics == null || this.statisticsModel.statistics.length == 0">
     <i class="fi flaticon-urgency"></i> <br/>
     <strong>No statistics found</strong> <br/>
      Please return after a while <br/>
   </div>
-  
+
 </ion-content>

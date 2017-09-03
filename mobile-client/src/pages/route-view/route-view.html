@@ -43,7 +43,7 @@
         </small>
       </form>
         <ion-fab center middle>
-          <button ion-fab color="orange" (click)="saveRoute(routeForm)">
+          <button ion-fab color="orange" class="animated bounce" (click)="saveRoute(routeForm)">
             <ion-icon name="checkmark"></ion-icon>
           </button>
         </ion-fab>
@@ -51,7 +51,7 @@
   </div>
 
   <div *ngIf='selectedRoute'>
-    <agm-map id="selectedRouteMap" [styles]="googleMapsProvider.mapStyle" [zoom]="16"
+    <agm-map id="selectedRouteMap" class="animated bounce" [styles]="googleMapsProvider.mapStyle" [zoom]="16"
              [minZoom]="googleMapsProvider.options.minZoom"
              [maxZoom]="googleMapsProvider.options.maxZoom"
              [latitude]="googleMapsProvider.options.center.lat"

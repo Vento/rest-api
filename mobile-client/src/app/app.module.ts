@@ -20,7 +20,7 @@ import {Register} from '../pages/register/register';
 import {Statistics} from '../pages/statistics/statistics';
 import {Routes} from '../pages/routes/routes';
 import {RouteViewPage} from '../pages/route-view/route-view';
-import {Matches} from '../pages/matches/matches';
+import {Matches, ChallengeRoute} from '../pages/matches/matches';
 import {Settings} from '../pages/settings/settings';
 import {Account} from '../pages/account/account';
 
@@ -89,7 +89,8 @@ const stompConfig: StompConfig = {
     Matches,
     Settings,
     Account,
-    GoogleMapComponent
+    GoogleMapComponent,
+    ChallengeRoute
   ],
   imports: [
     BrowserModule,
@@ -122,7 +123,8 @@ const stompConfig: StompConfig = {
     RouteViewPage,
     Matches,
     Settings,
-    Account
+    Account,
+    ChallengeRoute
   ],
   providers: [
     StatusBar,

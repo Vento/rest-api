@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/v2/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -15,43 +14,48 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-.toolbar-background{
-    background: #4A4A4A;
+.toolbar-background {
+  background: #4A4A4A;
 }
 
-ion-navbar{
-    ion-icon,.toolbar-title{
-        color: #eee;
-    }
+ion-navbar {
+  ion-icon, .toolbar-title {
+    color: #eee;
+  }
 }
-.no-data-bg{
-    .scroll-content{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        strong{
-            font-weight: bold;
-        }
-        overflow: hidden;
-        margin-top: 0 !important;
+
+.no-data-bg {
+  .scroll-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    strong {
+      font-weight: bold;
     }
+    overflow: hidden;
+    margin-top: 0 !important;
+  }
 }
-.no-data-notice > i:before{
-    font-size: 12em;
+
+.no-data-notice > i:before {
+  font-size: 12em;
 }
 
 cntstyle {
-background-color: #06c;
-// background: linear-gradient(to bottom, #06c , white);
+  background-color: #06c;
+  // background: linear-gradient(to bottom, #06c , white);
 }
-.cntstyle .list{
-background-color: transparent;
+
+.cntstyle .list {
+  background-color: transparent;
 }
-.cntstyle .item, .cntstyle .item-content, .cntstyle .item-complex{
-background-color: transparent;
-color: #FFFFFF;
-border-color: rgba(0,0,0,0);
+
+.cntstyle .item, .cntstyle .item-content, .cntstyle .item-complex {
+  background-color: transparent;
+  color: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0);
 }
+
 /*.menu-inner{
     background: none;
     background-image: url(../assets/img/intro.jpg);
@@ -71,4 +75,33 @@ border-color: rgba(0,0,0,0);
         color: #eee;
     }
 
+}*/
+
+ion-menu {
+  ion-avatar img {
+    display: inline-block;
+  }
+
+  .list .item-block {
+    background-color: initial;
+
+    &.active {
+      background-color: map_get($colors, light);
+    }
+
+    .item-inner {
+      border: 0;
+    }
+  }
+}
+
+/*ion-content{
+  .scroll-content {
+    background-color: #E5E5E5;
+  }
+
+  .card{
+    box-shadow: none;
+    background: #D9DCDD;
+  }
 }*/

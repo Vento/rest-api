@@ -42,7 +42,18 @@ page-login {
 
   .forgot-password {
     font-size: 1.2rem;
-    color: $orange-dark;
+    color: $white;
+  }
+
+  p, .sign-up {
+    color: $white;
+  }
+
+  .sign-up {
+    a {
+      text-decoration: none;
+      font-weight: bold;
+    }
   }
 
   .item-input.input-has-focus .item-inner {

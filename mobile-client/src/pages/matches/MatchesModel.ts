@@ -1,7 +1,7 @@
 export interface IUserLocation {
   username: string;
   position: IPosition;
-  timeToLive: number;
+  timeToLive?: number;
 }
 
 export interface IPosition {
