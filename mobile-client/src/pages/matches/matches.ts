@@ -11,8 +11,8 @@ import {Observable} from 'rxjs/Observable';
 import {Geolocation} from 'ionic-native';
 import {ProfileStorage} from "../../providers/profile/profile-storage";
 import {IProfile} from "models/ProfileModel";
-import { ModalController, NavParams } from 'ionic-angular';
-
+import {ModalController, NavParams} from 'ionic-angular';
+import {ChallengeModal} from "./challengeModal/challengeModal";
 
 
 declare let google: any;
@@ -134,18 +134,9 @@ export class Matches {
   }
 
   private showRouteSelectionPrompt(): void {
-    let routesModal = this.modalCtrl.create(ChallengeRoute, { userId: 8675309 });
+    let routesModal = this.modalCtrl.create(ChallengeModal, {userId: 8675309});
     routesModal.present();
   }
 }
 
-@Component({
-  selector: 'page-challenge-route-select',
-  template: '<alert-wrapper>test</alert-wrapper>'
-})
-export class ChallengeRoute {
 
-  constructor(params: NavParams) {
-    console.log('UserId', params.get('userId'));
-  }
-}

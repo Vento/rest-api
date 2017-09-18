@@ -20,7 +20,7 @@ import {Register} from '../pages/register/register';
 import {Statistics} from '../pages/statistics/statistics';
 import {Routes} from '../pages/routes/routes';
 import {RouteViewPage} from '../pages/route-view/route-view';
-import {Matches, ChallengeRoute} from '../pages/matches/matches';
+import {Matches} from '../pages/matches/matches';
 import {Settings} from '../pages/settings/settings';
 import {Account} from '../pages/account/account';
 
@@ -51,6 +51,7 @@ import {StompConfig} from "@stomp/ng2-stompjs";
 import {StompService} from "@stomp/ng2-stompjs";
 
 import {LottieAnimationViewModule} from 'ng-lottie';
+import {ChallengeModal} from "../pages/matches/challengeModal/challengeModal";
 
 
 export function httpInterceptor(backend: XHRBackend, options: RequestOptions, authService: AuthService, authStorage: AuthStorage) {
@@ -90,7 +91,7 @@ const stompConfig: StompConfig = {
     Settings,
     Account,
     GoogleMapComponent,
-    ChallengeRoute
+    ChallengeModal
   ],
   imports: [
     BrowserModule,
@@ -124,7 +125,7 @@ const stompConfig: StompConfig = {
     Matches,
     Settings,
     Account,
-    ChallengeRoute
+    ChallengeModal
   ],
   providers: [
     StatusBar,
