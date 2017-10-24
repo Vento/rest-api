@@ -1,8 +1,13 @@
-sudo: required
-
 language: java
-jdk: oraclejdk8
-
+sudo: required
+install: true
+addons:
+  sonarcloud:
+    organization: "vvasiloud-github"
+    token:
+      secure: "HjzoC+YQoIp0ur1RPM3GGd584kHBfgQ48MpM0hyncUglqYRx52vrcEFLkiltnP65zfSjiVF/BODoiNtPqAvZTvs/FnaqG65Z2vpACn/pJ8kqSbtRJ56CV/BDSXtGz5gM+xtaObKfI2vIhT1it9X0lZreuHazFfqpJ/TOFTvR8yeF70i5rUB6XNQcickct+GKjbOuy9FTQ/JzqsSW50J9KvKP3h/8oyPuYV7qDbBHOSy7qrfbYrR3rq8UXw6ur9y2JXQ6Dtu3NscLUq9YzBqsH0zWXzNATEeSHNmZIL/YUHtpWEKIgBXp1dMaTjTpKb1Fw+fzqXHXas6ifL6bmgvq8tI+MHq9Sb7KFX9r/i/1hyqWOwB2/dCPx0MH+HwvN6oCT4mWRauvMHPFmgMzSJ+kbo96MTkdPINkRkc7EYuJkP2om7qv3N+wa5aQwUBjUsoku8GGJwo12RWOi42DAPaDHYzmLU8Xu5d7IHKus/4oeWvIu1hnakYS3Tql491oFJoc9LlbfaDLINE/eWW5wYSJHyxgViwgj5/50a889/fda0PbA7uoCoLSjrgII3PTbyU5bqsPsqLVbxlmKn2Vkorsuwjdnq58pUIDU0M06KjuJpygIOHpd/Q7qOzrzp9jLHScBnXek8RSSa8MiCdbbus6UPGNmagC8AozwbeEmQPiM48="
+jdk:
+  - oraclejdk8
 services:
   - mongodb
   - docker
@@ -11,8 +16,9 @@ services:
 
 before_script:
   - env > .env
-
+  
 after_success:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
   - bash <(curl -s https://codecov.io/bash) -t 6f6008b6-9461-4949-b7fe-bfc92156919d
 
 before_deploy:
@@ -24,3 +30,8 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
