@@ -102,7 +102,6 @@ Desktop.ini
 ######################
 /**/build/**
 /build/**
-/bin/**
 /spring_loaded/**
 /deploy/**
 
@@ -116,7 +115,6 @@ Desktop.ini
 ######################
 *.class
 *.*~
-*~
 .merge_file*
 
 ######################
@@ -133,3 +131,8 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+######################
+# Docker
+######################
+/**/.buildNodeID
