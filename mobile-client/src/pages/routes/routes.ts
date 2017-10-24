@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 
 import {NavController, NavParams} from 'ionic-angular';
-import {RouteModel} from '../../models/route-model';
 import {RouteViewPage} from '../../pages/route-view/route-view';
 import {ProfileService} from '../../providers/profile/profile-service';
 import {ViewUtilities} from '../../providers/view-utilities/view-utilities';
@@ -27,7 +26,7 @@ export class Routes {
   private loadData(): void {
     this.profileService.getCurrentProfile().subscribe((profile: IProfile) => {
         if (profile.routes && profile.routes.length !== 0) this.hasDataClass = "";
-        this.routes = profile.routes;
+        this.routes = profile.routes || [];
       },
       err => {
         this.viewUtilities.onError(err);

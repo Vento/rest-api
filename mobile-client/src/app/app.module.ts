@@ -47,8 +47,8 @@ import {ConnectivityProvider} from '../providers/connectivity/connectivity';
 
 import * as SockJS from 'sockjs-client';
 import {AgmCoreModule} from '@agm/core';
-import {StompConfig} from "@stomp/ng2-stompjs";
-import {StompService} from "@stomp/ng2-stompjs";
+import {StompConfig} from "../providers/@stomp/ng2-stompjs";
+import {StompService} from "../providers/@stomp/ng2-stompjs";
 
 import {LottieAnimationViewModule} from 'ng-lottie';
 import {ChallengeModal} from "../pages/matches/challengeModal/challengeModal";
@@ -62,9 +62,9 @@ export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
 
-const stompConfig: StompConfig = {
+export const stompConfig: StompConfig = {
   url: () => {
-    return new SockJS('/api/matches/ws');
+    return new SockJS('http://snf-728774.vm.okeanos.grnet.gr/api/matches/ws');
   },
   headers: {
     login: '',

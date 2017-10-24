@@ -14,7 +14,7 @@
     "target": "es5",
     "baseUrl": "./src",
     "paths": {
-      "@stomp/ng2-stompjs": ["../node_modules/@stomp/ng2-stompjs"]
+      //"@stomp/ng2-stompjs": ["../node_modules/@stomp/ng2-stompjs"]
     }
   },
   "include": [

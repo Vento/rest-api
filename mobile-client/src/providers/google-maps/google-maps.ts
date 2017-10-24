@@ -16,8 +16,8 @@ export class GoogleMapsProvider {
 
   public options: MapOptions = {
     center: {
-      lat: 0,
-      lng: 0
+      lat: 6.132205,
+      lng: -2.7312286
     },
     zoom: 16,
     minZoom: 13,
@@ -271,7 +271,7 @@ export class GoogleMapsProvider {
   }
 
   public centerToMyLocation() {
-    Geolocation.getCurrentPosition().then((position) => {
+    Geolocation.getCurrentPosition({enableHighAccuracy: true, timeout: 5000, maximumAge: 0}).then((position) => {
       let latLng: LatLngLiteral = {lat: position.coords.latitude, lng: position.coords.longitude};
       this.currentMarker = <MarkerOptions> {};
       this.currentMarker.position = latLng;
@@ -283,7 +283,8 @@ export class GoogleMapsProvider {
           this.map.panTo(latLng);
         });
     }).catch(error => {
-      console.log('geolocation error', error);
+      console.log('geolocation error', error.message);
     });
   }
 }
+

@@ -1,19 +1,14 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NavController, Platform} from 'ionic-angular';
-import {ViewUtilities} from '../../providers/view-utilities/view-utilities';
 import {GoogleMapsProvider} from "../../providers/google-maps/google-maps";
-import {MatchService} from "../../providers/match/match-service";
-import {StompService, StompState} from "@stomp/ng2-stompjs";
-import {LatLngLiteral, GoogleMapsAPIWrapper, AgmMap} from '@agm/core';
+import {StompService, StompState} from "../../providers/@stomp/ng2-stompjs";
+import {GoogleMapsAPIWrapper, AgmMap} from '@agm/core';
 import {IPosition, IUserLocation} from "./MatchesModel";
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
 import {Geolocation} from 'ionic-native';
 import {ProfileStorage} from "../../providers/profile/profile-storage";
 import {IProfile} from "models/ProfileModel";
-import {ModalController, NavParams} from 'ionic-angular';
+import {ModalController} from 'ionic-angular';
 import {ChallengeModal} from "./challengeModal/challengeModal";
-
 
 declare let google: any;
 
@@ -29,29 +24,14 @@ export class Matches {
   private map: GoogleMapsAPIWrapper;
   private username: string;
   private activeMarker: any;
-  private circleRadius: number = 100;
 
-  constructor(public navCtrl: NavController, private platform: Platform, private viewUtilities: ViewUtilities,
-              public googleMapsProvider: GoogleMapsProvider, private matchService: MatchService,
-              private _stompService: StompService, private http: Http, private profileStorage: ProfileStorage,
-              private modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, private platform: Platform, public googleMapsProvider: GoogleMapsProvider,
+              private _stompService: StompService, private profileStorage: ProfileStorage, private modalCtrl: ModalController) {
     this.initWebsocket();
   }
 
   public loadAPIWrapper(map) {
     this.map = map;
-  }
-
-  public animateCircle() {
-    let direction = 1;
-    let rMin = 150, rMax = 1000;
-    setInterval(() => {
-      let radius = this.circleRadius;
-      if ((radius > rMax) || (radius < rMin)) {
-        direction *= -1;
-      }
-      this.circleRadius = radius + direction * 10;
-    }, 50);
   }
 
   public ionViewDidLoad(): void {
@@ -61,7 +41,7 @@ export class Matches {
     });
 
     this.profileStorage.getProfile().then((profile: IProfile) => {
-      this.username = profile.name;
+      this.username = (profile) ? profile.name : undefined;
     })
   }
 
@@ -126,7 +106,6 @@ export class Matches {
 
   private openDetail(marker): void {
     this.activeMarker = "test";
-    console.log(this.activeMarker)
   }
 
   private closeDetail(): void {
