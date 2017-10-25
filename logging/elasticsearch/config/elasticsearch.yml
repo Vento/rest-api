@@ -1,0 +1,11 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+
+discovery.zen.minimum_master_nodes: 1
+discovery.type: single-node
+
+## Disable X-Pack
+xpack.security.enabled: false
+xpack.monitoring.enabled: false
+xpack.ml.enabled: false
+xpack.watcher.enabled: false

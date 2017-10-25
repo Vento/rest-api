@@ -43,6 +43,8 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
+    depends_on:
+      - elasticsearch
 
   logstash:
     image: vvasiloud/vento-logstash
@@ -50,6 +52,8 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
+    depends_on:
+      - elasticsearch
 
 #
 # Centralized Configuration

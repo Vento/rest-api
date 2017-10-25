@@ -1,3 +1,5 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:5.3.0
-
-VOLUME ["/var/lib/elasticsearch", "/var/log/elasticsearch"]
+FROM docker.elastic.co/elasticsearch/elasticsearch:5.6.3
+ADD config/elasticsearch.yml /usr/share/elasticsearch/config/
+USER root
+RUN chown elasticsearch:elasticsearch config/elasticsearch.yml
+USER elasticsearch
