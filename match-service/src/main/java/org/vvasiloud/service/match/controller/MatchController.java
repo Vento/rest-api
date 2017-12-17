@@ -13,6 +13,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.vvasiloud.service.match.domain.Location;
+import org.vvasiloud.service.match.dto.RequestDto;
+import org.vvasiloud.service.match.dto.RouteDto;
 import org.vvasiloud.service.match.service.LocationService;
 
 import java.security.Principal;
@@ -31,6 +33,12 @@ public class MatchController {
     @MessageMapping("/track/{username}")
     public Location sendLocation(@DestinationVariable String username, Location position) throws Exception {
         return locationService.save(position);
+    }
+
+    @MessageMapping("/request/{username}")
+    @SendTo("/topic/requests/{username}")
+    public RequestDto sendRequestsToUser(@DestinationVariable String username, RouteDto route) throws Exception {
+        return new RequestDto(username,route);
     }
 
     @SubscribeMapping("/around/{username}")

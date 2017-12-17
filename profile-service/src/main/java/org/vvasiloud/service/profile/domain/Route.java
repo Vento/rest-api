@@ -6,9 +6,6 @@ import org.springframework.data.geo.Point;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/**
- * Created by Aeon on 10/9/2016.
- */
 public class Route {
 
     @Id
