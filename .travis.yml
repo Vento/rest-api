@@ -33,10 +33,10 @@ after_success:
 
 before_deploy:
   - cd $TRAVIS_BUILD_DIR && chmod +x scripts/docker.build.sh && scripts/docker.build.sh
-  
+
 deploy:
   provider: script
-  script: git clone https://github.com/Vento/deployment-automation.git && cd deployment-automation && ansible-playbook -i inventories/pro deploy.yml --ask-vault-pass $VAULT_PASS
+  script: git clone https://github.com/Vento/deployment-automation.git && cd deployment-automation && echo $VAULT_PASS >> vault_pass.txt && ansible-playbook -i inventories/pro deploy.yml --ask-vault-pass vault_pass.txt
 
 cache:
   directories:
