@@ -36,10 +36,7 @@ before_deploy:
   
 deploy:
   provider: script
-  script: git clone https://github.com/Vento/deployment-automation.git && cd deployment-automation && ansible-playbook -i inventories/pro deploy.yml --vault-password-file $VAULT_PASS
-  skip_cleanup: true
-  on:
-    branch: master
+  script: git clone https://github.com/Vento/deployment-automation.git && cd deployment-automation && ansible-playbook -i inventories/pro deploy.yml --ask-vault-pass $VAULT_PASS
 
 cache:
   directories:
