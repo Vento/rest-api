@@ -8,25 +8,32 @@ addons:
       secure: "F2Y7HJlHlxZqDeKlug1eeUA52piBPndRj/XdGoxVGHBiPzmZz/abiXcc/0OmI3zX/dvddkKs0TCucWE3AweIfzT99hzy+MPD7wtWZlQFjjKoNxHT9BgKoH1q3e4LryRjQ/4UUC2tDWf+zkGvyr/AtnGxA9q+3RMZcxZQyha8qE6w5hASPEwKmRX4c6wK0IIi+uLeUCjARAX1Onr1ByLnxZcOy6NY02JoB8mq5Vx3vEa9ihly9tyemVDj/Al5PkwmW1W4DZOirSSoDNSoXtjEZV3b286hGt/lkQ6ieKEOeV0XeZMoNZ4ZGBKVuSLb09WZzDZcM0zWQPblZA7PQ8Fnf8HRQTrUTsjvBC3IVDoxfhQwkLBPCY/xNm6bWoNjRNml8KPqaWV7euXmUwGUYRAM/d/N6BQBwnL/281pt6r/yzDGM4g8k+IyfnyI3IUayNFrx3NfyrkH89eKTVrINQXFaaKU2vwr+zibWILHT1GEbBOillcyAPQzJSBhAPtADOBVjIPEQ0GLvi1K4jfIlxw27UtmmLvfpjDtF818QTN0afCfeQi0WApzP4M9DnEstaRT5j09urudS8BAZQSdPGNxjEenp6mDwiJKxOUxXiHKCvE9qSSY32AjZM0kiHtIkknNHWmQwa8eTrzPOxQig/Ij+/iCQbK+JGM95tkulKNm8oM="
 jdk:
   - oraclejdk8
+
+python:
+  - '2.7'
+
 services:
   - mongodb
   - docker
   - redis-server
   - rabbitmq
 
-before_script:
-  - env > .env
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  - pip install ansible
   
 after_success:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
   - bash <(curl -s https://codecov.io/bash) -t 6f6008b6-9461-4949-b7fe-bfc92156919d
 
 before_deploy:
-  - cd $TRAVIS_BUILD_DIR
+  - cd $TRAVIS_BUILD_DIR && chmod +x scripts/docker.build.sh && scripts/docker.build.sh
   
 deploy:
   provider: script
-  script: chmod +x scripts/docker.build.sh && scripts/docker.build.sh
+  script: git clone https://github.com/Vento/deployment-automation.git && cd deployment-automation && ansible-playbook -i inventories/pro deploy.yml --vault-password-file $VAULT_PASS
   skip_cleanup: true
   on:
     branch: master
