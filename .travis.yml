@@ -36,7 +36,7 @@ before_deploy:
 
 deploy:
   provider: script
-  script: git clone https://github.com/Vento/deployment-automation.git && cd deployment-automation && echo $VAULT_PASS >> vault_pass.txt && ansible-playbook -i inventories/pro deploy.yml --vault-password-file ./vault_pass.txt
+  script: git clone https://github.com/Vento/deployment-automation.git && cd deployment-automation && echo $VAULT_PASS >> vault_pass.txt && ansible-playbook -e 'host_key_checking=False' -i inventories/pro deploy.yml --vault-password-file ./vault_pass.txt
 
 cache:
   directories:
