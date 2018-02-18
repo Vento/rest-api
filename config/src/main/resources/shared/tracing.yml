@@ -4,3 +4,7 @@
 
 server:
   port: 9411
+
+zipkin:
+  self-tracing:
+    enabled: true

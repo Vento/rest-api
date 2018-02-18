@@ -14,5 +14,6 @@ public class RouteDto {
 
     private String name;
     private List<Point> points;
+    private boolean isAccepted;
 
 }

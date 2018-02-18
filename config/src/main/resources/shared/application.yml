@@ -13,7 +13,7 @@ logging:
 spring:
   sleuth:
     sampler:
-      percentage: 0.2
+      percentage: 1.0
 
 hystrix:
   command:
