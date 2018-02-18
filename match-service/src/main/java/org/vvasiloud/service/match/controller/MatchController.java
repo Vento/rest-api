@@ -41,6 +41,11 @@ public class MatchController {
         return new RequestDto(username,route);
     }
 
+    @SubscribeMapping("/accept/{username}")
+    public RequestDto acceptUserRequests(@DestinationVariable String username, RouteDto route) throws Exception {
+        return new RequestDto(username,route);
+    }
+
     @SubscribeMapping("/around/{username}")
     public List<Location> getClosestLocationsForUser(@DestinationVariable String username) throws Exception {
         return locationService.findByUsernameNear(username);
